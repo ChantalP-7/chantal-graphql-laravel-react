@@ -20,7 +20,7 @@ export default function Catalogue() {
           <div key={p.id}>
             <h3>{p.name}</h3>
             <p>{p.couleur}</p>
-            <p>{p.price} $</p>
+            <p>{Number(p.price).toFixed(2)} $</p>
           </div>
         ))}
       </div>

@@ -16,7 +16,7 @@ export default function ProductPage() {
 
     return (
         <div>
-            <img src={p.image} alt={p.name} />
+            <img src={product.image} alt={product.name} />
             <h1>{product.name}</h1>
             <p>{product.millesime_produit}</p>
             <p>{product.pays_origine}</p>
