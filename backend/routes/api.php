@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\produitController;
+use App\Http\Controllers\CellierController;
 
 
 /*
@@ -20,5 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/produits', [produitController::class, 'index']);
+Route::get('/produits/{id}', [produitController::class, 'show']);
+
+/*Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/celliers', [CellierController::class, 'index']);
+});*/
+
+Route::get('/users/{userId}/celliers', [CellierController::class, 'index']);
+Route::get('/celliers/{cellierId}/produits', [CellierController::class, 'afficherProduit']);
+Route::post('/celliers/{cellierId}/produits', [CellierController::class, 'ajouterProduit']);
+Route::put('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'modifierQuantite']);
+Route::delete('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'supprimerProduit']);
+
+Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
