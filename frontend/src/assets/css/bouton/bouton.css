@@ -6,6 +6,14 @@
     background-color: #96384F;
 }
 
+.bouton-rosee {  
+    background-color: #E491A6;
+}
+
+.bouton-rosee:hover {  
+    background-color: #96384F;
+}
+
 .bouton {
     @apply text-white px-4 py-2 rounded cursor-pointer;
 }
