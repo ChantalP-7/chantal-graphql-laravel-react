@@ -11,7 +11,8 @@ class Produit extends Model
     protected $fillable = ['sku','name', 'price', 'image', 'millesime_produit', 'pays_origine', 'couleur', 'identite_produit'];
 
     public function celliers() {
-        return $this->belongsToMany(Cellier::class, 'cellier_produit')
+        return $this->belongsToMany(Cellier::class, 'cellier_produit', 'cellier_id',
+        'produit_id')
                     ->withPivot('quantite')
                     ->withTimestamps();
     }

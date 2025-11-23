@@ -11,12 +11,33 @@
 
 }
 
-p, span, a, button {
+p, span, a, button, select, option, input .bouton-vin {
     
     font-family: Poppins;
 }
 
 h1, h2, h3, h4, h5 {
     font-family: Merriweather;
+}
+
+
+
+/* Code pour enleve les spiners (flèches) des input number */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;    
+    width: 0 !important; 
+}
+
+
+input {
+  -moz-appearance: textfield;
+}
+
+/* Code pour centrer les placeholder */
+
+input:[type="number"] {
+  text-align: center !important;
 }
 

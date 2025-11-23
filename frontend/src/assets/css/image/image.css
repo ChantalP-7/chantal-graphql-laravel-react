@@ -1,15 +1,26 @@
 .imageBouteille {
     max-width: 100%;
-    height: 250px;
+    height:150px;
     object-fit: contain;
     display: block;
     margin: 5px auto 0px auto;
 }
 
+
+.imageCarte {
+    max-width: 100%;
+    height:250px;
+    object-fit: cover;
+    /*display: block;*/
+    margin: 5px auto 0px auto;
+    border-radius: 5px;
+}
+
+
 @media (min-width:800px)  {
     .imageBouteille {
         max-width: 100%;
-        height: 250px;
+        height: 150px;
         object-fit: contain;
         display: block;
         margin: 5px auto 0px auto;

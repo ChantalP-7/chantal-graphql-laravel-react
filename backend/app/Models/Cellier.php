@@ -11,18 +11,21 @@ class Cellier extends Model
 
     protected $fillable = ['user_id', 'nom', 'description'];
 
-    // Un cellier appartient à un utilisateur
+    // Relation avec l'utilisateur
     public function user()
     {
-        return $this->belongsToMany(Produit::class, 'cellier_produit')
-                ->withPivot('quantite')
-                ->withTimestamps();
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    // Relation avec les produits si besoin plus tard
-    public function produits() {
-    return $this->belongsToMany(Produit::class, 'cellier_produit')
-                ->withPivot('quantite')
-                ->withTimestamps();
-}
+    // Relation avec les produits via la table pivot
+    public function produits()
+    {
+        return $this->belongsToMany(
+            Produit::class,       
+            'cellier_produit',    
+            'cellier_id',     
+            'produit_id'
+        )->withPivot('quantite')
+         ->withTimestamps();
+    }
 }

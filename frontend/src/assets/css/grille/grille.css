@@ -6,16 +6,16 @@
 }
 
 
-.grilleBouteille {
-    
+.grilleBouteille {    
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px
 }
 
 
-@media (min-width:800px)  {
-    .grille {
-        
-    }
+.grilleBouton {   
+    background-color: #E491A6;
+    color: #450C1B;
 }

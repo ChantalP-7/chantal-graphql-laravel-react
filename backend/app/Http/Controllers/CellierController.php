@@ -20,12 +20,15 @@ class CellierController extends Controller
     }
 
     public function index() {
-        // Temporaire : prend juste le premier utilisateur
-        $userId = 1; // Remplacer par Auth::user()->id quand l'auth sera en place
-        $celliers = Cellier::with('produits')->where('user_id', $userId)->get();
-
+        $userId = 1; // utilisateur unique pour le moment
+        // Récupère tous les celliers de l'utilisateur avec leurs produits
+        $celliers = Cellier::with('produits')
+            ->where('user_id', $userId)
+            ->get();
         return response()->json($celliers);
     }
+
+    
 
     public function afficherProduit($cellierId) {
         $cellier = Cellier::with('produits')->findOrFail($cellierId);
