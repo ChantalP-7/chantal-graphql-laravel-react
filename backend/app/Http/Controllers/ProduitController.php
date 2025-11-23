@@ -53,4 +53,23 @@ class ProduitController extends Controller
         }
         return response()->json($produit);
     }
+
+    
+    /**
+     * @param
+     * @return array string. la liste des couleurs disponibles pour le filtre
+     */
+    public function getCouleurs()
+    {
+        try {
+            // On prend toutes les couleurs distinctes depuis la table produits
+            $couleurs = Produit::select('couleur')
+                ->distinct()
+                ->pluck('couleur');
+
+            return response()->json($couleurs);
+        } catch (\Exception $erreur) {
+            return response()->json(['erreur' => $erreur->getMessage()], 500);
+        }
+    }
 }

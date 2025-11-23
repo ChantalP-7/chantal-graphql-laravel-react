@@ -1,0 +1,78 @@
+/* CSS de base - Je ne voulais pas modifier App.css. Si jamais les nom changent, vérifier le fichier frontend\src\components\Filtre.jsx.
+Aucun autre fichier ne devrait avoir ces variables :root suivantes.  
+*/
+
+:root {
+	--rouge_lecture: #3c111b;
+    --rose_vino: #945f6c;
+}
+
+.cinzel-decorative-regular {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.cinzel-decorative-bold {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* mon CSS */
+.custom-select {
+    background-color: var(--rouge_lecture);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 12px 17px;
+    font-size: 20px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    position: relative;
+}
+
+.custom-select .selected {
+    /* the visible selected value */
+}
+
+.custom-select .options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    background-color: var(--rouge_lecture);
+    border-radius: 0 0 15px 15px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.custom-select .option {
+    padding: 12px 17px;
+    cursor: pointer;
+}
+
+.custom-select .option:hover {
+    background-color: var(--rose_vino);
+    color: var(--rouge_lecture);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
