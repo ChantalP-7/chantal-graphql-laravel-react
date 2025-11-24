@@ -8,8 +8,9 @@ import {
   ChevronUp,
   Languages,
 } from "lucide-react";
+import BoutonDeconnexion from "./boutonDeconnexion";
 
-export default function Header() {
+export default function Header({deconnexion}) {
   const [menuOuvert, setMenuOuvert] = useState(false);
   const [compteOuvert, setCompteOuvert] = useState(false);
  
@@ -71,12 +72,11 @@ export default function Header() {
           >
             Connexion
           </Link>
+          <BoutonDeconnexion deconnexion={deconnexion} />
 
           <Languages className="w-6 h-6 text-red-950 cursor-pointer" />
         </nav>
 
-
-        
 
         {/* Icônes Mobile */}
         <div className="md:hidden flex items-center gap-4">
@@ -133,18 +133,16 @@ export default function Header() {
 
           {compteOuvert && (
             
-                <div className="ml-4 flex flex-col gap-2">
-                  <Link to="/compte" className="hover:text-red-950">
-                    Gérer mon compte
-                  </Link>
-                  <Link to="/cellier" className="hover:text-red-950">
-                    Gérer mon cellier
-                  </Link>
-                </div>
-              )}
+            <div className="ml-4 flex flex-col gap-2">
+              <Link to="/compte" className="hover:text-red-950">
+                Gérer mon compte
+              </Link>
+              <Link to="/cellier" className="hover:text-red-950">
+                Gérer mon cellier
+              </Link>
+            </div>
+          )}
            
-          
-
           <Link to="/inscription" className="hover:text-red-950">
             Inscription
           </Link>
@@ -156,6 +154,7 @@ export default function Header() {
           >
             Connexion
           </Link>
+          <BoutonDeconnexion deconnexion={deconnexion} />
         </nav>
       </aside>
     </>
