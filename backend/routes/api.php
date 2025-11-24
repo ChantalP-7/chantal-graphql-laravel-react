@@ -37,15 +37,27 @@ Route::get('/produits/{id}', [produitController::class, 'show']);
 Route::post('/connexion', [AuthController::class, 'store']);
 Route::middleware('auth:sanctum')->post('/deconnexion', [AuthController::class, 'destroy']);
 
-/*Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/celliers', [CellierController::class, 'index']);
-});*/
+    Route::post('/celliers/{cellierId}/produits', [CellierController::class, 'ajouterProduit']);
+    Route::put('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'modifierQuantite']);
+    Route::delete('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'supprimerProduit']);
+});
 
-Route::get('/users/{userId}/celliers', [CellierController::class, 'index']);
-Route::get('/celliers/{cellierId}/produits', [CellierController::class, 'afficherProduit']);
-Route::post('/celliers/{cellierId}/produits', [CellierController::class, 'ajouterProduit']);
-Route::put('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'modifierQuantite']);
-Route::delete('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'supprimerProduit']);
+//Route::get('/users/{userId}/celliers', [CellierController::class, 'index']);
 
-Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
+//Route::middleware('auth:sanctum')->get('/celliers', [CellierController::class, 'index']);
+
+//Route::get('/celliers/{cellierId}/produits', [CellierController::class, 'afficherProduit']);
+//Route::post('/celliers/{cellierId}/produits', [CellierController::class, 'ajouterProduit']);
+//Route::put('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'modifierQuantite']);
+//Route::delete('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'supprimerProduit']);
+
+//Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
 Route::get('/couleurs', [ProduitController::class, 'getCouleurs']);
+
+
+// routes/web.php, toujours mettre à la fin pour empêcher de rediriger vers React
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
