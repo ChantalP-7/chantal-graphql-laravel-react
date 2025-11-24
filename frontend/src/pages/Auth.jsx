@@ -42,6 +42,10 @@ export default function Auth() {
 
       // Conserver le token dans le LocalStorage
       localStorage.setItem("token", response.data.token);
+      
+      // Conserver les infos de l'usager dans le LocalStorage
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
 
       // Vider les champs après soumission
       setCourriel('')

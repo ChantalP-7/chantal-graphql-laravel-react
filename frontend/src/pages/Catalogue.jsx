@@ -14,7 +14,9 @@ const [pageCourante, setPageCourante] = useState(1);
 const [totalPages, setTotalPages] = useState(1);
 const [filter, setFilter] = useState("");
 
-
+// Obtenir les infos de l'usager 
+const user = JSON.parse(localStorage.getItem("user"));
+ 
 const bouteillesParPage = 12;
 
  useEffect(() => {
@@ -38,7 +40,8 @@ const bouteillesParPage = 12;
 	
 
   return (
-    <div className="contenu">
+	  <div className="contenu">
+        <p className="flex justify-end mb-15 text-sm">Bienvenue, {user.name} !</p>
 		<h1 className="mt-10 mb-6 text-4xl text-bold text-center">Catalogue</h1>
 
 		<Filtre filter={filter} setFilter={setFilter} />
