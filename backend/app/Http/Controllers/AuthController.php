@@ -45,12 +45,12 @@ class AuthController extends Controller
      * Remove the specified resource from storage.
      * Fonction pour se déconnecté
      */
-    public function destroy($request)
+    public function destroy( Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message:' => 'Vous êtes déconnecté!'
-         ]);
+            'message' => 'Vous êtes déconnecté!'
+        ]);
     }
 }
