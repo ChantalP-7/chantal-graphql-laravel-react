@@ -48,7 +48,7 @@ export default function Incription() {
    
   return (
     <section className="mt-30">
-      <form className="flex flex-col space-y-4 p-4 bg-form rounded-lg" onSubmit={gererSoumission}>
+      <form className="flex flex-col space-y-4 px-4 py-4 bg-form rounded-lg w-full max-w-screen-sm mx-auto " onSubmit={gererSoumission}>
       <h1 className="text-4xl font-bold">Inscription</h1>
         <div className="flex flex-col mt-2 border-t border-gray-200 pt-5">
           <label className="text-brown" htmlFor="nom">Nom</label>
@@ -58,7 +58,7 @@ export default function Incription() {
           name="name"
           placeholder="Nom complet"
           value={nom}
-          // required
+          required
           onChange={(e) => setNom(e.target.value)} />
           {erreurs.name && <p className="text-red-500 pt-2">{erreurs.name[0]}</p>}
         </div>
@@ -70,7 +70,7 @@ export default function Incription() {
           name="email"
           placeholder="Courriel"
           value={courriel}
-          // required
+          required
           onChange={(e) => setCourriel(e.target.value)} />
           {erreurs.email && <p className="text-red-500 pt-2">{erreurs.email[0]}</p>}
         </div>
@@ -82,7 +82,7 @@ export default function Incription() {
             name="password"
             placeholder="Entrer un mot de passe"
             value={motDePasse}
-            // required
+            required
             onChange={(e) => setMotDePasse(e.target.value)}
           />
           {erreurs.password && <p className="text-red-500 pt-2">{erreurs.password[0]}</p>}
@@ -95,7 +95,7 @@ export default function Incription() {
             name="password_confirmation"
             placeholder="Entrer de nouveau le mot de passe"
             value={confirmationMdp}
-            // required
+            required
             onChange={(e) => setConfirmationMdp(e.target.value)}
           />
         </div>
