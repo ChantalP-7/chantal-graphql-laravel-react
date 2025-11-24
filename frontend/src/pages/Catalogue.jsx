@@ -12,39 +12,47 @@ export default function Catalogue() {
 const [produits, setproduits] = useState([]);
 const [pageCourante, setPageCourante] = useState(1);
 const [totalPages, setTotalPages] = useState(1);
-const [filter, setFilter] = useState("");
+const [filtre, setFiltre] = useState("");
+const produitsFiltres = produits.filter(p => filtre === "" || p.couleur === filtre);
 
 
 const bouteillesParPage = 12;
 
- useEffect(() => {
-    getproduits(pageCourante, bouteillesParPage)
-      .then((res) => {
-		console.log("API DATA =>", res.data);
-      	setproduits(res.data);
-		setproduits(res.data.data || []);        // Tableau des produits
-        setTotalPages(res.data.last_page || 1);
-      })
-      .catch((err) => console.error("Erreur API :", err));
-  }, [pageCourante]);
+	useEffect(() => {
+		getproduits(pageCourante, bouteillesParPage, filtre)
+			.then((res) => {
+				console.log("res.data type:", typeof res.data);
+				console.log("res.data actual value:", res.data);
 
-  const prochainePage = () => {
+				if (filtre) {
+					setproduits(Array.isArray(res.data) ? res.data : res.data.data || []);
+					setTotalPages(1);
+				} else {
+					setproduits(res.data.data || []);
+					setTotalPages(res.data.last_page || 1);
+				}
+			})
+			.catch((err) => console.error("Erreur API :", err));
+	}, [pageCourante, filtre]);
+
+	const prochainePage = () => {
 		if (pageCourante < totalPages) setPageCourante(pageCourante + 1);
 	};
 
 	const pagePrecedente = () => {
 		if (pageCourante > 1) setPageCourante(pageCourante - 1);
 	};
-	
+
 
   return (
     <div className="contenu">
 		<h1 className="mt-10 mb-6 text-4xl text-bold text-center">Catalogue</h1>
 
-		<Filtre filter={filter} setFilter={setFilter} />
+		<Filtre filtre={filtre} setFiltre={setFiltre} />
+		
 	
 		<div className="grilleBouteille">
-			{Array.isArray(produits) && produits.map((p) => (		
+			{Array.isArray(produits) && produitsFiltres.map((p) => (
 				
 					<div className="carteBouteille" key={p.id}>
 						<img className="imageBouteille" src={p.image} alt="Nom de l'image {p.name} "/>

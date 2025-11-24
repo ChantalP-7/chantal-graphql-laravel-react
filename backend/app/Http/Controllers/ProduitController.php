@@ -72,4 +72,19 @@ class ProduitController extends Controller
             return response()->json(['erreur' => $erreur->getMessage()], 500);
         }
     }
+
+        /**
+     * @param string, la couleur que l'on veut afficher
+     * @return array d'object, de tout les vins qui seront affichés
+     */
+    public function getProduitsParCouleur($couleur)
+    {
+        try {
+            $produits = Produit::where('couleur', $couleur)->get();
+            return response()->json($produits);
+        } catch (\Exception $erreur) {
+            return response()->json(['erreur' => $erreur->getMessage()], 500);
+        }
+    }
+
 }
