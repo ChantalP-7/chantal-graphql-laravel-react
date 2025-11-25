@@ -87,7 +87,7 @@ const bouteillesParPage = 12;
 					disabled={pageCourante === 1}
 					className="px-4 py-2 bouton bouton-vin text-white mt-50 mb-50 rounded text-lg disabled:text:gray"
 				>
-					◀
+					<span className="boutonRosee">◀</span>
 				</button>					
 				<button className="px-4 py-2 rounded bouton bouton-vin text-white">
 					{pageCourante}
