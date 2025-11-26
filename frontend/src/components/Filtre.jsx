@@ -2,31 +2,38 @@ import { useEffect, useState, useRef } from "react";
 import axiosClient from "../api/axios";
 
 export default function Filtre({ filtre, setFiltre, ordre, setOrdre, setproduits }) {
-	const [couleurs, setCouleurs] = useState([]);
+	/*const [couleurs, setCouleurs] = useState([]);*/
+	const [identites, setIdentites] = useState([]);
 	const [open, setOuvert] = useState(false);
 	const [openOrder, setOuvertOrdre] = useState(false);
 	const dropdownRef = useRef(null);
 	const orderDropdownRef = useRef(null);
 
 	const lesFiltresOrdre = [
-		"Par année (Jeune-Vieux)",
-		"Par année (Vieux-Jeune)",
-		"Par prix (Bas-Haut)",
-		"Par prix (Haut-Bas)"
+		"Millésime (Croissant)",
+		"Millésime (Décroissant)",
+		"Prix (Croissant)",
+		"Prix (Décroissant)"
 	];
 	const ordreMap = {
-		"Par année (Jeune-Vieux)": "anneeJeuneVieux",
-		"Par année (Vieux-Jeune)": "anneeVieuxJeune",
-		"Par prix (Bas-Haut)": "prixBasHaut",
-		"Par prix (Haut-Bas)": "prixHautBas"
+		"Millésime (Croissant)": "anneeJeuneVieux",
+		"Millésime (Décroissant)": "anneeVieuxJeune",
+		"Prix (Croissant)": "prixBasHaut",
+		"Prix (Décroissant)": "prixHautBas"
 	};
-
+/*
 	useEffect(() => {
 		axiosClient.get("/couleurs")
 			.then(res => setCouleurs(res.data))
 			.catch(err => console.error(err));
 	}, []);
+*/
 
+	useEffect(() => {
+		axiosClient.get("/identite_produit") 
+			.then(res => setIdentites(res.data))
+			.catch(err => console.error(err));
+	}, []);
 
 	useEffect(() => {
 		if (!ordre) return;
@@ -37,8 +44,8 @@ export default function Filtre({ filtre, setFiltre, ordre, setOrdre, setproduits
 			const sorted = [...prev];
 			if (key === "anneeJeuneVieux") sorted.sort((a,b) => a.millesime_produit - b.millesime_produit);
 			else if (key === "anneeVieuxJeune") sorted.sort((a,b) => b.millesime_produit - a.millesime_produit);
-			else if (key === "prixBasHaut") sorted.sort((a,b) => a.prix - b.prix);
-			else if (key === "prixHautBas") sorted.sort((a,b) => b.prix - a.prix);
+			else if (key === "prixBasHaut") sorted.sort((a,b) => a.price - b.price);
+			else if (key === "prixHautBas") sorted.sort((a,b) => b.price - a.price);
 			return sorted;
 		});
 	}, [ordre, setproduits]);
@@ -65,33 +72,23 @@ export default function Filtre({ filtre, setFiltre, ordre, setOrdre, setproduits
 				className={`custom-select ${open ? "open" : ""}`}
 				onClick={() => setOuvert(!open)}
 			>
-				<div className="selected">{filtre || "Filtrez par couleur"}</div>
+				<div className="selected">{filtre || "Filtrez par identité"}</div>
 				{open && (
 					<ul className="options">
-						{couleurs.map(c => (
-							<li
-							key={c}
-							className="option"
-							onClick={() => {
-								setFiltre(c);
-								setOuvert(false);
-								if (ordre) {
-									const key = ordreMap[ordre];
-									console.log(key);
-									setproduits(prev => {
-										const sorted = [...prev];
-										if (key === "anneeJeuneVieux") sorted.sort((a,b) => a.millesime_produit - b.millesime_produit);
-										else if (key === "anneeVieuxJeune") sorted.sort((a,b) => b.millesime_produit - a.millesime_produit);
-										else if (key === "prixBasHaut") sorted.sort((a,b) => a.price - b.price);
-										else if (key === "prixHautBas") sorted.sort((a,b) => b.price - a.price);
-										return sorted;
-									});
-								}
-							}}
-							>
-							{c}
-							</li>
-						))} 
+					{identites.map(i => (
+						<li 
+						key={i} 
+						className="option" 
+						onClick={(e) => { 
+							e.stopPropagation(); 
+							console.log('clicked identite:', i); 
+							setFiltre(i); 
+							setOuvert(false); 
+						}}
+						>
+						{i}
+						</li>
+					))}
 					</ul>
 				)}
 			</div>
@@ -100,7 +97,6 @@ export default function Filtre({ filtre, setFiltre, ordre, setOrdre, setproduits
 				ref={orderDropdownRef}
 				className={`custom-select ${openOrder ? "open" : ""}`}
 				onClick={() => setOuvertOrdre(!openOrder)}
-				style={{ marginLeft: "1rem" }} // optional spacing between dropdowns
 			>
 				<div className="selected">{ordre || "Trier par"}</div>
 				{openOrder && (

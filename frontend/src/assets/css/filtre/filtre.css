@@ -29,7 +29,9 @@ Aucun autre fichier ne devrait avoir ces variables :root suivantes.
 
 .formulaire_de_filtre {
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
 }
 
 .custom-select {
@@ -42,6 +44,7 @@ Aucun autre fichier ne devrait avoir ces variables :root suivantes.
     cursor: pointer;
     position: relative;
     min-width: 255px;
+    margin-left: 0px;
 }
 
 .custom-select .options {

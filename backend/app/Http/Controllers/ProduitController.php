@@ -63,11 +63,10 @@ class ProduitController extends Controller
     {
         try {
             // On prend toutes les couleurs distinctes depuis la table produits
-            $couleurs = Produit::select('couleur')
+            $couleurs = Produit::select('identite_produit')
                 ->distinct()
-                ->pluck('couleur');
-
-            return response()->json($couleurs);
+                ->pluck('identite_produit');
+                return response()->json($couleurs);
         } catch (\Exception $erreur) {
             return response()->json(['erreur' => $erreur->getMessage()], 500);
         }
@@ -77,10 +76,10 @@ class ProduitController extends Controller
      * @param string, la couleur que l'on veut afficher
      * @return array d'object, de tout les vins qui seront affichés
      */
-    public function getProduitsParCouleur($couleur)
+    public function getProduitsParCouleur($identite_produit)
     {
         try {
-            $produits = Produit::where('couleur', $couleur)->get();
+            $produits = Produit::where('identite_produit', $identite_produit)->get();
             return response()->json($produits);
         } catch (\Exception $erreur) {
             return response()->json(['erreur' => $erreur->getMessage()], 500);

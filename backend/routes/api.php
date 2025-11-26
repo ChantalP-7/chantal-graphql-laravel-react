@@ -4,8 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\produitController;
 use App\Http\Controllers\CellierController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
 
 
 /*
@@ -23,15 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Routes des usagers
-Route::post('/inscription', [UserController::class, 'store']);
-
 Route::get('/produits', [produitController::class, 'index']);
 Route::get('/produits/{id}', [produitController::class, 'show']);
-
-// Routes d'authentification
-Route::post('/connexion', [AuthController::class, 'store']);
-Route::middleware('auth:sanctum')->post('/deconnexion', [AuthController::class, 'destroy']);
 
 /*Route::middleware('auth:sanctum')->group(function () {
     Route::get('/celliers', [CellierController::class, 'index']);
@@ -44,4 +35,5 @@ Route::put('/celliers/{cellierId}/produits/{produitId}', [CellierController::cla
 Route::delete('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'supprimerProduit']);
 
 Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
-Route::get('/couleurs', [ProduitController::class, 'getCouleurs']);
+Route::get('/identite_produit', [ProduitController::class, 'getCouleurs']);
+Route::get('/produits/couleur/{identite_produit}', [ProduitController::class, 'getProduitsParCouleur']);
