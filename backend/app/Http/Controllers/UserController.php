@@ -107,14 +107,19 @@ class UserController extends Controller
         ]);
     }
 
-   /**
+    /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Suppression du compte par l'usager
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $user = $request->user();
+
+        $user->tokens()->delete(); // supprimer les tokens 
+        $user->delete();           // supprimer l'usager 
+        
+        return response()->json([
+            'message' => 'Votre compte a été supprimé avec succès!'
+        ]);
     }
 }
