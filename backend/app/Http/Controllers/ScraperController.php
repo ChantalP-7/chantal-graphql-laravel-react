@@ -117,7 +117,9 @@ GRAPHQL;
             'phrase' => '',
             'pageSize' => $taillePage,
             'currentPage' => $pageCourante,
-            'filter' => $filtres
+            'filters' => [
+            "product_filter" => ["eq" => $facetId],  // Vin / Champagne / Mousseux
+            "visibility" => ["in" => ["2", "4"]]    ]
         ];
 
         $attempts = 0;
