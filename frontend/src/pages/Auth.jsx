@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 
 
 export default function Auth() {
@@ -34,7 +34,7 @@ export default function Auth() {
       
       // Connexion avec la requête du backend via axios
     try {
-      const response = await axios.post("http://localhost:8000/api/connexion", {
+      const response = await api.post("/connexion", {
       email: courriel,
       password: motDePasse,
       

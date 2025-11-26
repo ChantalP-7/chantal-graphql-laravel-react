@@ -39,20 +39,17 @@ Route::middleware('auth:sanctum')->post('/deconnexion', [AuthController::class, 
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/celliers', [CellierController::class, 'index']);
+    Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
     Route::post('/celliers/{cellierId}/produits', [CellierController::class, 'ajouterProduit']);
     Route::put('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'modifierQuantite']);
     Route::delete('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'supprimerProduit']);
     Route::post('/celliers', [CellierController::class, 'creerCellier']);
 });
 
-Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
-
 /* À Hannah */
 Route::get('/identite_produit', [ProduitController::class, 'getCouleurs']);
 Route::get('/produits/couleur/{identite_produit}', [ProduitController::class, 'getProduitsParCouleur']);
 /* Plus à Hannah */
-
-Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
 
 // routes/web.php, toujours mettre à la fin pour empêcher de rediriger vers React
 Route::get('/{any}', function () {

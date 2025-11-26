@@ -1,6 +1,7 @@
 // Importation des bibliothèques
 import { useState } from "react";
-import axios from "axios";
+//import axios from "axios";
+import api from "../api/axios";
 import { Link } from "react-router-dom";
 
 export default function CreerCellier() {
@@ -16,16 +17,21 @@ export default function CreerCellier() {
     setErreurs({});
     setMessage("");
 
+    // Vérifier côté front que le champ n'est pas vide
+    if (!nomCellier.trim()) {
+      setErreurs({ nom: "Le nom du cellier est requis." });
+      return;
+    }
+
     try {
-      const reponse = await axios.post("http://localhost:8000/api/celliers", {
+      /*const reponse = await axios.post("http://localhost:8000/api/celliers", {
         nom: nomCellier,
         user_id: 1,  // Remplacez par l'ID de l'utilisateur connecté
-      });
+      });*/
+      const reponse = await api.post("/celliers", { nom: nomCellier });
 
       setNomCellier("");
-      setMessage(reponse.data.message || "Cellier créé avec succès !");
-
-     
+      setMessage(reponse.data.message || "Cellier créé avec succès !");    
 
 
     } catch (error) {
