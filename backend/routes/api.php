@@ -21,15 +21,17 @@ use App\Http\Controllers\UserController;
 
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 // Routes des usagers
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::put('/user', [UserController::class, 'update']);
+    Route::delete('/user', [UserController::class, 'destroy']);
+});
 Route::post('/inscription', [UserController::class, 'store']);
 
 // Routes des produits (vins)
-
 Route::get('/produits', [produitController::class, 'index']);
 Route::get('/produits/{id}', [produitController::class, 'show']);
 

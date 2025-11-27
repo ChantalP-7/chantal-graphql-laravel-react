@@ -53,37 +53,73 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Mettre à jour les infos de l'usager
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $usager = $request->user();
+
+        $request->validate([
+            'name' => 'required|min:4|max:30',
+            'current_password' => ['required_with:new_password', 'string'],
+            'new_password' => [
+                'nullable','string','confirmed', 'max:20',
+                Password::min(6)->letters()->mixedCase()->numbers()->symbols()
+            ]
+           ],
+[],
+        [
+            'name' => 'nom',
+            'current_password' => 'mot de passe actuel',
+            'new_password' => 'nouveau mot de passe',
+        ]);
+
+         // mis à jour du nom
+        $usager->name = $request->name;
+
+        // mis à jour le mot de passe si demandé
+        if($request->filled('new_password')) {
+
+            if (!$request->filled('current_password')) {
+                return response()->json([
+                    'message' => 'Mot de passe actuel requis.'
+                ],422);
+            }
+
+            if(!Hash::check($request->current_password, $usager->password)) {
+                return response()->json([
+                    'message' => 'Mot de passe actuel incorrect'
+                ], 422);
+            }
+
+            $usager->password = hash::make($request->new_password);
+        }
+
+        $usager->save();
+
+        return response()->json([
+            'message' => 'Profil mis à jour!',
+            'user' => $usager
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Suppression du compte par l'usager
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $user = $request->user();
+
+        $user->tokens()->delete(); // supprimer les tokens 
+        $user->delete();           // supprimer l'usager 
+        
+        return response()->json([
+            'message' => 'Votre compte a été supprimé avec succès!'
+        ]);
     }
 }

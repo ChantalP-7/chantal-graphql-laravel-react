@@ -16,8 +16,9 @@ export default function Auth() {
     // Récupérer les messages venant de Inscription.jsx et de BoutonDeconnexion.jsx 
     const message = localisation.state?.message;
     const deconnexionMsg = localisation.state?.deconnexionMsg;
+    const msgCompteSupprime = localisation.state?.msgCompteSupprime;
 
-    const [msgSucces, setMsgSucces] = useState(message || deconnexionMsg || "" );
+    const [msgSucces, setMsgSucces] = useState(message || deconnexionMsg || msgCompteSupprime || "" );
 
     // Faire disparaitre message après 5 secondes
     useEffect(() =>{

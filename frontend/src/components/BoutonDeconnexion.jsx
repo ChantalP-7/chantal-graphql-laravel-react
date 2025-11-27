@@ -15,6 +15,7 @@ export default function BoutonDeconnexion(){
             );
             // Supprimer du localStorage
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
 
             // Redirectionner vers la page de connexion avec message de succès
             route('/connexion',{
