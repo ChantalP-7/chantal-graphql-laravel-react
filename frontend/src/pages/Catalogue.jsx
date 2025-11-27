@@ -48,7 +48,7 @@ const bouteillesParPage = 12;
 
   return (
 	  <div className="contenu">
-        <p className="flex justify-end mb-15 text-sm">Bienvenue, {user.name} !</p>
+        <p className="flex justify-end mb-15 text-sm">Bienvenue, {user ? user.name : "Invité"} !</p>
 		<h1 className="mt-10 mb-6 text-4xl text-bold text-center">Catalogue</h1>
 
 	 <Filtre filtre={filtre} setFiltre={setFiltre} ordre={ordre} setOrdre={setOrdre} setproduits={setproduits}/>
@@ -60,8 +60,8 @@ const bouteillesParPage = 12;
 				<div className="carteBouteille" key={p.id}>
 					<img className="imageBouteille" src={p.image} alt="Nom de l'image {p.name} "/>
 					<div className="carteContenu">
-					<h3 className="font-bold">{p.name}</h3>
-					<p>{p.identite_produit}</p>
+					<h3 className="font-bold">{p.name} {p.millesime_produit}</h3>
+					<p>{p.identite_produit} - {p.pays_origine}</p>
 					<p>{Number(p.price).toFixed(2)} $</p>	
 					<div className="flex justify-between align-center">
 						<>
