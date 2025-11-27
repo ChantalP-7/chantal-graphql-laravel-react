@@ -54,8 +54,10 @@ export default function Auth() {
 
       // Redirige vers la page catalogue avec message de succès
       route('/', {
-        state:{message: response.data.message }
+        state:{ message: "Connexion réussie !" }
       });
+
+   
 
       // Affiche les erreurs de validation
     } catch (error) {

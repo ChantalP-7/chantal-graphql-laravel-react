@@ -49,6 +49,13 @@ const bouteillesParPage = 12;
 
   return (
 	  <div className="contenu">
+		  {/* Message de bienvenue si usager connecté */}
+    {user?.name && (
+      <p className="flex justify-end mb-2 text-sm text-red-950 font-medium">
+        Bienvenue, {user.name} 🍷
+      </p>
+    )}
+
         {/* <p className="flex justify-end mb-15 text-sm">Bienvenue, {user.name} !</p> */}
 		<h1 className="mt-10 mb-6 text-4xl text-bold text-center">Catalogue</h1>
 
