@@ -7,6 +7,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import BoutonDeconnexion from './BoutonDeconnexion';
 
 export default function Header() {
   const [menuOuvert, setMenuOuvert] = useState(false);
@@ -18,7 +19,7 @@ export default function Header() {
   return (
     <>
       {/* ===== HEADER DESKTOP ===== */}
-      <header className="bg-orange-50 border-b py-4 px-6 shadow flex justify-between items-center">
+      <header className="bg-white py-4 px-6 shadow flex justify-between items-center">
 
         {/* LOGO */}
         <Link to="/" className="text-2xl font-medium tracking-tight text-red-950">
@@ -109,7 +110,7 @@ export default function Header() {
 
       {/* ===== MENU MOBILE ===== */}
       <aside
-        className={`fixed top-0 left-0 h-full w-72 bg-orange-50 shadow-2xl p-6 z-50 transform transition-transform duration-300 md:hidden
+        className={`fixed top-0 left-0 h-full w-72 bg-white shadow-2xl p-6 z-50 transform transition-transform duration-300 md:hidden
         ${menuOuvert ? "translate-x-0" : "-translate-x-full"}`}
       >
         {/* En-tête menu mobile */}
@@ -167,8 +168,10 @@ export default function Header() {
               )}
 
               {/* Déconnexion mobile */}
-              <button
-                className="mt-6 bg-red-950 text-white py-3 rounded-lg hover:bg-red-100 hover:text-red-950 transition"
+
+              <BoutonDeconnexion/>
+              {/* <button
+                className="mt-6 bg-red-950 text-white py-3 rounded-lg hover:bg-red-900 transition cursor-pointer"
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
@@ -176,7 +179,7 @@ export default function Header() {
                 }}
               >
                 Déconnexion
-              </button>
+              </button> */}
             </>
           )}
 

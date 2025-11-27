@@ -1,6 +1,10 @@
 .carteBouteille {
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 10px;
+    
 }
 
 .carteBouteille:hover {
@@ -9,13 +13,12 @@
 }
 
 .carteContenu {
-        padding: 20px;
-    }
+    padding: 20px;
+}
 
-.carteContenu h2 {
-    font-size: 1rem;
+.carteContenu h3 {
+    font-size: 1.2rem;
     font-weight: 400;
-    color: #2c3e50;
 }
 
 .carteContenu p {
@@ -24,14 +27,7 @@
     color: #555;
 }
 
-.carteContenu p.price {
-    color: #880844ff;;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
 .carteFicheBouteille {
-    margin: 50px auto;
     display: flex;
     flex-direction: column;
     padding: 20px;

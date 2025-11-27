@@ -37,7 +37,7 @@
 /* bouton formulaire inscription et connexion*/
 .bouton-accent{
     background-color:var(--couleur-accent);
-    @apply rounded-lg text-white p-2 mt-5 text-xl cursor-pointer  
+    @apply rounded-lg text-white p-2 mt-5 text-xl cursor-pointer 
 }
 
 .bouton-accent:hover{

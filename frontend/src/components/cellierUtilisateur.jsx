@@ -53,7 +53,7 @@ export default function AfficheCellier() {
     };
 
     return (
-      <div className="flex justify-center p-4">
+      <div className="flex justify-center px-3 py-4">
           <div className="w-full lg:w-1/2">
           <h1 className="text-2xl font-bold mt-8 mb-8">Mes Celliers 🍇</h1>
 

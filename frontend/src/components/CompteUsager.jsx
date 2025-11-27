@@ -95,7 +95,7 @@ export default function CompteUsager() {
   };
 
   return (
-    <section className="p-4">
+    <section className="p-3 py-4">
       <div className="contenu">
         {msg && <p className="text-lime-700 mb-3">{msg}</p>}
         <h1 className="text-2xl font-bold">Mon profil</h1>

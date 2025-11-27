@@ -6,10 +6,14 @@
   --couleur-accent: #96384F;
   --couleur-text: #450C1B;
   --couleur-form: #450c1b3e;
-  --couleur-fond: #559e0615;
+  --couleur-fond: #f8f3f3;
   --couleur-secondaire: #BF7A8C;
+  --rouge_lecture: #3c111b;
+  --rose_vino: #945f6c;
 }
-
+body{
+  background-color: var(--couleur-fond);
+}
 p, span, a, button, select, option, input .bouton-vin {
     
   font-family: "Poppins", sans-serif;

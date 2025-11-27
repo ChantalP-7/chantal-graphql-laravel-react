@@ -61,7 +61,7 @@ import api from "../api/axios"; // ton axios configuré avec baseURL, withCreden
         <span></span><span></span><span></span>
     </div>;
     return (
-        <div className="grilleBouteille grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+        <div className="grilleBouteille grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="carteFicheBouteille w-full max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
                 <div className="carteColonne flex flex-col items-center">
                 <img
@@ -69,13 +69,15 @@ import api from "../api/axios"; // ton axios configuré avec baseURL, withCreden
                     src={produit.image}
                     alt={produit.name}
                 />
-                <h1 className="text-xl sm:text-2xl font-bold mb-2">
-                    Nom : {produit.name}
-                </h1>
-                <p className="text-md mb-1 text-lg sm:text-xl"><strong>Catégorie :</strong> {produit.identite_produit}</p>
-                <p className="text-md mb-1 text-lg sm:text-xl"><strong>Millésime :</strong> {produit.millesime_produit}</p>
-                <p className="text-md mb-1 text-lg sm:text-xl"><strong>Origine :</strong> {produit.pays_origine}</p>
-                <p className="text-md mb-1 text-lg sm:text-xl"><strong>Prix :</strong> {Number(produit.price).toFixed(2)} $</p>
+                <div className="w-full py-4 px-6">
+                    <h1 className="text-xl max-w sm:text-2xl font-bold mb-2">
+                    Nom: {produit.name}
+                    </h1>
+                    <p className="text-md mt-6 sm:text-xl flex justify-between py-2"><strong>Catégorie </strong> {produit.identite_produit}</p>
+                    <p className="text-md border-t border-gray-300 flex justify-between  py-2 sm:text-xl"><strong>Millésime</strong> {produit.millesime_produit}</p>
+                    <p className="text-md border-t border-gray-300 flex justify-between  py-2 sm:text-xl"><strong>Origine</strong> {produit.pays_origine}</p>
+                    <p className="text-md border-t border-gray-300 flex justify-between  py-2 sm:text-xl text-red-900 font-bold"><strong>Prix</strong> {Number(produit.price).toFixed(2)} $</p>
+                </div>
                 </div>
             </div>
             <div className="carteFicheBouteille w-full max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
@@ -85,7 +87,7 @@ import api from "../api/axios"; // ton axios configuré avec baseURL, withCreden
                     src="../../public/images/wine-1802763_640.jpg"
                     alt="Image cellier"
                 />
-                <h2 className="text-xl sm:text-2xl font-semibold mb-3">Choisi un cellier</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold mb-3 mt-2">Choisir un cellier</h2>
                 <select
                     className="w-full text-lg sm:text-xl p-3 mb-4 rounded-sm bouton-vin text-white pr-8 focus:outline-none"
                     value={cellierSelectionne || ''}

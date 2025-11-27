@@ -2,7 +2,7 @@ import { Linkedin, Instagram, Github, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="mt-20 bg-orange-50 text-red-950">
+    <footer className="mt-20 bg-stone-200 text-red-950">
 
       {/* SECTION HAUT — TITRE & DESCRIPTION */}
       <div className="text-center px-6 py-12 max-w-3xl mx-auto">
@@ -25,7 +25,7 @@ export default function Footer() {
       </div>
 
       {/* NAVIGATION BAS */}
-      <div className="border-t border-red-200 py-8">
+      <div className="border-t border-gray-300 shadow py-8">
         <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
           <a href="/" className="hover:text-red-700">Catalogue</a>
           <a href="/celliers" className="hover:text-red-700">Mes celliers</a>
