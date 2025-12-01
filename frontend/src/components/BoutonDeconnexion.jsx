@@ -28,6 +28,6 @@ export default function BoutonDeconnexion(){
     };
 
     return (
-        <button className="bg-red-950 text-white text-center p-3 rounded-lg hover:bg-red-900 transition cursor-pointer" type="button" onClick={deconnexion}>Se déconnecter</button>
+        <button className="bg-red-950 text-white px-4 py-2 rounded-lg hover:bg-red-200 hover:text-red-950 transition" type="button" onClick={deconnexion}>Se déconnecter</button>
     );
 }  

@@ -16,7 +16,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <Header />
+      <Header/>
 
       <main className="pb-24">   {/* important pour ne pas cacher le contenu */}
         <Routes>
@@ -34,10 +34,12 @@ function App() {
         <Route path="/produit/:id" element={<FicheProduit />} />
         <Route path="/celliers" element={<CellierUtilisateur />} />
         </Routes>
+      
        
       </main>
-     <Footer/>
-      <MenuMobile />   {/* ✔ Menu application mobile */}
+     <Footer />
+      <MenuMobile />   {/* ajout Menu application mobile */}
+      
     </>
   );
 }

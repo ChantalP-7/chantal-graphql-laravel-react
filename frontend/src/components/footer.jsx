@@ -41,11 +41,12 @@ export default function Footer() {
   
         <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
 
-          <Link to="/" className="hover:text-red-700">Catalogue</Link>
+          
 
           {/* === Connecté === */}
           {token && user && (
             <>
+            <Link to="/" className="hover:text-red-700">Catalogue</Link>
               <Link to="/celliers" className="hover:text-red-800">Mes celliers</Link>
               <Link to="/compte" className="hover:text-red-800">Mon compte</Link>
 

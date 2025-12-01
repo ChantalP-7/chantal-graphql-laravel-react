@@ -22,11 +22,10 @@ export default function Header() {
       <header className="bg-white py-4 px-6 shadow flex justify-between items-center">
 
         {/* LOGO */}
-        <Link to="/" className="text-3xl font-serif text-red-950">
-          Vino
-        </Link>
+       <h2 className="text-3xl font-serif text-red-950">Vino</h2>
 
         {/* BARRE DE RECHERCHE */}
+        {token && (
         <div className="hidden md:flex items-center w-1/4 bg-white rounded-full px-4 py-2 border border-red-950">
           <Search className="text-red-950 w-5 h-5" />
           <input
@@ -35,17 +34,21 @@ export default function Header() {
             className="ml-2 w-full bg-transparent focus:outline-none text-red-950"
           />
         </div>
+        )}
 
         {/* ===== NAVIGATION DESKTOP ===== */}
         <nav className="hidden md:flex items-center gap-8 text-lg font-medium">
 
-          <Link to="/" className="hover:text-red-950 transition">
-            Catalogue
-          </Link>
+         {token && (
+  <Link to="/" className="hover:text-red-950 transition">
+    Catalogue
+  </Link>
+)}
 
-          {/* ===== MENU MON COMPTE SI CONNECTÉ ===== */}
+          {/* ===== SI CONNECTÉ ===== */}
           {token && user && (
             <>
+              {/* Sous-menu Mon compte */}
               <div className="relative">
                 <button
                   className="flex items-center gap-2 hover:text-red-950"
@@ -69,7 +72,7 @@ export default function Header() {
                 )}
               </div>
 
-              {/* === BOUTON DÉCONNEXION === */}
+              {/* Déconnexion desktop */}
               <button
                 className="bg-red-950 text-white px-4 py-2 rounded-lg hover:bg-red-200 hover:text-red-950 transition"
                 onClick={() => {
@@ -83,10 +86,10 @@ export default function Header() {
             </>
           )}
 
-          {/* ===== AFFICHER SEULEMENT SI NON CONNECTÉ ===== */}
+          {/* ===== SI NON CONNECTÉ ===== */}
           {!token && !user && (
             <>
-              <Link to="/inscription" className="hover:text-red-950">
+              <Link to="/inscription" className="bg-red-950 text-white px-4 py-2 rounded-lg hover:bg-red-200 hover:text-red-950 transition">
                 Inscription
               </Link>
 
@@ -98,6 +101,7 @@ export default function Header() {
               </Link>
             </>
           )}
+
         </nav>
 
         {/* Icône menu mobile */}
@@ -115,15 +119,16 @@ export default function Header() {
       >
         {/* En-tête menu mobile */}
         <div className="flex justify-between items-center mb-6">
-          <Link to="/" className="text-3xl font-serif text-red-950">
+          <h2 className="text-3xl font-serif text-red-950">
           Vino
-        </Link>
+        </h2>
           <button onClick={() => setMenuOuvert(false)}>
             <X className="w-8 h-8 text-red-950 cursor-pointer" />
           </button>
         </div>
 
-        {/* Barre recherche mobile */}
+        {/* Recherche mobile */}
+        {token && (
         <div className="bg-white rounded-full px-4 py-2 flex items-center mb-8 border">
           <Search className="text-red-950 w-5 h-5" />
           <input
@@ -132,21 +137,21 @@ export default function Header() {
             className="ml-2 w-full bg-transparent focus:outline-none text-red-950"
           />
         </div>
+        )}
 
-        {/* ===== NAV MOBILE ===== */}
+        {/* ===== NAVIGATION MOBILE ===== */}
         <nav className="flex flex-col gap-4 text-lg font-medium">
 
-          <Link
-            to="/"
-            className="hover:text-red-950"
-            onClick={() => setMenuOuvert(false)}
-          >
-            Catalogue
-          </Link>
+          {token && (
+  <Link to="/" className="hover:text-red-950 transition">
+    Catalogue
+  </Link>
+)}
 
-          {/* ===== Sous-menu Mon compte (mobile) ===== */}
+          {/* SI CONNECTÉ */}
           {token && user && (
             <>
+              {/* Sous-menu mobile */}
               <button
                 onClick={() => setCompteOuvert(!compteOuvert)}
                 className="flex justify-between w-full text-left hover:text-red-950"
@@ -170,16 +175,16 @@ export default function Header() {
               )}
 
               {/* Déconnexion mobile */}
-              <BoutonDeconnexion/>
+              <BoutonDeconnexion />
             </>
           )}
 
-          {/* Si NON connecté */}
+          {/* SI NON CONNECTÉ */}
           {!token && !user && (
             <>
               <Link
                 to="/inscription"
-                className="hover:text-red-950"
+                className="mt-4 bg-red-950 text-white text-center py-3 rounded-lg hover:bg-red-100 hover:text-red-950 transition"
                 onClick={() => setMenuOuvert(false)}
               >
                 Inscription
