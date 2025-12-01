@@ -19,7 +19,7 @@ export default function Incription() {
 
     // Connexion avec la requête du backend via axios
     try {
-    const response = await api.post("http://localhost:8000/api/inscription", {
+    const response = await api.post("/inscription", {
         name: nom,
         email: courriel,
         password: motDePasse,

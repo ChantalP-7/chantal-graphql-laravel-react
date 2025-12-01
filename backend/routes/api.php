@@ -59,3 +59,7 @@ Route::get('/pays', [ProduitController::class, 'getPays']);
 Route::get('/{any}', function () {
     return view('app');
 })->where('any', '.*');
+
+Route::get('/test', function() {
+    return response()->json(['message' => 'Backend fonctionne !']);
+});

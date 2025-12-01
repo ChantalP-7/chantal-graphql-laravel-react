@@ -70,7 +70,7 @@ const bouteillesParPage = 12;
 					<h3 className="font-bold">{p.name} {p.millesime_produit}</h3>
 					<p>{p.identite_produit} - {p.pays_origine}</p>
 					<p className="font-bold">{Number(p.price).toFixed(2)} $</p>	
-					<div className="flexjustify-center align-center mt-auto">
+					<div className="mt-auto">
 						<Link className="block w-full" key={p.id} to={`/produit/${p.id}`}>			
 							<button className="bouton-accent w-full flex items-center justify-center gap-2 " id="ajoutBouteille">
 								Voir détail

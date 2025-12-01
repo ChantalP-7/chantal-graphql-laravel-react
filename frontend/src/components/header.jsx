@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import BoutonDeconnexion from './BoutonDeconnexion';
 
-export default function Header() {
+export default function Header({deconnexion}) {
   const [menuOuvert, setMenuOuvert] = useState(false);
   const [compteOuvert, setCompteOuvert] = useState(false);
 
@@ -175,7 +175,7 @@ export default function Header() {
               )}
 
               {/* Déconnexion mobile */}
-              <BoutonDeconnexion />
+              <BoutonDeconnexion deconnexion={deconnexion}/>
             </>
           )}
 

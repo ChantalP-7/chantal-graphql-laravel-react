@@ -1,10 +1,6 @@
 // api/cellier
 import api from "./axios";
 
-/*api.get('/celliers')
-   .then(res => console.log(res.data))
-   .catch(err => console.error(err));*/
-
 export function getCelliers() {
   return api.get("/celliers");
 }
