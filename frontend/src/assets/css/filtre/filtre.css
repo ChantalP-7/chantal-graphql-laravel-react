@@ -73,11 +73,26 @@ Aucun autre fichier ne devrait avoir ces variables :root suivantes.
     border-radius: 15px 15px 0px 0px;
 }
 
+.pagesuivante, .pagerourante {
+    color: var(--rouge_lecture);
+    font-size: 1.125rem;
+    padding: 1rem;
+}
+.pagerourante {
+    text-decoration: underline;
+    font-size: 1.3rem;
+    cursor: default;
+}
+.pagesuivante:hover {
+    cursor:pointer;
+    text-decoration: underline;
+}
 
-
-
-
-
+.navigationCatalogue {
+    display: flex;
+    flex-direction: row;
+    align-items: center; justify-content: center; 
+}
 
 
 

@@ -49,6 +49,10 @@ const bouteillesParPage = 12;
 		if (pageCourante > 1) setPageCourante(pageCourante - 1);
 	};
 
+	const allALaPage = (page) => {
+		setPageCourante(page);
+	};
+
   return (
 
 	  <div className="contenu">        
@@ -80,7 +84,7 @@ const bouteillesParPage = 12;
 				</div>				
 			))}			
 		</div>
-		{totalPages > 1 && (
+		{/*totalPages > 1 && (
 			<div className="div-boutons flex justify-center items-center gap-4 mb-8 mt-8">
 				<button
 					onClick={pagePrecedente}
@@ -103,7 +107,83 @@ const bouteillesParPage = 12;
 					<span className="boutonRosee text-md">▶</span>
 				</button>
 			</div>
-		)}
+		)*/
+		
+		totalPages > 1 && (
+			<div class="navigationCatalogue" className="navigationCatalogue div-boutons flex justify-center items-center mb-8 mt-8">
+				
+				{/* 1. Fleche gauge pas visible à la page 1*/}
+				{pageCourante > 1 && (
+					<button
+						onClick={pagePrecedente}
+						className="px-4 py-2 bouton bouton-vin text-white rounded text-lg"
+					>
+						<span className="boutonRosee">◀</span>
+					</button>
+				)}
+
+				{/* 2. Page 1 pas visible à la page 1 ou 2 */}
+				{pageCourante !== 1 && (
+					<button
+						onClick={() => goToPage(1)}
+						className="pagesuivante"
+					>
+						1
+					</button>
+				)}
+
+				{pageCourante > 3 && (
+					<span className="text-lg">...</span>
+				)}
+
+				{pageCourante > 2 && (
+					<button
+						onClick={pagePrecedente}
+						className="pagesuivante"
+						
+					>
+						{pageCourante - 1}
+					</button>
+				)}
+
+				<span className="pagerourante">
+					{pageCourante}
+				</span>
+				
+				{pageCourante < totalPages - 1 && (
+					<button
+						onClick={prochainePage}
+						className="pagesuivante"
+						
+					>
+						{pageCourante + 1}
+					</button>
+				)}
+
+				{pageCourante < totalPages - 2 && (
+					<span className="text-lg">...</span>
+				)}
+
+				{pageCourante !== totalPages && (
+					<button
+						onClick={() => goToPage(totalPages)}
+						className="pagesuivante"
+					>
+						{totalPages}
+					</button>
+				)}
+
+				{pageCourante < totalPages && (
+					<button
+						onClick={prochainePage}
+						className="px-4 py-2 rounded bouton bouton-vin text-white text-lg"
+					>
+						<span className="boutonRosee text-md">▶</span>
+					</button>
+				)}
+
+			</div>)
+		}
 	</div>
   );
 }
