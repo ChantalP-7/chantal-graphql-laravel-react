@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalSupprimer from "./ModalSupprimer";
@@ -19,7 +19,7 @@ export default function CompteUsager() {
 
   // afficher info de l'usager
   useEffect(() => {
-    axios.get("http://localhost:8000/api/user", {
+    api.get("http://localhost:8000/api/user", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => {
@@ -38,7 +38,7 @@ export default function CompteUsager() {
     e.preventDefault();
 
     try {
-      const res = await axios.put(
+      const res = await api.put(
         "http://localhost:8000/api/user",
         {
           name: nom,
@@ -77,7 +77,7 @@ export default function CompteUsager() {
   const supprimerCompte = async () => {
     
     try {
-      const res = await axios.delete("http://localhost:8000/api/user", {
+      const res = await api.delete("http://localhost:8000/api/user", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
 
