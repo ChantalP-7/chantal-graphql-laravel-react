@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getproduits } from "../api/produits";
 import { Link } from "react-router-dom";
 import Filtre from "../components/Filtre";
-import api from "../api/axios";
 
 /**
  * @param
@@ -70,11 +69,11 @@ const bouteillesParPage = 12;
 					<h3 className="font-bold">{p.name} {p.millesime_produit}</h3>
 					<p>{p.identite_produit} - {p.pays_origine}</p>
 					<p className="font-bold">{Number(p.price).toFixed(2)} $</p>	
-					<div className="mt-auto">
+					<div className="flexjustify-center align-center mt-auto">
 						<Link className="block w-full" key={p.id} to={`/produit/${p.id}`}>			
 							<button className="bouton-accent w-full flex items-center justify-center gap-2 " id="ajoutBouteille">
 								Voir détail
-								<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" color="#fff"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+								<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" Stroke="currentColor" color="#fff"><path StrokeLineCap="round" StrokeLineJoin="round" StrokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path StrokeLineCap="round" StrokeLineJoin="round" StrokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
 								</svg>
 							</button>
 						</Link>
@@ -102,7 +101,7 @@ const bouteillesParPage = 12;
 				{pageCourante !== 1 && (
 					<button
 						onClick={() => goToPage(1)}
-						className="pagesuivante"
+						className="allALaPage"
 					>
 						1
 					</button>
@@ -143,7 +142,7 @@ const bouteillesParPage = 12;
 				{pageCourante !== totalPages && (
 					<button
 						onClick={() => goToPage(totalPages)}
-						className="pagesuivante"
+						className="allALaPage"
 					>
 						{totalPages}
 					</button>
@@ -156,10 +155,10 @@ const bouteillesParPage = 12;
 					>
 						<span className="boutonRosee text-md">▶</span>
 					</button>
-				)}
-
-			</div>)
-		}
+				)
+			}
+			</div>
+		)}
 	</div>
   );
 }
