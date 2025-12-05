@@ -27,7 +27,7 @@ export default function CompteUsager() {
     .catch(error => {
       setErreurs(error.response?.data?.message || "Erreur lors du chargement du profil");
     });
-  });
+  }, []);
 
   if (!usager) return 
   <div className="points">
