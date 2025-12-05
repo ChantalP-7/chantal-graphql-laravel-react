@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getproduits } from "../api/produits";
 import { Link } from "react-router-dom";
 import Filtre from "../components/Filtre";
+import GetUsager from "../components/GetUsager";
 
 /**
  * @param
@@ -16,9 +17,8 @@ const [filtre, setFiltre] = useState({ identite: null, pays: null });
 const [ordre, setOrdre] = useState("");
 
 // Obtenir les infos de l'usager 
-//const user = JSON.parse(localStorage.getItem("user") || "{}" || );
-const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-
+const user = GetUsager();
+ 
 const bouteillesParPage = 12;
 
 	// Quand un filtre est choisi, on met la page à 1
@@ -73,18 +73,15 @@ const bouteillesParPage = 12;
 					<h3 className="font-bold">{p.name} {p.millesime_produit}</h3>
 					<p>{p.identite_produit} - {p.pays_origine}</p>
 					<p className="font-bold">{Number(p.price).toFixed(2)} $</p>	
-					<div className="flexjustify-center align-center mt-auto">
-								
-							<div className="bouton-accent w-full flex justify-between items-center" id="ajoutBouteille">
-								<Link className="block w-full" to={`/produits/${p.id}`}>
-									<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" color="#ff"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
-								</Link>								
-								<Link className="block w-full" to={`/user/${user ? user.id : ''}/celliers/produits/${p.id}`}>
-									<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" color="#fff"><path d="M0 0h24v24H0z" fill="none"></path><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>								
-								</Link>
-							</div>
-						
-											
+					<div className="flexjustify-center align-center mt-auto">		
+						<div className="bouton-accent w-full flex justify-between items-center" id="ajoutBouteille">
+							<Link className="block w-full" to={`/produits/${p.id}`}>
+								<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" color="#ff"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+							</Link>								
+							<Link className="block w-full" to={`/user/${user ? user.id : ''}/celliers/produits/${p.id}`}>
+								<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" color="#fff"><path d="M0 0h24v24H0z" fill="none"></path><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>								
+							</Link>
+						</div>				
 					</div>
 					</div>
 				</div>				

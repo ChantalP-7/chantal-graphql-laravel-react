@@ -19,10 +19,7 @@ export default function CompteUsager() {
 
   // afficher info de l'usager
   useEffect(() => {
-    
-    api.get(`/user`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-    })
+    api.get("/user")
     .then(res => {
       setUsager(res.data);
       setNom(res.data.name);
@@ -34,7 +31,7 @@ export default function CompteUsager() {
 
   if (!usager) return 
   <div className="points">
-      <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
   </div>
 
   // Mettre à jour le profil
@@ -42,16 +39,12 @@ export default function CompteUsager() {
     e.preventDefault();
 
     try {
-      const res = await api.put(
-        `/user`,
+      const res = await api.put("/user",
         {
           name: nom,
           current_password: mdpActuel,
           new_password: nouveauMdp,
           new_password_confirmation: confNouveauMdp
-        },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         }
       );
       // afficher les données de certains champs
@@ -81,15 +74,17 @@ export default function CompteUsager() {
   const supprimerCompte = async () => {
     
     try {
-      const res = await api.delete(`/user`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      });
+      const res = await api.delete("/user");
 
+      // Supprimer infos de tous storages
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+      localStorage.removeItem("souvenir_courriel");
 
       // Redirige vers la page connexion avec message de succès
-      route('/connexion', {
+      route('/', {
         state:{msgCompteSupprime: res.data.message }
       });
 
@@ -177,7 +172,7 @@ export default function CompteUsager() {
                 placeholder="Confirmez nouveau mot de passe"/>
             </div>
 
-            <button type="submit" className="bouton-edit mt-2">Enregistrer les modifications</button>
+            <button type="submit" className="bouton-edit mt-4">Enregistrer les modifications</button>
           </form>
         )}
       </div>

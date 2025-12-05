@@ -1,12 +1,14 @@
 import { Wine, Columns4, Plus, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import GetUsager from "./GetUsager";
+import GetToken from "./GetToken";
 
 export default function MenuMobile() {
   const location = useLocation();
 
-  // 🔐 Récupérer connexion
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
+  // Récupérer connexion
+  const token = GetToken();
+  const user = GetUsager;
 
   const isActive = (path) => location.pathname === path;
 

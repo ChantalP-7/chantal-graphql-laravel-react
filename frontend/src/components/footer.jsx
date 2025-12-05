@@ -1,21 +1,13 @@
 import { Github } from "lucide-react";
 import { Link } from "react-router-dom";
+import GetUsager from "./GetUsager";
+import GetToken from "./GetToken";
 
 export default function Footer() {
-  let user = null;
-
-  try {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser && storedUser !== "undefined" && storedUser !== "null") {
-      user = JSON.parse(storedUser);
-    }
-  } catch (e) {
-    console.error("Erreur parsing user depuis localStorage:", e);
-    user = null;
-    localStorage.removeItem("user");
-  }
-  let token = localStorage.getItem("token");
-  if (token === "undefined" || token === "null") token = null;
+  
+  // Récupérer token et user depuis localStorage ou sessionStorage
+  const token = GetToken
+  const user = GetUsager();
 
   return (
     <footer className="mt-20 bg-stone-200 text-red-950">
