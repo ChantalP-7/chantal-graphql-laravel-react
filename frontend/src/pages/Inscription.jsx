@@ -33,8 +33,8 @@ export default function Incription() {
       setConfirmationMdp('')
       setErreurs({})
 
-      // Redirige vers la page login avec message de succès
-      route('/connexion', {
+      // Redirige vers la page de connexion avec message de succès
+      route('/', {
         state:{message: response.data.message }
       })
 
@@ -55,25 +55,27 @@ export default function Incription() {
         <div className="flex flex-col mt-2 border-t border-gray-200 pt-5">
           <label className="text-brown" htmlFor="nom">Nom</label>
           <input className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-green-200 focus:ring-1 focus:ring-green-200"
-          type="text"
-          id="nom"
-          name="name"
-          placeholder="Nom complet"
-          value={nom}
-          required
-          onChange={(e) => setNom(e.target.value)} />
+            type="text"
+            id="nom"
+            name="name"
+            placeholder="Nom complet"
+            value={nom}
+            required
+            onChange={(e) => setNom(e.target.value)} 
+          />
           {erreurs.name && <p className="text-red-500 pt-2">{erreurs.name[0]}</p>}
         </div>
         <div className="flex flex-col">
           <label className="text-brown" htmlFor="courriel">Courriel</label>
           <input className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-green-200 focus:ring-1 focus:ring-green-200"
-          type="email"
-          id="courriel"
-          name="email"
-          placeholder="Courriel"
-          value={courriel}
-          required
-          onChange={(e) => setCourriel(e.target.value)} />
+            type="email"
+            id="courriel"
+            name="email"
+            placeholder="Courriel"
+            value={courriel}
+            required
+            onChange={(e) => setCourriel(e.target.value)} 
+          />
           {erreurs.email && <p className="text-red-500 pt-2">{erreurs.email[0]}</p>}
         </div>
         <div className="flex flex-col">
@@ -102,7 +104,7 @@ export default function Incription() {
           />
         </div>
         <input className="bouton-accent" type="submit" value="S'inscrire" />
-       <Link className="underline mt-4 text-sm" to="/connexion">Déjà inscrit? Se connecter</Link>
+       <Link className="underline mt-4 text-sm" to="/">Déjà inscrit? Se connecter</Link>
       </form>
    </section>
   );

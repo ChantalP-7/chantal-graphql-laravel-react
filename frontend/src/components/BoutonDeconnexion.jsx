@@ -3,22 +3,20 @@ import { useNavigate } from "react-router-dom";
 
 // Fonction déconnexion
 export default function BoutonDeconnexion(){
-    // recupérer le token
-    const token = localStorage.getItem('token');
     const route = useNavigate();
 
     const deconnexion = async() => {
         try {
-            const response = await api.post("/deconnexion",
-                {},
-                { headers: { Authorization: `Bearer ${token}`}}
-            );
-            // Supprimer du localStorage
+            const response = await api.post("/deconnexion");
+
+            // Supprimer du localStorage et sessionStorage
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("user");
 
             // Redirectionner vers la page de connexion avec message de succès
-            route('/connexion',{
+            route('/',{
                 state:{deconnexionMsg: response.data.message}
             })
         } 

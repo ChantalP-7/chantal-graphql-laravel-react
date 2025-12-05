@@ -27,42 +27,42 @@ import api from "../api/axios";
             .then(res => setProduit(res.data))
             .catch(err => console.error(err));
     }, [id]);
-    if (!produit) return <div className="points">
+
+    {/* Animations 3 points pour le chargement de la page */}
+    if (!produit) return <div className="points"> 
         <span></span><span></span><span></span>
-    </div>;
+    </div>
+
     return (
         
-<div class="container mx-auto p-4">
-    <h1 className="text-center mt-20 text-4xl lg:text-5xl">Fiche de détails</h1>
-    <h1 className="text-center text-3xl md:text-4xl  lg:text-5xl mt-4 mb-10"><strong>{produit.name}</strong></h1>
-    <hr className="border-t-1 border-dashed bouton-[var(--couleur-texte)] mt-15 mb-15 my-4" />
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-        <div class="flex justify-center">            
-            <img
-                    className="w-full h-auto max-w-sm sm:max-w-md lg:max-w-lg object-cover"
-                    src={produit.image}
-                    alt={produit.name}
-                />
-        </div>               
-        <div class="flex flex-col mt-5 gap-4 h-full">
-            <ul class="space-y-2">
-                <li class="text-sm md:text-xl lg:text-3lg "><strong>Prix - </strong> {Number(produit.price).toFixed(2)} $</li>
-                <li class="text-sm md:text-xl lg:text-3lg "><strong>Catégorie - </strong> {produit.identite_produit}</li>
-                <li class="text-sm md:text-xl lg:text-3lg "><strong>Millésime - </strong> {produit.millesime_produit}</li>
-                <li class="text-sm md:text-xl lg:text-3lg "><strong>Origine - </strong> {produit.pays_origine}</li>
-            </ul>
-            <div className="flex gap-5 items-center ">
-                <Link className="block w-full" to={`/user/${user ? user.id : ''}/celliers/produits/${produit.id}`}>
-                    <button class="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg">Ajouter au cellier</button>
-                </Link>
-                <Link>
-                <button class="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg">Ajouter à ma liste</button>
-                </Link>
+        <div className="container mx-auto p-4">
+            <h1 className="text-center mt-20 text-4xl lg:text-5xl">Fiche détaillée</h1>
+            <h1 className="text-center text-3xl md:text-4xl mt-5 mb-10"><strong>{produit.name}</strong></h1>
+            <hr className="border-t-1 border-dashed bouton-[var(--couleur-texte)] mt-15 mb-15 my-4" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div className="flex justify-center">            
+                    <img className="w-full" src={produit.image || 'https://cdn.pixabay.com/photo/2012/04/13/11/49/wine-32052_1280.png'}
+                    alt={produit.name ? `Nom du vin ${produit.name}` : 'Nom du vin non disponible'}/>
+                </div>               
+                <div className="flex flex-col mt-5 gap-4 h-full">
+                    <ul className="space-y-2">
+                        <li className="text-sm md:text-xl lg:text-3lg "><strong>Prix - </strong> {Number(produit.price).toFixed(2)} $</li>
+                        <li className="text-sm md:text-xl lg:text-3lg "><strong>Catégorie - </strong> {produit.identite_produit}</li>
+                        <li className="text-sm md:text-xl lg:text-3lg "><strong>Millésime - </strong> {produit.millesime_produit}</li>
+                        <li className="text-sm md:text-xl lg:text-3lg "><strong>Origine - </strong> {produit.pays_origine}</li>
+                    </ul>
+                    <div className="flex gap-5 justify-left items-center ">
+                        <Link className="block w-full" to={`/user/${user ? user.id : ''}/celliers/produits/${produit.id}`}>
+                            <button className="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg">Ajouter au cellier</button>
+                        </Link>
+                        <Link>
+                        <button className="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg">Ajouter à ma liste</button>
+                        </Link>
+                    </div>
+                </div>
+                
             </div>
         </div>
-        
-    </div>
-</div>
         
     );
 }

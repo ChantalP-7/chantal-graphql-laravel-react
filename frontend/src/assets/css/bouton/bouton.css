@@ -25,6 +25,11 @@
     color: white;
 }
 
+.bouton-raisin {
+    background-color: var(--couleur-form);
+    color: var(--couleur-text);
+}
+
 .bouton {
     @apply text-white px-4 py-2 rounded cursor-pointer;
 }
