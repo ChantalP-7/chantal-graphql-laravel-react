@@ -36,7 +36,7 @@ export default function Auth() {
     
     // Connexion avec la requête du backend via axios
     try {
-      const response = await api.post("/", {
+      const response = await api.post("/connexion", {
         email: courriel,
         password: motDePasse,
         

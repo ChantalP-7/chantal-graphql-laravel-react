@@ -45,9 +45,7 @@ export default function Incription() {
       }
     }
   };
-  if (!connexion) return <div className="points">
-        <span></span><span></span><span></span>
-    </div>; 
+  
   return (
     <section className="mt-30">
       <form className="flex flex-col space-y-4 px-4 py-4 bg-form rounded-lg w-full max-w-screen-sm mx-auto " onSubmit={gererSoumission}>

@@ -23,10 +23,7 @@ export default function BoutonDeconnexion(){
         catch (error) {
             console.error(error.response?.data|| error.message)    
         }
-    };
-    if (!token) return <div className="points">
-        <span></span><span></span><span></span>
-    </div>;
+    };    
     return (
         <button className="bg-red-950 text-white text-center p-3 rounded-lg hover:text-red-950 hover:bg-red-100 text-red-950 transition" type="button" onClick={deconnexion}>Se déconnecter</button>
     );

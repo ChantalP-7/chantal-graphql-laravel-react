@@ -10,6 +10,7 @@
   --couleur-secondaire: #BF7A8C;
   --rouge_lecture: #3c111b;
   --rose_vino: #945f6c;
+  --test: #641393; 
 }
 body{
   background-color: var(--couleur-fond);
