@@ -39,8 +39,7 @@ function App() {
 
           <Route path="/user/:id/celliers" element={<CellierUtilisateur />} />
           <Route path="/cellier/creer" element={<CreerCellier />} />          
-          <Route path="/user/:userId/celliers/produits/:produitId" element={<AjouterProduitCellier />} 
-    />
+          <Route path="/user/:userId/celliers/produits/:produitId" element={<AjouterProduitCellier />} />
           <Route path="/celliers" element={<CellierUtilisateur />} />
         </Routes>       
       </main>
