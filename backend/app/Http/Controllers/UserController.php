@@ -65,12 +65,12 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required|min:4|max:30',
-            'current_password' => ['required_with:new_password', 'string'],
+            'current_password' => ['required_with:new_password', 'nullable', 'string'],
             'new_password' => [
                 'nullable','string','confirmed', 'max:20',
                 Password::min(6)->letters()->mixedCase()->numbers()->symbols()
             ]
-           ],
+        ],
 [],
         [
             'name' => 'nom',
