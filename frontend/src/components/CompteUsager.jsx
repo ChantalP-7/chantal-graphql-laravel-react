@@ -11,7 +11,8 @@ export default function CompteUsager() {
   const [nouveauMdp, setNouveauMdp] = useState("");
   const [confNouveauMdp, setConfNouveauMdp] = useState("");
   const [erreurs, setErreurs] = useState({});
-  const [msg, setMsg] = useState("");
+  const [msgSucces, setMsgSucces] = useState("");
+  const [msgErreur, setMsgErreur] = useState("");
   const [afficherForm, setAfficherForm] = useState(false); // toggle afficher/cacher le formulaire
   const [modalVisible, setModalVisible] = useState(false); // toggle afficher/cacher la boite modal 
 
@@ -27,7 +28,7 @@ export default function CompteUsager() {
     .catch(error => {
       setErreurs(error.response?.data?.message || "Erreur lors du chargement du profil");
     });
-  });
+  }, []);
 
   if (!usager) return 
   <div className="points">
@@ -39,14 +40,19 @@ export default function CompteUsager() {
     e.preventDefault();
 
     try {
-      const res = await api.put("/user",
-        {
-          name: nom,
-          current_password: mdpActuel,
-          new_password: nouveauMdp,
-          new_password_confirmation: confNouveauMdp
-        }
-      );
+      const data = {
+        name: nom
+      };
+      
+      // Si l’utilisateur veut changer le mot de passe 
+      if (nouveauMdp !== "") {
+        data.current_password = mdpActuel;
+        data.new_password = nouveauMdp;
+        data.new_password_confirmation = confNouveauMdp;
+      }
+
+      const res = await api.put("/user", data);
+
       // afficher les données de certains champs
       setUsager(res.data.user);
       setNom(res.data.user.name);
@@ -55,17 +61,18 @@ export default function CompteUsager() {
       setConfNouveauMdp("");
       setAfficherForm(false); //cacher le formulaire après succès
       setErreurs({});
-      setMsg(res.data.message);
+      setMsgSucces(res.data.message);
+      setMsgErreur("");
       
       // faire disparaître le message après 5 secondes
-      setTimeout(() => setMsg(""), 5000);
+      setTimeout(() => setMsgSucces(""), 5000);
 
     } catch (error) {
-      if (error.response && error.response.data.errors) {
+      if (error.response?.data?.errors) {
         setErreurs(error.response.data.errors);
       }
-      else if(error.response && error.response.data.message){
-        setMsg(error.response.data.message);
+      else if(error.response?.data?.message){
+        setMsgErreur(error.response.data.message);
       }
     }
   };
@@ -96,9 +103,10 @@ export default function CompteUsager() {
   return (
     <section className="p-4">
       <div className="contenu">
-        {msg && <p className="text-lime-700 mb-3">{msg}</p>}
+        {msgSucces && (
+          <p className="text-lime-700 mb-4">{msgSucces}</p>
+        )}
         <h1 className="text-2xl font-bold">Mon profil</h1>
-
         {/* --- AFFICHAGE DU PROFIL --- */}
         <div className="mb-10 mt-3">
           <p>Nom : <strong>{usager.name}</strong></p>
@@ -112,12 +120,14 @@ export default function CompteUsager() {
             Supprimer mon compte
           </button>
         </div>
-
         {/* --- FORMULAIRE (affiché si afficherForm = true) --- */}
         {afficherForm && (
           <form className="flex flex-col space-y-4 px-4 py-4 bg-form rounded-lg w-full max-w-screen-sm mx-auto mt-6" onSubmit={modifierInfos}>
             <h1 className="text-2xl font-bold">Modifier mon compte</h1>
             <div className="flex flex-col mt-2 border-t border-gray-200 pt-5">
+              {msgErreur && (
+                <p className="text-red-600 mb-3">{msgErreur}</p>
+              )}
               <label className="text-brown" htmlFor="nom">Nom</label>
               <input className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-green-200 focus:ring-1 focus:ring-green-200"
                 type="text"
