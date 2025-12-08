@@ -17,6 +17,8 @@ import api from "./api/axios"
 
 // Faire afficher les vues de react
 function App() {
+
+  const [recherche, setRecherche] = useState(""); 
   
   return (
     <div className="min-h-screen flex flex-col">
