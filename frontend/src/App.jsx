@@ -1,3 +1,4 @@
+// Importation des composants et pages
 import { Routes, Route } from "react-router-dom";
 import Catalogue from "./pages/Catalogue";
 import FicheProduit from "./pages/FicheProduit";
@@ -14,16 +15,9 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import api from "./api/axios"
 
+// Faire afficher les vues de react
 function App() {
-  const [recherche, setRecherche] = useState('');
-  useEffect(() => {
-    // Configurer le header au démarrage si token existe
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    if (token) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
-  }, []);
-
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header recherche={recherche} setRecherche={setRecherche} />
