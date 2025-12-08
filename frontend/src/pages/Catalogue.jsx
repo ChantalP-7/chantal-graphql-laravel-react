@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getproduits } from "../api/produits";
 import { Link } from "react-router-dom";
 import Filtre from "../components/Filtre";
+import GetUsager from "../components/GetUsager";
 
 /**
  * @param
@@ -16,7 +17,7 @@ const Catalogue = () => {
 	const [ordre, setOrdre] = useState("");
 
 	// Obtenir les infos de l'usager 
-	const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+	const user = GetUsager();
 
 	const bouteillesParPage = 12;
 

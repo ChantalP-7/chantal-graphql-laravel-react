@@ -53,6 +53,9 @@ Route::get('/identite_produit', [ProduitController::class, 'getCouleurs']);
 Route::get('/pays_origine', [ProduitController::class, 'getPays']);
 /* Plus à Hannah */
 
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
 
 Route::get('/test', function() {
     return response()->json(['message' => 'Backend fonctionne !']);
