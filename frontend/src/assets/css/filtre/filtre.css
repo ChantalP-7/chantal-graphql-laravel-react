@@ -59,7 +59,6 @@ Aucun autre fichier ne devrait avoir ces variables :root suivantes.
     transition: background-color 0.2s, color 0.2s;
 }
 
-
 .custom-select .option {
     border: 2px solid var(--rouge_lecture);
     border-radius: 0;
@@ -108,4 +107,28 @@ Aucun autre fichier ne devrait avoir ces variables :root suivantes.
 
 .filter-container.open {
     max-height: 100%; 
+}
+
+.contenuPreview {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: auto;
+}
+
+.previewRecherche {
+    color: var(--rouge_lecture);
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: space-between;
+    border-top: 1px solid #945f6c3b;
+}
+
+.previewAnne {
+    text-align:end;
+    height: auto;
+    flex-direction: row;
+    color: var(--rose_vino);
+    opacity: 0.5;
 }

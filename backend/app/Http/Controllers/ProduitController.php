@@ -19,8 +19,15 @@ class ProduitController extends Controller
         $pays = $request->get('pays');
         $ordre = $request->get('ordre');
         $limit = $request->get('limit', 12);
+        $recherche = $request->get('q'); 
 
         $query = Produit::query();
+
+        if ($recherche) {
+            $query->where(function ($q) use ($recherche) {
+                $q->where('name', 'like', "%{$recherche}%");
+            });
+        }
 
         if ($identite) {
             $query->where('identite_produit', $identite);
