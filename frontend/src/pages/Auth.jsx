@@ -126,7 +126,7 @@ export default function Auth() {
         <input className="bouton-accent" type="submit" value="Se connecter" />
 
         <Link className="underline mt-4 text-sm" to="/inscription">Pas encore membre? S'inscrire</Link>
-        <Link className="underline text-sm" to="#">Mot de passe oublié?</Link>
+        <Link className="underline text-sm" to="/mdp-oublie">Mot de passe oublié?</Link>
       </form>
     </section>
   );
