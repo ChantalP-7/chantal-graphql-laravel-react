@@ -5,11 +5,10 @@ import Filtre from "../components/Filtre";
 import GetUsager from "../components/GetUsager";
 
 /**
- * @param
- * Fonction qui liste le catalogue de bouteilles 
- * @returns produits
+ * Fonction qui liste le catalogue de bouteilles
  */
 const Catalogue = () => {
+
 	const [produits, setproduits] = useState([]);
 	const [pageCourante, setPageCourante] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
@@ -157,3 +156,4 @@ const Catalogue = () => {
 }
 
 export default Catalogue
+

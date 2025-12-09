@@ -54,16 +54,7 @@ export default function Footer() {
               <Link to="/celliers" className="hover:text-red-800">Mes celliers</Link>
               <Link to="/compte" className="hover:text-red-800">Mon compte</Link>
 
-              <button
-                className="text-red-950 hover:text-red-700"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("user");
-                  window.location.reload();
-                }}
-              >
-                Déconnexion
-              </button>
+        
             </>
           )}
 

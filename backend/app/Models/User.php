@@ -23,7 +23,8 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function celliers() {
+    public function celliers()
+    {
         return $this->hasMany(Cellier::class);
     }
 
@@ -36,6 +37,13 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+
+    public function listeAchats()
+    {
+        return $this->belongsToMany(Produit::class, 'liste_achats')->withTimestamps();
+    }
+
 
     /**
      * The attributes that should be cast.
