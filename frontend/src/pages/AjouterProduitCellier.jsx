@@ -60,7 +60,7 @@ import { useNavigate } from "react-router-dom";
         })
         .then((res) => {
             setQuantiteAjoutee(quantite);
-            setMessageAjout(`<p className="text-center text-[var(--couleur-text)] font-bold text-2xl">Vous avez ajouté <strong>${quantiteAjoutee}</strong> bouteille${quantiteAjoutee > 1 ? "s" : ""} 🍷.</p>`);
+            setMessageAjout(`Vous avez ajouté ${quantite} bouteille${quantite > 1 ? "s" : ""} 🍷.`);
             setModalAjouterVisible(true);
             setQuantite(1);
 
@@ -142,12 +142,12 @@ import { useNavigate } from "react-router-dom";
                 <ModaleAjouter
                     visible={modalAjouterVisible}
                     quantite={quantiteAjoutee}
-                    message={messageAjout}
+                    messageAjout={messageAjout}
                     onFermer={() => setModalAjouterVisible(false)}
                 />
                 <ModaleErreur
                     visible={modalErreurVisible}
-                    message={messageErreur}
+                    messageErreur={messageErreur}
                     onFermer={() => setModalErreurVisible(false)}
                 />
         </div>

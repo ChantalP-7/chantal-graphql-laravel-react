@@ -52,6 +52,7 @@ const Catalogue = () => {
 	{/* Animations 3 points pour le chargement de la page */}
 	if (!produits) return <div className="points"> 
 		<span></span><span></span><span></span>
+		<p>Le catalogue se charge...</p>
 	</div>;
   	return (
 		<div className="contenu"> 
