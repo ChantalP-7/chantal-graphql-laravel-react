@@ -21,4 +21,16 @@ class Produit extends Model
             ->withPivot('quantite')
             ->withTimestamps();
     }
+
+    public function listeAchats()
+    {
+        return $this->belongsToMany(
+            ListeAchat::class,
+            'liste_achats',
+            'produit_id',
+            'user_id'
+        )
+            ->withPivot('quantite')
+            ->withTimestamps();
+    }
 }

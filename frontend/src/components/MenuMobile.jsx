@@ -1,4 +1,4 @@
-import { Wine, Columns4, Plus, User } from "lucide-react";
+import { Wine, Columns4, Plus, User, ShoppingCart } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import GetUsager from "./GetUsager";
 import GetToken from "./GetToken";
@@ -21,7 +21,7 @@ export default function MenuMobile() {
           <>
             <li className="flex-1 text-center">
               <Link
-                to="/"
+                to="/produits"
                 className={`flex flex-col items-center ${
                   isActive("/") ? "text-red-950 font-semibold" : "text-red-900 opacity-70"
                 }`}
@@ -67,6 +67,17 @@ export default function MenuMobile() {
               >
                 <User className="w-7 h-7" />
                 <span className="text-xs mt-1">Compte</span>
+              </Link>
+            </li>
+
+            <li className="flex-1 text-center">
+              <Link to="/liste-achats"
+                className={`flex flex-col items-center ${
+                  isActive("/liste-achats") ? "text-red-950 font-semibold" : "text-red-900 opacity-70"
+                }`}
+              >
+                <ShoppingCart className="w-7 h-7" />
+                    <span className="text-xs mt-1">Achats</span>
               </Link>
             </li>
           </>
