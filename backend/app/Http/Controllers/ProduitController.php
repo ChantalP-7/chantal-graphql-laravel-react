@@ -68,6 +68,24 @@ class ProduitController extends Controller
         return response()->json($produit);
     }
 
+
+    public function deplacer(Request $request, $id) {
+        $request->validate([
+            'nouveau_cellier_id' => 'required|exists:celliers,id',
+        ]);
+
+        $produit = Produit::findOrFail($id);
+
+        // Mise à jour du cellier
+        $produit->cellier_id = $request->nouveau_cellier_id;
+        $produit->save();
+
+        return response()->json([
+            'message' => 'Bouteille déplacée avec succès.',
+            'produit' => $produit
+        ]);
+    }
+
     
     /**
      * @param
