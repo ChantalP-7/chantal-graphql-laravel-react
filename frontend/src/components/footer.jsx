@@ -58,7 +58,7 @@ export default function Footer({ deconnexion }) {
           {(!token || !user) && (
             <>
               <Link to="/inscription" className="hover:text-red-800">Inscription</Link>
-              <Link to="/connexion" className="hover:text-red-800">Connexion</Link>
+              <Link to="/" className="hover:text-red-800">Connexion</Link>
             </>
           )}
 
