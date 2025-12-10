@@ -124,4 +124,14 @@ class CellierController extends Controller
             return response()->json($cellier->produits()->where('produit_id', $produitId)->first());
         }
     }
+
+    public function supprimerCellier($cellierId)
+    {
+        $cellier = Cellier::findOrFail($cellierId);
+        $cellier->delete();
+        
+        return response()->json([
+            'message' => 'Votre cellier a été supprimé avec succès!'
+        ]);
+    }
 }

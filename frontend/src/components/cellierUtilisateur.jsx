@@ -3,6 +3,7 @@ import api from "../api/axios";
 import FicheProduitCellier from "./FicheProduitCellier";
 import ModalAjouter from "../components/ModalAjouter";
 import ModalErreur from "../components/ModalErreur";
+import ModalSupprimerCellier from "../components/ModalSupprimerCellier";
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import { GiGrapes } from "react-icons/gi";
@@ -18,16 +19,19 @@ const AfficheCellier = () => {
     const [pagination, setPagination] = useState({});
     const [afficherFormAjoutCellier, setAfficherFormAjoutCellier] = useState(false); // toggle afficher/cacher le formulaire d'ajout
     const [afficherFormModifCellier, setAfficherFormModifCellier] = useState(false); // toggle afficher/cacher le formulaire de modif
+    const [afficherFormSupprimerCellier, setAfficherFormSupprimerCellier] = useState(false) // toggle afficher/cacher le formulaire de suppression de cellier
     const [nomCellier, setNomCellier] = useState("");
     const [nomCellierModif, setNomCellierModif] = useState("");
+    const [nomCellierSup, setNomCellierSup] = useState("");
     const [cellierSelectionne, setCellierSelectionne] = useState("");
     const [erreurs, setErreurs] = useState({});
     const [message, setMessage] = useState("");
     const [messageAjout, setMessageAjout] = useState("");
-    const [messageSupprimerCellier, setMessageSupprimeCellier] = useState("");
+    const [messageSupprimerCellier, setMessageSupprimerCellier] = useState("");
     const [modalAjouterVisible, setModalAjouterVisible] = useState(false); // affiche la boite modale d'ajout et quantité
     const [modalErreurVisible, setModalErreurVisible] = useState(false);
-    const [modalSupprimerVisible, setModalSupprimerVisible] = useState(false);
+    const [modalSupprimerCellierVisible, setModalSupprimerCellierVisible] = useState(false);
+    const [chargementSupprimer, setChargementSupprimer] = useState(false);
 
     useEffect(() => {
         api.get("/celliers")
@@ -96,7 +100,7 @@ const AfficheCellier = () => {
         }
     };
 
-      // Modifier le nom du cellier
+    // Modifier le nom du cellier
     const modifierNomCellier = async (e) => {
         e.preventDefault();
 
@@ -113,7 +117,7 @@ const AfficheCellier = () => {
             );
 
             // Modale retire bouteille du cellier
-            setMessageAjout(`Tu as bien modifié le nom du cellier pour : ${nomCellier}!`);
+            setMessageAjout(`Tu as bien modifié le nom du cellier pour : ${nomCellierModif}!`);
             setModalAjouterVisible(true);
 
             // fermer la modale après 5s
@@ -124,11 +128,7 @@ const AfficheCellier = () => {
             // Réinitialiser les champs
             setNomCellierModif("");
             setCellierSelectionne("");
-
-             // Modale suppression de cellier
-            setMessageSupprimeCellier(`Ton cellier a bien été supprimé !`);
-            setModalSupprimerVisible(true);
-
+            
             // Fermer le formulaire
             setAfficherFormModifCellier(false);
 
@@ -150,23 +150,57 @@ const AfficheCellier = () => {
         }
     };
 
-    // Suppression de cellier  
+    
+
     const supprimerCellier = async () => {
-        
+        setChargementSupprimer(true);
         try {
-            const res = await api.delete("/cellier");
+            const id = Number(cellierSelectionne);
 
-            setMessageSupprimeCellier(`Ton cellier a bien été supprimé !`);
-            setModalSupprimerVisible(true);
+            await api.delete(`/celliers/${id}`);
+            
+            setCelliers(prev => prev.filter(c => c.id !== id));
+            
+            setMessageSupprimerCellier("Ton cellier a bien été supprimé !");
 
-            // fermer la modale après 5s
             setTimeout(() => {
-                setModalSupprimerVisible(false);
-            }, 5000);
+                setMessageSupprimerCellier("");
+            }, 3000);
+            
+            setModalSupprimerCellierVisible(false);
+            setAfficherFormSupprimerCellier(false);
 
-            } catch (error) {
-            setErreurs(error.response?.data?.message || "Erreur lors de la suppression");
-            }
+            // Reset
+            setNomCellierSup("");
+            setCellierSelectionne("");
+
+        } catch (error) {
+            console.error(error);
+            setMessageSupprimerCellier("Erreur lors de la suppression.");
+        } finally {
+        setChargementSupprimer(false);
+    }
+    };
+
+    //
+
+    const confirmer = async () => {
+        setChargementSupprimer(true); // ✔ feedback immédiat
+
+        try {
+            await api.delete(`/celliers/${idASupprimer}`);
+
+            setCelliers(prev => prev.filter(c => c.id !== idASupprimer));
+            setModalVisible(false);
+
+            // ici tu affiches ton message de réussite
+            setSuccessMessage("Le cellier a été supprimé avec succès !");
+            
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setChargementSuppression(false);
+        }
     };
 
 
@@ -195,7 +229,7 @@ const AfficheCellier = () => {
         <div className="flex justify-center align-col px-3 py-4">                        
             <div className="w-full lg:w-4/5">
                 <div>
-                    <h1 className="text-4xl mt-8 mb-8 text-center">Gestion des celliers</h1>
+                    <h1 className="text-3xl mt-8 mb-8 text-center">Gestion des celliers</h1>
                 </div>
                 <h2 className="text-2xl mt-8 mb-8 text-center flex gap-2 items-center">Mes Celliers <GiBarrel /></h2>
 
@@ -210,7 +244,6 @@ const AfficheCellier = () => {
                         <span className="font-semibold">{cellier.nom}</span>
                         <span className="text-md">{cellierOuvertId === cellier.id ? <FaChevronUp /> : <FaChevronDown />}</span>
                         </button>
-
                         <div className={`overflow-hidden transition-all duration-300 ${cellierOuvertId === cellier.id ? "max-h-[2000px] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"}`}>
                         {cellier.produits && cellier.produits.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-3 bg-[var(--couleur-form)] lg:grid-cols-5 gap-2 p-2">
@@ -263,7 +296,7 @@ const AfficheCellier = () => {
                 <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:gap-20">                    
                     { /* Ajout d'un nouveau cellier */ }
                     <div className="relative w-full sm:w-auto">
-                        <p className="text-2xl mb-8 flex gap-2 items-center">Nouveau cellier <GiGrapes /></p>
+                        <p className="text-2xl mb-8 flex gap-2 items-center">Nouveau cellier</p>
                         
                         <button className="sm:w-full sm:block inline-block text-lg px-6 py-3 mb-10 border-[2px] border-solid border-[var(--couleur-accent)] text-[var(--couleur-accent)] hover:bg-[var(--couleur-accent)] hover:text-white rounded-lg cursor-pointer" onClick={() => setAfficherFormAjoutCellier(prev => prev === "ajout" ? null : "ajout")}>
                                 
@@ -273,7 +306,7 @@ const AfficheCellier = () => {
                             <form className="w-full flex flex-col bg-form space-y-4 p-4" onSubmit={gererSoumission}>
                                 
                                 
-                                <div className="flex flex-col mt-2 border-t border-gray-200 pt-5">
+                                <div className="flex flex-col mt-2">
                                     <label className="text-brown" htmlFor="nomCellier">
                                     Nom du cellier
                                     </label>
@@ -287,8 +320,7 @@ const AfficheCellier = () => {
                                     onChange={(e) => setNomCellier(e.target.value)}
                                     />
                                     {erreurs.nom && <p className="text-red-500 pt-2">{erreurs.nom[0]}</p>}
-                                </div>
-                                
+                                </div>                                
                                 {messageAjout}
                                 
                                 <input
@@ -304,17 +336,14 @@ const AfficheCellier = () => {
                     {/* Modification du nom du cellier */ }
 
                     <div className="w-full sm:w-auto">
-                        <p className="text-2xl mb-8 flex gap-2 items-center">Modifier le nom <GiGrapes /></p>
+                        <p className="text-2xl mb-8 flex gap-2 items-center">Modifier le nom</p>
                         
                         <button className="sm:w-full sm:block inline-block text-lg cursor-pointer px-6 py-3 mb-10 border-[2px] border-solid border-[var(--couleur-accent)] text-[var(--couleur-accent)] hover:bg-[var(--couleur-accent)]  hover:text-white rounded-lg" onClick={() => setAfficherFormModifCellier(!afficherFormModifCellier)}>                        
                             {afficherFormModifCellier ? "Fermer" : "Modifier le nom"}
                         </button>
                         {afficherFormModifCellier && (
                             <form className="w-full flex flex-col sm:width-full space-y-4 p-4 bg-form rounded-lg" onSubmit={modifierNomCellier}>
-                                <div className="flex flex-col mt-2 border-t border-gray-200 pt-5">
-                                    <label className="text-brown" htmlFor="nomCellier">
-                                    Nom du cellier
-                                    </label>
+                                <div className="flex flex-col mt-2">
                                     <select
                                         className="w-full p-3 mb-4 text-lg sm:text-xl rounded-sm bouton-accent text-white bg-transparent focus:outline-none"
                                         defaultValue=""
@@ -344,7 +373,7 @@ const AfficheCellier = () => {
                                     />
                                     {erreurs.nom && <p className="text-red-500 pt-2">{erreurs.nom[0]}</p>}
                                 </div>                                
-                                {messageAjout}                                
+                                                               
                                 <input
                                 className="bouton-accent"
                                 type="submit"
@@ -355,23 +384,83 @@ const AfficheCellier = () => {
                         )}
                     
                     </div>
+
+                    {/* Suppression d'un cellier */ }
+
+                    
+                    <div className="relative w-full sm:w-auto">
+                        <p className="text-2xl mb-8 flex gap-2 items-center">Supprimer un cellier</p>
+                        {messageSupprimerCellier && (
+                            <p className="text-green-600 font-semibold mb-4">{messageSupprimerCellier}</p>
+                        )}
+                        <button className="sm:w-full sm:block inline-block text-lg px-6 py-3 mb-10 border-[2px] border-solid border-[var(--couleur-accent)] text-[var(--couleur-accent)] hover:bg-[var(--couleur-accent)] hover:text-white rounded-lg cursor-pointer" onClick={() => setAfficherFormSupprimerCellier(prev => prev === "supprimer" ? null : "supprimer")}>
+                                
+                            {afficherFormSupprimerCellier === "supprimer" ? "Fermer" : "Supprimer un cellier"}
+                        </button>
+                        {afficherFormSupprimerCellier === "supprimer" &&  (
+                            <form className="w-full flex flex-col sm:width-full space-y-4 p-4 bg-form rounded-lg" onSubmit={(e) => {
+                                e.preventDefault();
+                                if (!cellierSelectionne) {
+                                    setMessageSupprimerCellier("Sélectionne un cellier.");
+                                    return;
+                                }
+                                setModalSupprimerCellierVisible(true);
+                            }}>
+                            
+                                <div className="flex flex-col mt-2 ">
+                                    <select
+                                        className="w-full p-3 mb-4 text-lg sm:text-xl rounded-sm bouton-accent text-white bg-transparent focus:outline-none"
+                                        defaultValue=""
+                                        onChange={e => {
+                                            const id = e.target.value;
+                                            setCellierSelectionne(id);
+                                            const cellierSelectionne = celliers.find(c => c.id == id);
+                                            if (cellierSelectionne) {
+                                                setNomCellierSup(cellierSelectionne.nom);
+                                            }
+                                        }}
+                                    >
+                                        <option value="">Choisi un cellier</option>
+                                        {celliers.map(c => (
+                                            <option key={c.id} value={c.id}>{c.nom}</option>
+                                        ))}
+                                    </select>
+                                    <input
+                                    className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-red-300 focus:ring-1 focus:ring-red-300"
+                                    type="text"
+                                    id="nomCellier"
+                                    name="nom"
+                                    placeholder="Ex. : Cellier du sous-sol"
+                                    value={nomCellierSup}
+                                    onChange={(e) => setNomCellierSup(e.target.value)}
+                                    />
+                                    {erreurs.nom && <p className="text-red-500 pt-2">{erreurs.nom[0]}</p>}
+                                </div>                       
+                                <input
+                                className="bouton-accent"
+                                type="submit"
+                                value="Supprimer le cellier"
+                                />
+                            </form>                            
+                        )}                
+                    </div>
                 </div>
 
                 {/* Fiche bouteille cellier mobile */}
                 {produitSelectionne && (
-                <FicheProduitCellier
-                    produit={produitSelectionne}
-                    onFerme={() => setProduitSelectionne(null)}
-                    onRetire={() =>
-                    gestionRetraitBouteille(
-                        produitSelectionne.cellierId,
-                        produitSelectionne.id,
-                        produitSelectionne.pivot.quantite
-                    )
-                    }
-                />
-                )}
-            </div>
+                    <FicheProduitCellier
+                        produit={produitSelectionne}
+                        onFerme={() => setProduitSelectionne(null)}
+                        onRetire={() =>
+                        gestionRetraitBouteille(
+                            produitSelectionne.cellierId,
+                            produitSelectionne.id,
+                            produitSelectionne.pivot.quantite
+                        )
+                        }
+                    />
+                    )}
+                </div>
             {/* Modal succès et erreur*/}
                 <ModalAjouter
                     visible={modalAjouterVisible}
@@ -384,13 +473,13 @@ const AfficheCellier = () => {
                     onFermer={() => setModalErreurVisible(false)}
                 />
                 {/* MODAL SUPPRIMER */}
-                <ModalSupprimer
-                    visible={modalVisible}
-                    onAnnule={() => setModalSupprimerVisible(false)}
-                    onConfirme={() => {
-                    setModalSupprimerVisible(false);
-                    supprimerCellier();
-                    }} 
+                <ModalSupprimerCellier
+                    visible={modalSupprimerCellierVisible}
+                    h1="Supprimer ce cellier ?"
+                    messageSupprimerCellier="Cette action est irréversible."
+                    onAnnule={() => setModalSupprimerCellierVisible(false)}
+                    onConfirme={supprimerCellier}
+                    chargement={chargementSupprimer}                    
                 />
         </div>
     );

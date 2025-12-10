@@ -29,16 +29,16 @@ import api from "../api/axios";
     }, [id]);
 
     const ajouterALaListe = async (produitId) => {
-  try {
-    const response = await api.post(`/liste-achats/${produitId}`);
+        try {
+            const response = await api.post(`/liste-achats/${produitId}`);
 
-    console.log("Ajout réussi :", response.data);
-    alert("Produit ajouté à votre liste d'achat !");
-  } catch (err) {
-    console.error("Erreur ajout liste d'achat :", err);
-    alert("Impossible d'ajouter ce produit à votre liste.");
-  }
-};
+            console.log("Ajout réussi :", response.data);
+            alert("Produit ajouté à votre liste d'achat !");
+        } catch (err) {
+            console.error("Erreur ajout liste d'achat :", err);
+            alert("Impossible d'ajouter ce produit à votre liste.");
+        }
+    };
 
    {/* Animations 3 points pour le chargement de la page */}
    if (!produit) return <div className="points"> 
@@ -65,18 +65,16 @@ import api from "../api/axios";
                     </ul>
 
                     <div className="flex gap-5 justify-left items-center ">
-                        <Link className="block w-full" to={user ? `/user/${user.id}/celliers/produits/${p.id}` : ""}>
+                        <Link className="block w-full" to={user ? `/user/${user.id}/celliers/produits/${produit.id}` : ""}>
                             <button className="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg">Ajouter au cellier</button>
                         </Link>
-                        <Link>
-                        <button
-                            onClick={() => ajouterALaListe(produit.id)}
-                            className="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg"
-                            >
-                                Ajouter à ma liste d’achat
-                        </button>
-
-
+                        <Link className="block w-full" to={user ? `/user/${user.id}/liste/produits/${produit.id}` : ""}>
+                            <button
+                                onClick={() => ajouterALaListe(produit.id)}
+                                className="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg"
+                                >
+                                    Ajouter à ma liste
+                            </button>
                         </Link>
 
                     </div>

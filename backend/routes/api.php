@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/celliers/{cellierId}/produits/{produitId}', [CellierController::class, 'supprimerProduit']);
     Route::post('/celliers', [CellierController::class, 'creerCellier']);
     Route::put('/celliers/{id}', [CellierController::class, 'modifieNomCellier']);
+    Route::delete('/celliers/{cellierId}', [CellierController::class, 'supprimerCellier']);
 
     // Routes pour la liste d'achat
     Route::get('/liste-achats', [ListeAchatController::class, 'index']);
