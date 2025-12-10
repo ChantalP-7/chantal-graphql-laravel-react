@@ -11,6 +11,7 @@ import CompteUsager from "./components/CompteUsager";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import AjouterProduitCellier from './pages/AjouterProduitCellier'; 
+import ListeAchats from "./pages/ListeAchats";
 import "./App.css";
 import { useEffect, useState } from "react";
 import api from "./api/axios"
@@ -38,6 +39,10 @@ function App() {
           <Route path="/cellier/creer" element={<CreerCellier />} />          
           <Route path="/user/:userId/celliers/produits/:produitId" element={<AjouterProduitCellier />} />
           <Route path="/celliers" element={<CellierUtilisateur />} />
+
+          {/* Liste d’achats */}
+          <Route path="/liste-achats" element={<ListeAchats />} />
+
         </Routes>       
       </main>
       <Footer />

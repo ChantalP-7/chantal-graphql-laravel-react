@@ -176,33 +176,11 @@ const AfficheCellier = () => {
 
         } catch (error) {
             console.error(error);
-            setMessageSupprimerCellier("Erreur lors de la suppression.");
+            setErreurs("Le cellier contient des bouteilles. Vide-le avant de le supprimer");
         } finally {
         setChargementSupprimer(false);
     }
     };
-
-    //
-
-    const confirmer = async () => {
-        setChargementSupprimer(true); // ✔ feedback immédiat
-
-        try {
-            await api.delete(`/celliers/${idASupprimer}`);
-
-            setCelliers(prev => prev.filter(c => c.id !== idASupprimer));
-            setModalVisible(false);
-
-            // ici tu affiches ton message de réussite
-            setSuccessMessage("Le cellier a été supprimé avec succès !");
-            
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setChargementSuppression(false);
-        }
-    };
-
 
     // Pagination
 
@@ -386,7 +364,6 @@ const AfficheCellier = () => {
                     </div>
 
                     {/* Suppression d'un cellier */ }
-
                     
                     <div className="relative w-full sm:w-auto">
                         <p className="text-2xl mb-8 flex gap-2 items-center">Supprimer un cellier</p>
