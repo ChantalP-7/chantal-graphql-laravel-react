@@ -1,6 +1,6 @@
 import { Routes, Route} from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "./api/axios";
+
 // Pages
 import Catalogue from "./pages/Catalogue";
 import FicheProduit from "./pages/FicheProduit";
@@ -48,7 +48,7 @@ function App() {
           <Route path="/liste-achats" element={<ListeAchats />} />
 
           {/* Celliers */}
-           <Route path="/celliers" element={<CellierUtilisateur />} />
+          <Route path="/celliers" element={<CellierUtilisateur />} />
           <Route path="/user/:id/celliers" element={<CellierUtilisateur />} />
           <Route path="/cellier/creer" element={<CreerCellier />} />
           <Route
