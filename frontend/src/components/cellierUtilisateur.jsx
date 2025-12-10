@@ -199,9 +199,9 @@ const AfficheCellier = () => {
     };
 
     {/* Animations 3 points pour le chargement de la page */}
-	if (!celliers) return <div className="points"> 
-		<span></span><span></span><span></span>
-	</div>;
+	//if (!celliers) return <div className="points"> 
+		//<span></span><span></span><span></span>
+	//</div>;
 
     return (
         <div className="flex justify-center align-col px-3 py-4">                        

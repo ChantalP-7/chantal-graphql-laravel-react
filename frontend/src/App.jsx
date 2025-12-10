@@ -1,52 +1,75 @@
-// Importation des composants et pages
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "./api/axios";
+// Pages
 import Catalogue from "./pages/Catalogue";
 import FicheProduit from "./pages/FicheProduit";
-import CellierUtilisateur from "./components/CellierUtilisateur";
 import Auth from "./pages/Auth";
 import Inscription from "./pages/Inscription";
+import AjouterProduitCellier from "./pages/AjouterProduitCellier";
 import CreerCellier from "./pages/CreerCellier";
+import ListeAchats from "./pages/ListeAchats";
+
+// Composants
+import Header from "./components/header";
+import Footer from "./components/Footer";
 import MenuMobile from "./components/MenuMobile";
 import CompteUsager from "./components/CompteUsager";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import AjouterProduitCellier from './pages/AjouterProduitCellier'; 
+import CellierUtilisateur from "./components/CellierUtilisateur";
+import MotDePasseOublie from "./pages/MotDePasseOublie";
+
 import ListeAchats from "./pages/ListeAchats";
 import "./App.css";
-import { useEffect, useState } from "react";
-import api from "./api/axios"
 
-// Faire afficher les vues de react
 function App() {
 
   const [recherche, setRecherche] = useState(""); 
-  
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* HEADER */}
       <Header recherche={recherche} setRecherche={setRecherche} />
-      <main className="pb-24 flex-1 px-4">
-        {" "}
-        {/* important pour ne pas cacher le contenu */}
-        <Routes>
-          <Route path="/inscription" element={<Inscription />} />
-          <Route path="/" element={<Auth />} />
-          <Route path="/compte" element={<CompteUsager />} />
-                 
-          <Route path="/produits" element={<Catalogue />} />      
-          <Route path="/produits/:id" element={<FicheProduit />} />
 
-          <Route path="/user/:id/celliers" element={<CellierUtilisateur />} />
-          <Route path="/cellier/creer" element={<CreerCellier />} />          
-          <Route path="/user/:userId/celliers/produits/:produitId" element={<AjouterProduitCellier />} />
-          <Route path="/celliers" element={<CellierUtilisateur />} />
+      {/* MAIN CONTENT */}
+      <main className="pb-24 flex-1 px-4">
+        <Routes>
+
+          {/* Auth */}
+          <Route path="/" element={<Auth />} />
+          <Route path="/inscription" element={<Inscription />} />
+
+          {/* Compte */}
+          <Route path="/compte" element={<CompteUsager />} />
+
+          {/* Produits */}
+          <Route path="/produits" element={<Catalogue />} />
+          <Route path="/produits/:id" element={<FicheProduit />} />
 
           {/* Liste d’achats */}
           <Route path="/liste-achats" element={<ListeAchats />} />
 
-        </Routes>       
+          {/* Celliers */}
+           <Route path="/celliers" element={<CellierUtilisateur />} />
+          <Route path="/user/:id/celliers" element={<CellierUtilisateur />} />
+          <Route path="/cellier/creer" element={<CreerCellier />} />
+          <Route
+            path="/user/:userId/celliers/produits/:produitId"
+            element={<AjouterProduitCellier />}
+          />
+          {/* Mot de passe oublié*/}
+          <Route path="/mdp-oublie" element={<MotDePasseOublie />} />
+
+
+          {/* Liste d’achats */}
+          <Route path="/liste-achats" element={<ListeAchats />} />
+
+        </Routes>
       </main>
+
+      {/* FOOTER & MENU MOBILE */}
       <Footer />
-      <MenuMobile /> {/* ajout Menu application mobile */}
+      <MenuMobile />
+
     </div>
   );
 }

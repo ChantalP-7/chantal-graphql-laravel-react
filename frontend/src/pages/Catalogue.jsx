@@ -8,7 +8,6 @@ import GetUsager from "../components/GetUsager";
  * Fonction qui liste le catalogue de bouteilles
  */
 const Catalogue = () => {
-
 	const [produits, setproduits] = useState([]);
 	const [pageCourante, setPageCourante] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
@@ -52,7 +51,7 @@ const Catalogue = () => {
 	{/* Animations 3 points pour le chargement de la page */}
 	if (!produits) return <div className="points"> 
 		<span></span><span></span><span></span>
-		<p>Le catalogue se charge...</p>
+
 	</div>;
   	return (
 		<div className="contenu"> 
