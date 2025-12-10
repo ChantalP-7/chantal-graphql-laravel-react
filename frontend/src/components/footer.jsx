@@ -2,8 +2,9 @@ import { Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import GetUsager from "./GetUsager";
 import GetToken from "./GetToken";
+import BoutonDeconnexion from "./BoutonDeconnexion";
 
-export default function Footer() {
+export default function Footer({ deconnexion }) {
   
   // Récupérer token et user depuis localStorage ou sessionStorage
   const token = GetToken
@@ -45,24 +46,19 @@ export default function Footer() {
   
         <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
 
-          
-
           {/* === Connecté === */}
           {token && user && (
-            <>
-            <Link to="/produits" className="hover:text-red-700">Catalogue</Link>
-              <Link to="/celliers" className="hover:text-red-800">Mes celliers</Link>
-              <Link to="/compte" className="hover:text-red-800">Mon compte</Link>
-
-        
-            </>
-          )}
+  <>
+    {/* Déconnexion desktop */}
+    <BoutonDeconnexion deconnexion={deconnexion} />
+  </>
+)}
 
           {/* === Non connecté === */}
           {(!token || !user) && (
             <>
               <Link to="/inscription" className="hover:text-red-800">Inscription</Link>
-              <Link to="/connexion" className="hover:text-red-800">Connexion</Link>
+              <Link to="/" className="hover:text-red-800">Connexion</Link>
             </>
           )}
 

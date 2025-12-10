@@ -16,10 +16,10 @@ import { Link } from "react-router-dom";
     setMessage("");
     
     // Vérifier côté front que le champ n'est pas vide
-    if (!nomCellier.trim()) {
-      setErreurs({ nom: "Le nom du cellier est requis." });
-      return;
-    }
+    //if (!nomCellier.trim()) {
+      //setErreurs({ nom: "Le nom du cellier est requis." });
+      //return;
+    //}
     
     try {
       const reponse = await api.post("/celliers", { nom: nomCellier });
@@ -37,9 +37,9 @@ import { Link } from "react-router-dom";
     }
   };
 
-  if (!nomCellier) return <div className="points">
+  //if (!nomCellier) return <div className="points">
         //<span></span><span></span><span></span>
-    </div>;
+    //</div>;
 
 
   return (
