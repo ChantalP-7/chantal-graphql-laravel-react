@@ -144,27 +144,28 @@ class UserController extends Controller
         $usager = User::where('email', $request->email)->first();
         $mdpTemporaire = Str::random(45);// mot de passe temporaire
 
-        // Stocker le mot de passe temporaire encrypté
+        // Stocker le mot de passe temporaire 
         $usager->temp_password = $mdpTemporaire;
         $usager->temp_password_created_at = now();
         $usager->save();
 
         // URL qui renvoie vers React
         $frontend = env('APP_URL');
-        $reinitialiserUrl = "$frontend/mdp-reinitialise?token=$mdpTemporaire&user=$usager->id";
+        $tokenUrl = urlencode($mdpTemporaire);// Encoder le mot de passe temporaire
+        $reinitialiserUrl = "$frontend/mdp-reinitialise?token=$tokenUrl&user=$usager->id";
 
         // Envoie de l'e-mail
-       Mail::html("
+        Mail::html("
             <p>Bonjour {$usager->name},</p>
             <p>Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe :</p>
             <p><a href='{$reinitialiserUrl}'>Réinitialiser mon mot de passe</a></p>
         ", function($message) use ($usager) {
-        $message->to($usager->email)->subject('Réinitialisation du mot de passe');
+            $message->to($usager->email)->subject('Réinitialisation du mot de passe');
         });
 
         // Retour avec message de succès
         return response()->json([
-            'message' => 'Lien envoyé! Veuillez vérifier votre courriel. ', 
+            'message' => 'Lien de réinitialisation envoyé! Veuillez vérifier votre courriel. ', 
         ]);
     }
 
@@ -178,7 +179,7 @@ class UserController extends Controller
             'user' => 'required|integer',
             'token' => 'required',
             'password' => [
-                'required','string', 'max:20',
+                'required','string', 'confirmed', 'max:20',
                 Password::min(6)->letters()->mixedCase()->numbers()->symbols()
             ]
         ],
@@ -190,7 +191,7 @@ class UserController extends Controller
         // Trouver le id de l'usager correspondant
         $usager = User::find($request->user);
 
-        // Vérifier le token
+        // Vérifier le token si correspond au mot de passe temporaire
         if (!$usager || $request->token !== $usager->temp_password) {
             return response()->json(['erreur' => 'Token invalide'], 400);
         }
