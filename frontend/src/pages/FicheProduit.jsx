@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
+import GetUsager from "../components/GetUsager"
 
 /**
  * Fonction fléchée qui affiche les détails d'un vin et qui affiche le formulaire d'ajout du vin sélectionné et qui permet d'ajouter le vin dans le cellier de l'utilisateur connecté. La quantité ajoutée est enregistrée dans la table pivot cellier_produit dans la colonne "quantite"
@@ -11,16 +12,18 @@ import api from "../api/axios";
  const FicheProduit = () => {
     const { id } = useParams();
     const [produit, setProduit] = useState(null);  
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate();
+    //const [user, setUser] = useState(null);
+    //const navigate = useNavigate();
+
+    const user = GetUsager();
 
     // Récupérer l'utilisateur'
-    useEffect(() => {
+   /* useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
         setUser(JSON.parse(storedUser));
         }
-    }, []);
+    }, []);*/
 
     // Récupérer le produit
     useEffect(() => {
