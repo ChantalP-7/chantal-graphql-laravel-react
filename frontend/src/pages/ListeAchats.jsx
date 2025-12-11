@@ -103,21 +103,21 @@ const ListeAchats = () => {
                 {/* CONTROLES QUANTITÉ + SUPPRESSION */}
                 <div className="flex items-center gap-2 border-t border-gray-300 py-4">
                     <button
-                    className="px-2 py-1 rounded bg-gray-200"
+                    className="px-2 py-1 rounded bg-gray-200 cursor-pointer"
                     onClick={() => changerQuantite(item.id, item.quantite - 1)}
                     >
                     -
                     </button>
                     <span className="w-8 text-center">{item.quantite}</span>
                     <button
-                    className="px-2 py-1 rounded bg-gray-200"
+                    className="px-2 py-1 rounded bg-gray-200 cursor-pointer"
                     onClick={() => changerQuantite(item.id, item.quantite + 1)}
                     >
                     +
                     </button>
 
                     <button
-                    className="ml-4 px-3 py-1 text-sm rounded bg-red-950 text-white hover:bg-pink-800 transition"
+                    className="ml-4 px-3 py-1 text-sm rounded bg-red-950 text-white hover:bg-pink-800 transition cursor-pointer"
                     onClick={() => supprimerItem(item.id)}
                     >
                     Supprimer
