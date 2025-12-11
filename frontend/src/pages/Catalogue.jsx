@@ -52,7 +52,7 @@ const Catalogue = () => {
 	if (!produits) return <div className="points"> 
 		<span></span><span></span><span></span>
 
-	</div>;
+ 	</div>;
   	return (
 		<div className="contenu"> 
 			<p className="flex justify-end mb-15 text-sm">{user ? `Bienvenue ${user.name} !` : ""}</p>

@@ -1,6 +1,7 @@
 import { Routes, Route} from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
+
 // Pages
 import Catalogue from "./pages/Catalogue";
 import FicheProduit from "./pages/FicheProduit";
@@ -13,12 +14,11 @@ import ReinitialiserMotDePasse from "./pages/ReinitialiserMotDePasse";
 import MotDePasseOublie from "./pages/MotDePasseOublie";
 
 // Composants
-import Header from "./components/Header";
+import Header from "./components/header";
 import Footer from "./components/Footer";
 import MenuMobile from "./components/MenuMobile";
 import CompteUsager from "./components/CompteUsager";
 import CellierUtilisateur from "./components/CellierUtilisateur";
-
 
 function App() {
 
@@ -47,7 +47,7 @@ function App() {
           <Route path="/produits/:id" element={<FicheProduit />} />
 
           {/* Celliers */}
-           <Route path="/celliers" element={<CellierUtilisateur />} />
+          <Route path="/celliers" element={<CellierUtilisateur />} />
           <Route path="/user/:id/celliers" element={<CellierUtilisateur />} />
           <Route path="/cellier/creer" element={<CreerCellier />} />
           <Route path="/user/:userId/celliers/produits/:produitId" element={<AjouterProduitCellier />} />

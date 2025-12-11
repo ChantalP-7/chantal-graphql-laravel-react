@@ -46,7 +46,7 @@ export default function Header({deconnexion, recherche, setRecherche }) {
             <>
               <div className="relative">
                 <button
-                  className="flex items-center gap-2 hover:text-red-950"
+                  className="flex items-center gap-2 hover:text-red-950 cursor-pointer transition"
                   onClick={() => setCompteOuvert(!compteOuvert)}
                 >
                   Mon compte
@@ -136,8 +136,8 @@ export default function Header({deconnexion, recherche, setRecherche }) {
 
           {!token && !user && (
             <>
-              <Link to="/inscription">Inscription</Link>
-              <Link to="/">Connexion</Link>
+              <Link to="/inscription"  className="bg-red-950 text-white text-center px-4 py-2 rounded-lg">Inscription</Link>
+              <Link to="/" className="bg-red-950 text-white text-center px-4 py-2 rounded-lg">Connexion</Link>
             </>
           )}
         </nav>

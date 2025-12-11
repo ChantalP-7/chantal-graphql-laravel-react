@@ -37,7 +37,6 @@ const ListeAchats = () => {
         );
         } catch (error) {
         console.error(error);
-        alert("Erreur lors de la mise à jour de la quantité.");
     }
   };
 
@@ -49,7 +48,6 @@ const ListeAchats = () => {
         setItems((prev) => prev.filter((it) => it.id !== itemId));
         } catch (error) {
         console.error(error);
-        alert("Erreur lors de la suppression.");
         }
   };
 
@@ -101,7 +99,7 @@ const ListeAchats = () => {
                 </div>
 
                 {/* CONTROLES QUANTITÉ + SUPPRESSION */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                     <button
                     className="px-2 py-1 rounded bg-gray-200"
                     onClick={() => changerQuantite(item.id, item.quantite - 1)}

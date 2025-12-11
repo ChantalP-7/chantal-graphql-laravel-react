@@ -1,4 +1,4 @@
-import { Wine, Columns4, Plus, User, ShoppingCart } from "lucide-react";
+import { Wine, Columns4, Plus, User, ListChecks } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import GetUsager from "./GetUsager";
 import GetToken from "./GetToken";
@@ -13,7 +13,7 @@ export default function MenuMobile() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full h-16 bg-white border-t shadow-xl z-50 px-6">
+    <nav className="fixed bottom-0 left-0 w-full h-16 bg-red-950 border-t shadow-xl z-50 px-6">
       <ul className="flex justify-between items-center h-full">
 
         {/* ===== Accueil / Catalogue ===== */}
@@ -23,7 +23,7 @@ export default function MenuMobile() {
               <Link
                 to="/produits"
                 className={`flex flex-col items-center ${
-                  isActive("/") ? "text-red-950 font-semibold" : "text-red-900 opacity-70"
+                  isActive("/produits") ? "text-white font-semibold" : "text-white opacity-70"
                 }`}
               >
                 <Wine className="w-7 h-7" />
@@ -36,7 +36,7 @@ export default function MenuMobile() {
               <Link
                 to="/celliers"
                 className={`flex flex-col items-center ${
-                  isActive("/celliers") ? "text-red-950 font-semibold" : "text-red-900 opacity-70"
+                  isActive("/celliers") ? "text-white font-semibold" : "text-white opacity-70"
                 }`}
               >
                 <Columns4 className="w-7 h-7" />
@@ -49,7 +49,7 @@ export default function MenuMobile() {
               <Link
                 to="/cellier/creer"
                 className={`flex flex-col items-center ${
-                  isActive("/cellier/creer") ? "text-red-950 font-semibold" : "text-red-900 opacity-70"
+                  isActive("/cellier/creer") ? "text-white font-semibold" : "text-white opacity-70"
                 }`}
               >
                 <Plus className="w-8 h-8" />
@@ -62,7 +62,7 @@ export default function MenuMobile() {
               <Link
                 to="/compte"
                 className={`flex flex-col items-center ${
-                  isActive("/compte") ? "text-red-950 font-semibold" : "text-red-900 opacity-70"
+                  isActive("/compte") ? "text-white font-semibold" : "text-white opacity-70"
                 }`}
               >
                 <User className="w-7 h-7" />
@@ -73,10 +73,10 @@ export default function MenuMobile() {
             <li className="flex-1 text-center">
               <Link to="/liste-achats"
                 className={`flex flex-col items-center ${
-                  isActive("/liste-achats") ? "text-red-950 font-semibold" : "text-red-900 opacity-70"
+                  isActive("/liste-achats") ? "text-white font-semibold" : "text-white opacity-70"
                 }`}
               >
-                <ShoppingCart className="w-7 h-7" />
+                < ListChecks className="w-7 h-7" />
                     <span className="text-xs mt-1">Achats</span>
               </Link>
             </li>
