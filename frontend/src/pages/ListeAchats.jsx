@@ -71,7 +71,7 @@ const ListeAchats = () => {
             {items.map((item) => (
                 <div
                 key={item.id}
-                className="flex items-center justify-between p-4 rounded-lg border bg-white shadow-sm"
+                className="flex flex-col gap-5 py-4 px-6 rounded-lg border bg-white shadow-sm"
                 >
                 {/* IMAGE MINI BOUTEILLE */}
                 <img
@@ -80,7 +80,7 @@ const ListeAchats = () => {
                     "https://cdn.pixabay.com/photo/2012/04/13/11/49/wine-32052_1280.png"
                     }
                     alt={item.produit?.name || "Bouteille de vin"}
-                    className="w-14 h-24 object-contain mr-4"
+                    className="w-20 h-24 object-contain mx-auto"
                 />
 
                 {/* INFOS PRODUIT */}
@@ -99,7 +99,7 @@ const ListeAchats = () => {
                 </div>
 
                 {/* CONTROLES QUANTITÉ + SUPPRESSION */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 border-t border-gray-300 py-4">
                     <button
                     className="px-2 py-1 rounded bg-gray-200"
                     onClick={() => changerQuantite(item.id, item.quantite - 1)}
