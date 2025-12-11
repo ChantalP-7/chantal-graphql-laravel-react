@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
 import GetUsager from "../components/GetUsager"
@@ -11,21 +10,11 @@ import GetUsager from "../components/GetUsager"
  */
  const FicheProduit = () => {
     const { id } = useParams();
-    const [produit, setProduit] = useState(null);  
-    //const [user, setUser] = useState(null);
-    //const navigate = useNavigate();
+    const [produit, setProduit] = useState(null); 
 
     const user = GetUsager();
 
-    // Récupérer l'utilisateur'
-   /* useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-        setUser(JSON.parse(storedUser));
-        }
-    }, []);*/
-
-    // Récupérer le produit
+       // Récupérer le produit
     useEffect(() => {
         api.get(`/produits/${id}`)
             .then(res => setProduit(res.data))
