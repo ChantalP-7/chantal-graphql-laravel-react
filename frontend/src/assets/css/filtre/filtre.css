@@ -171,3 +171,6 @@ Aucun autre fichier ne devrait avoir ces variables :root suivantes.
     margin-bottom: 12px;
 }
 
+.boutonDropdown {
+    margin-top: 10px;
+}

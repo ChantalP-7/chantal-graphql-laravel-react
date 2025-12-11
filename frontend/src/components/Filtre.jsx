@@ -53,7 +53,7 @@ export default function Filtre({ filtre, setFiltre, ordre, setOrdre }) {
     </div>;
 
     return (
-    <div>
+    <div className="boutonDropdown">
         <button 
             type="button" 
             onClick={() => setFiltreOuvert(!filtreOuvert)}
