@@ -13,7 +13,7 @@ export default function MenuMobile() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full h-16 bg-red-950 border-t shadow-xl z-50 px-6">
+    <nav className="fixed bottom-0 left-0 w-full h-16 bg-red-950 shadow-xl z-50 px-6">
       <ul className="flex justify-between items-center h-full">
 
         {/* ===== Accueil / Catalogue ===== */}

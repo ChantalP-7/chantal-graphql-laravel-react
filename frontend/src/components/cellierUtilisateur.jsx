@@ -314,7 +314,7 @@ const AfficheCellier = () => {
                             {afficherFormAjoutCellier === "ajout" ? "Fermer" : "Ajouter un cellier"}
                         </button>
                         {afficherFormAjoutCellier === "ajout" &&  (
-                            <form className="w-full flex flex-col bg-form space-y-4 p-4" onSubmit={gererSoumission}>                               
+                            <form className="w-full flex flex-col bg-form space-y-4 p-4 rounded-lg" onSubmit={gererSoumission}>                               
                                 
                                 <div className="flex flex-col mt-2">
                                     <label className="text-brown" htmlFor="nomCellier">
@@ -355,7 +355,7 @@ const AfficheCellier = () => {
                             <form className="w-full flex flex-col sm:width-full space-y-4 p-4 bg-form rounded-lg" onSubmit={modifierNomCellier}>
                                 <div className="flex flex-col mt-2">
                                     <select
-                                        className="w-full p-3 mb-4 text-lg sm:text-xl rounded-sm bouton-accent text-white bg-transparent focus:outline-none"
+                                        className="w-full p-2 mb-4 text-md sm:text-xl rounded-sm bg-red-950 text-white focus:outline-none"
                                         defaultValue=""
                                         onChange={e => {
                                             const id = e.target.value;
@@ -417,7 +417,7 @@ const AfficheCellier = () => {
                             
                                 <div className="flex flex-col mt-2 ">
                                     <select
-                                        className="w-full p-3 mb-4 text-lg sm:text-xl rounded-sm bouton-accent text-white bg-transparent focus:outline-none"
+                                        className="w-full p-2 mb-4 text-md sm:text-md rounded-sm bg-red-950 text-white focus:outline-none"
                                         defaultValue=""
                                         onChange={e => {
                                             const id = e.target.value;

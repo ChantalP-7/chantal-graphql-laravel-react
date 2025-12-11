@@ -73,7 +73,7 @@ const Catalogue = () => {
 						<div className="carteContenu">
 							<h3 className="font-bold">{p.name} {p.millesime_produit}</h3>
 							<p>{p.identite_produit} - {p.pays_origine}</p>
-							<p className="font-bold">{Number(p.price).toFixed(2)} $</p>	
+							<p className="font-bold ">{Number(p.price).toFixed(2)} $</p>	
 							<div className="carteBouton flex justify-between items-center">								
 								<button className="bg-lime-700 border-transparent hover:bg-lime-800 p-2 rounded-md mt-4 " id="ajoutBouteille">
 									<Link className="block " to={`/produits/${p.id}`}>

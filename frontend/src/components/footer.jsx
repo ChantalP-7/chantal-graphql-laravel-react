@@ -66,7 +66,7 @@ export default function Footer({ deconnexion }) {
       </div>
 
       {/* BAS DE PAGE */}
-      <div className="bg-red-950 text-white text-center py-4 text-xs sm:text-sm">
+      <div className="bg-red-950 text-white text-center py-6 text-xs sm:text-sm">
         © 2025 Vino — Tous droits reservés.
       </div>
 

@@ -3,8 +3,7 @@
 @import "tailwindcss";
 
 :root{
-  /* --couleur-accent: #96384F; */
-  --couleur-accent: #7c9838;
+  --couleur-accent: #5d7226;
   --couleur-text: #450C1B;
   --couleur-form: #450c1b3e;
   --couleur-fond: #f8f3f3;

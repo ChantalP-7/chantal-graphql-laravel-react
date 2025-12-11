@@ -102,31 +102,31 @@ export default function Header({deconnexion, recherche, setRecherche }) {
 
         {/* Recherche mobile */}
         {token && (
-        <div className="flex md:hidden items-center w-full mt-4 md:mt-0">
+        <div className="flex md:hidden items-center w-full mt-4 mb-4 md:mt-0">
             <Recherche recherche={recherche} setRecherche={setRecherche} />
         </div>
         )}
 
         {/* NAV mobile */}
         <nav className="flex flex-col gap-4 text-lg font-medium">
-          {token && <Link to="/produits">Catalogue</Link>}
-          {token && <Link to="/liste-achats">Achats</Link>}
+          {token && <Link className="hover:text-lime-800" to="/produits">Catalogue</Link>}
+          {token && <Link className="hover:text-lime-800" to="/liste-achats">Achats</Link>}
           
           {token && user && (
             <>
               <button
                 onClick={() => setCompteOuvert(!compteOuvert)}
-                className="flex justify-between w-full text-left"
+                className="flex justify-between w-full text-left mb-4"
               >
                 Mon compte
                 {compteOuvert ? <ChevronUp /> : <ChevronDown />}
               </button>
 
               {compteOuvert && (
-                <div className="ml-4 flex flex-col gap-2">
-                  <Link to="/compte">Gérer mon compte</Link>
-                  <Link to="/celliers">Mes celliers</Link>
-                  <Link to="/cellier/creer">Ajouter un cellier</Link>
+                <div className="ml-4 mb-4 flex flex-col gap-2">
+                  <Link className="hover:text-lime-800" to="/compte">Gérer mon compte</Link>
+                  <Link className="hover:text-lime-800" to="/celliers">Mes celliers</Link>
+                  <Link className="hover:text-lime-800" to="/cellier/creer">Ajouter un cellier</Link>
                 </div>
               )}
 

@@ -81,7 +81,7 @@ import { useNavigate } from "react-router-dom";
         <span></span><span></span><span></span>
     </div>;
     return (
-        <div className="w-full min-h-screen flex flex-col items-center mb-[-50px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center mb-[-50px] px-4 sm:px-6 lg:px-8">
             <h1 className="text-2xl mt-20 mb-10">Ajout de bouteilles au cellier</h1>            
             <div className="max-w-lg rounded-lg overflow-hidden shadow-md bg-white">                
                 <div className="carteColonne flex flex-col items-center">
@@ -90,14 +90,14 @@ import { useNavigate } from "react-router-dom";
                         src="/images/wine-1802763_640.jpg"
                         alt="Image cellier"
                     />
-                    <div class="p-4">
+                    <div className="p-4">
                         <h2 className="text-xl sm:text-2xl font-semibold mb-3 mt-2">Garnir mon cellier</h2>
                         <select name="cellier" id="cellier"
-                        className="w-full p-3 mb-4 text-md sm:text-xl rounded-sm focus:outline-none block border border-gray-300 bg-red-950 text-white"
+                        className="w-full p-3 mb-4  mt-4 text-md sm:text-xl rounded-sm focus:outline-none block border border-gray-300 bouton-raisin  text-white"
                         
                         onChange={e => setCellierSelectionne(e.target.value)} defaultValue={''}
                         >
-                            <option className="" value=""  >Sélectionner un cellier</option>
+                            <option disabled value=""  >Sélectionner un cellier</option>
                             {Array.isArray(celliers) && celliers.length > 0 ? (
                                 celliers.map(c => <option key={c.id} value={c.id}>{c.nom}</option>)
                             ) : (
@@ -132,9 +132,9 @@ import { useNavigate } from "react-router-dom";
                         </div>
                         <button
                             onClick={ajouterProduit}
-                            className="w-full flex gap-2 justify-center items-center p-4 bouton-accent text-lg sm:text-xl text-white rounded cursor-pointer border-xs transition-colors"
+                            className="w-full flex gap-2 justify-center bouton-accent transition-colors"
                         >
-                            <span>Ajouter</span><FaWineBottle />
+                            Ajouter<FaWineBottle />
 
                         </button>
                     </div>
