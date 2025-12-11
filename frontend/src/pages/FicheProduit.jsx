@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useEffect, useState} from "react";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import GetUsager from "../components/GetUsager"
 

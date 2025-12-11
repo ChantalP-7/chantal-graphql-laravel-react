@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 
+
 const ListeAchats = () => {
     const [items, setItems] = useState([]);
     const [chargement, setChargement] = useState(true);
     const [erreur, setErreur] = useState("");
+    
 
   const chargerListe = async () => {
     try {
@@ -41,11 +43,11 @@ const ListeAchats = () => {
   };
 
   const supprimerItem = async (itemId) => {
-        if (!window.confirm("Retirer ce produit de la liste ?")) return;
-
+        
         try {
         await api.delete(`/liste-achats/${itemId}`);
         setItems((prev) => prev.filter((it) => it.id !== itemId));
+
         } catch (error) {
         console.error(error);
         }

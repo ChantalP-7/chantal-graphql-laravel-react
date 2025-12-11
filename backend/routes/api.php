@@ -43,6 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/produits/{id}', [ProduitController::class, 'show']);
     Route::put('/produit/{id}/deplacer', [ProduitController::class, 'deplacer']);
 
+    // Routes des filtres
+    Route::get('/identite_produit', [ProduitController::class, 'getCouleurs']);
+    Route::get('/pays_origine', [ProduitController::class, 'getPays']);
+
     // Routes pour les celliers
     Route::get('/celliers', [CellierController::class, 'index']);
     Route::get('/celliers/{id}', [CellierController::class, 'afficherProduit']);
@@ -52,7 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/celliers', [CellierController::class, 'creerCellier']);
     Route::put('/celliers/{id}', [CellierController::class, 'modifieNomCellier']);
     Route::delete('/celliers/{cellierId}', [CellierController::class, 'supprimerCellier']);
-    
+
 
     // Routes pour la liste d'achat
     Route::get('/liste-achats', [ListeAchatController::class, 'index']);

@@ -1,5 +1,6 @@
 import { Routes, Route} from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "./api/axios";
 import "./App.css";
 
 // Pages
@@ -22,19 +23,32 @@ import CellierUtilisateur from "./components/CellierUtilisateur";
 
 function App() {
 
+    const [isAuth, setIsAuth] = useState(
+    !!localStorage.getItem("token") || !!sessionStorage.getItem("token")
+  );
+
+
+     useEffect(() => {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (token) {
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+  }, [isAuth]);
+
   const [recherche, setRecherche] = useState(""); 
 
   return (
     <div className="min-h-screen flex flex-col">
       {/* HEADER */}
-      <Header recherche={recherche} setRecherche={setRecherche} />
+      <Header  isAuth={isAuth} setIsAuth={setIsAuth}  recherche={recherche} setRecherche={setRecherche} />
 
       {/* MAIN CONTENT */}
       <main className="pb-24 flex-1 px-4">
         <Routes>
 
           {/* Auth */}
-          <Route path="/" element={<Auth />} />
+          <Route path="/" element={<Auth setIsAuth={setIsAuth} />} />
           <Route path="/mdp-oublie" element={<MotDePasseOublie />} />
           <Route path="/mdp-reinitialise" element={<ReinitialiserMotDePasse />} />
           <Route path="/inscription" element={<Inscription />} />
@@ -58,9 +72,11 @@ function App() {
         </Routes>
       </main>
 
-      {/* FOOTER & MENU MOBILE */}
+      {/* FOOTER */}
       <Footer />
-      <MenuMobile />
+
+      {/* Menu mobile visible seulement si on est connecté */}
+      {isAuth && <MenuMobile />}
 
     </div>
   );

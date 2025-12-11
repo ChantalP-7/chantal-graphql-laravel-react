@@ -1,14 +1,8 @@
 import { Github } from "lucide-react";
 import { Link } from "react-router-dom";
-import GetUsager from "./GetUsager";
-import GetToken from "./GetToken";
-import BoutonDeconnexion from "./BoutonDeconnexion";
 
-export default function Footer({ deconnexion }) {
+export default function Footer() {
   
-  // Récupérer token et user depuis localStorage ou sessionStorage
-  const token = GetToken
-  const user = GetUsager();
 
   return (
     <footer className="mt-20 bg-stone-200 text-red-950">
@@ -38,32 +32,6 @@ export default function Footer({ deconnexion }) {
 
       </div>
 
-
-      {/* NAVIGATION BAS */}
-      <div className="border-t border-gray-300 shadow py-8">
-
-      {/* SECTION LIENS NAVIGATION (dynamique selon état de connexion) */}
-  
-        <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
-
-          {/* === Connecté === */}
-          {token && user && (
-          <>
-            {/* Déconnexion desktop */}
-            <BoutonDeconnexion deconnexion={deconnexion} />
-          </>
-        )}
-
-          {/* === Non connecté === */}
-          {(!token || !user) && (
-            <>
-              <Link to="/inscription" className="hover:text-red-800">Inscription</Link>
-              <Link to="/" className="hover:text-red-800">Connexion</Link>
-            </>
-          )}
-
-        </nav>
-      </div>
 
       {/* BAS DE PAGE */}
       <div className="bg-red-950 text-white text-center py-4 text-xs sm:text-sm">

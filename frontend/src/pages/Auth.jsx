@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import api from "../api/axios";
 
 
-export default function Auth() {
+export default function Auth({ setIsAuth }) {
   const [courriel, setCourriel] = useState(localStorage.getItem('souvenir_courriel') || "");
   const [motDePasse, setMotDePasse] = useState("");
   const [erreurs, setErreurs] = useState({});
@@ -30,7 +30,8 @@ export default function Auth() {
       return () => clearTimeout(temps)
     }
   }, [msgSucces]);
-  
+ 
+
   const gererSoumission = async (e) => {
     e.preventDefault();
     
@@ -64,6 +65,9 @@ export default function Auth() {
       setMotDePasse('')
       setSouvenirDeMoi(false)
       setErreurs({})
+
+      // ON INFORME APP QUE L'USER EST CONNECTÉ
+      setIsAuth(true);
       
       // Redirige vers la page catalogue
       route('/produits');

@@ -2,7 +2,7 @@ import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
 // Fonction déconnexion
-export default function BoutonDeconnexion(){
+export default function BoutonDeconnexion({setIsAuth}) {
     const route = useNavigate();
 
     const deconnexion = async() => {
@@ -14,6 +14,9 @@ export default function BoutonDeconnexion(){
             localStorage.removeItem('user');
             sessionStorage.removeItem("token");
             sessionStorage.removeItem("user");
+
+            // Mets à jour immédiatement le menu
+                if (setIsAuth) setIsAuth(false);
 
             // Redirectionner vers la page de connexion avec message de succès
             route('/',{
