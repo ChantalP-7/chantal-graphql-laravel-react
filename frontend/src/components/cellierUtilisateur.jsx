@@ -1,509 +1,295 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import FicheProduitCellier from "./FicheProduitCellier";
-import ModalAjouter from "./ModalAjouter";
-import ModalErreur from "./ModalErreur";
-import ModalSupprimerCellier from "./ModalSupprimerCellier";
-import { FaChevronUp } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
+import ModalConfirmation from "./ModalConfirmation";
+import ModalViderCellier from "./ModalViderCellier";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import { GiBarrel } from "react-icons/gi";
- 
 
 const produitsParPageCellier = 6;
 
 const AfficheCellier = () => {
-    const [celliers, setCelliers] = useState([]);
-    const [cellierOuvertId, setCellierOuvertId] = useState(null);
-    const [produitSelectionne, setProduitSelectionne] = useState(null);
-    const [pagination, setPagination] = useState({});
-    const [afficherFormAjoutCellier, setAfficherFormAjoutCellier] = useState(false); // toggle afficher/cacher le formulaire d'ajout
-    const [afficherFormModifCellier, setAfficherFormModifCellier] = useState(false); // toggle afficher/cacher le formulaire de modif
-    const [afficherFormSupprimerCellier, setAfficherFormSupprimerCellier] = useState(false) // toggle afficher/cacher le formulaire de suppression de cellier
-    const [nomCellier, setNomCellier] = useState("");
-    const [nomCellierModif, setNomCellierModif] = useState("");
-    const [nomCellierSup, setNomCellierSup] = useState("");
-    const [cellierSelectionne, setCellierSelectionne] = useState("");
-    const [erreurs, setErreurs] = useState({});
-    const [message, setMessage] = useState("");
-    const [messageAjout, setMessageAjout] = useState("");
-    const [messageErreur, setMessageErreur] = useState("");
-    const [messageViderCellier, setMessageViderCellier] = useState("");
-    const [messageSupprimerCellier, setMessageSupprimerCellier] = useState("");
-    const [modalAjouterVisible, setModalAjouterVisible] = useState(false); // affiche la boite modale d'ajout et quantité
-    const [modalErreurVisible, setModalErreurVisible] = useState(false);
-    const [modalSupprimerCellierVisible, setModalSupprimerCellierVisible] = useState(false);
-    const [modalViderCellierVisible, setModalViderCellierVisible] = useState(false);
-    const [chargementSupprimer, setChargementSupprimer] = useState(false);
-    const [modalRetraitVisible, setModalRetraitVisible] = useState(false);
-    const [messageRetraitBouteille, setMessageRetraitBouteille] = useState("");    
+  const [celliers, setCelliers] = useState([]);
+  const [cellierOuvertId, setCellierOuvertId] = useState(null);
+  const [selection, setSelection] = useState({ cellier: null, produit: null });
+  const [pagination, setPagination] = useState({});
+  const [afficherFormAjoutCellier, setAfficherFormAjoutCellier] = useState(false);
+  const [nomCellier, setNomCellier] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalSupprimerViderVisible, setModalSupprimerViderVisible] = useState(false);
+  const [cellierSelectionneSupId, setCellierSelectionneSupId] = useState(null);
 
-    useEffect(() => {
-        api.get("/celliers")
-        .then(res => setCelliers(Array.isArray(res.data) ? res.data : []))
-        .catch(err => {
-            console.error("Erreur lors de la récupération des celliers :", err);
-            setCelliers([]);
-        });
-    }, []);
+  const cellierSelectionneSup = celliers.find(
+    (c) => c.id === cellierSelectionneSupId
+  );
 
-    // Supression / Boire une bouteille
-    const gestionRetraitBouteille = async (cellierId, produitId, quantiteActuelle) => {
-        if (quantiteActuelle <= 0) return;
-        const nouvelleQuantite = quantiteActuelle - 1;
+  // Pagination des produits
+  const getProduitsPage = (cellier) => {
+    const page = pagination[cellier.id] || 0;
+    const start = page * produitsParPageCellier;
+    const end = start + produitsParPageCellier;
+    return cellier.produits.slice(start, end);
+  };
 
-        try {
-            await api.put(`/celliers/${cellierId}/produits/${produitId}`, { quantite: nouvelleQuantite });
+  // Fetch celliers
+  useEffect(() => {
+    api
+      .get("/celliers")
+      .then((res) => setCelliers(Array.isArray(res.data) ? res.data : []))
+      .catch((err) => {
+        console.error("Erreur récupération celliers :", err);
+        setCelliers([]);
+      });
+  }, []);
 
-            setCelliers(prev =>
-                prev.map(cellier => {
-                    if (cellier.id !== cellierId) return cellier;
-
-                    const nouveauxProduits = cellier.produits
-                        .map(p =>
-                            p.id === produitId
-                                ? { ...p, pivot: { ...p.pivot, quantite: nouvelleQuantite } }
-                                : p
-                        )
-                        .filter(p => p.pivot.quantite > 0); // supprime si quantité = 0
-
-                    return { ...cellier, produits: nouveauxProduits };
-                })
-            );
-
-            if (produitSelectionne && produitSelectionne.id === produitId && nouvelleQuantite === 0) {
-                setProduitSelectionne(null);
-            } else {                
-                setProduitSelectionne(prev => ({ ...prev, pivot: { ...prev.pivot, quantite: nouvelleQuantite } }));
-            }
-
-            try {
-                await api.put(`/celliers/${cellierId}/produits/${produitId}`, { quantite: nouvelleQuantite });
-            } catch (error) {
-                console.error(error);
-                // Optionnel : remettre l'ancienne quantité ou afficher erreur
-            }
-
-            // Affiche la modale succès
-            setMessageRetraitBouteille("Retrait de la bouteille avec succès !");
-            setModalRetraitVisible(true);
-            setTimeout(() => setModalRetraitVisible(false), 3000);
-
-        } catch (error) {
-            console.error(error);
-            setMessageRetraitBouteille("Erreur lors du retrait de la bouteille !");
-            setModalRetraitVisible(true);
-            setTimeout(() => setModalRetraitVisible(false), 3000);
-        }
+  // Ajouter un cellier
+  const gererAjoutCellier = async (e) => {
+    e.preventDefault();
+    if (!nomCellier.trim()) {
+      afficherModalConfirmation("Le nom du cellier est requis.");
+      return;
     }
+    try {
+      const res = await api.post("/celliers", { nom: nomCellier });
+      setCelliers((prev) => [...prev, res.data.cellier]);
+      setNomCellier("");
+      afficherModalConfirmation("Cellier créé avec succès !");
+    } catch (err) {
+      console.error(err);
+      afficherModalConfirmation("Erreur lors de la création du cellier.");
+    }
+  };
 
-    // Ajout d'un nouveau cellier
-    const gererSoumission = async (e) => {
-        e.preventDefault();
+  // Boire une bouteille
+  const boireBouteille = async () => {
+    const { cellier, produit } = selection;
+    if (!cellier || !produit) return;
+    const nouvelleQuantite = produit.pivot.quantite - 1;
+    if (nouvelleQuantite < 0) return;
 
-        setErreurs({});
-        setMessage("");
+    try {
+      await api.put(`/celliers/${cellier.id}/produits/${produit.id}`, { quantite: nouvelleQuantite });
 
-        if (!nomCellier.trim()) {
-            setMessageErreur("Le nom du cellier est requis.");
-            setModalErreurVisible(true);
-            setTimeout(() => setModalErreurVisible(false), 3000);
-            return;
-        }
-        try {
-            const reponse = await api.post("/celliers", { nom: nomCellier });
+      setCelliers((prev) =>
+        prev.map((c) => {
+          if (c.id !== cellier.id) return c;
+          if (nouvelleQuantite === 0)
+            return { ...c, produits: c.produits.filter((p) => p.id !== produit.id) };
+          return {
+            ...c,
+            produits: c.produits.map((p) =>
+              p.id === produit.id ? { ...p, pivot: { ...p.pivot, quantite: nouvelleQuantite } } : p
+            ),
+          };
+        })
+      );
 
-            const nouveauCellier = reponse.data.cellier;
+      if (nouvelleQuantite === 0) setSelection({ cellier: null, produit: null });
+      afficherModalConfirmation("Bonne dégustation !");
+    } catch (err) {
+      console.error(err);
+      afficherModalConfirmation("Erreur lors du retrait de la bouteille");
+    }
+  };
 
-            setNomCellier("");
-            setMessageAjout(reponse.data.message || "Cellier créé avec succès !");
-            setModalAjouterVisible(true);
-            
-            setCellierSelectionne(nouveauCellier.id);
-            setCelliers(prev => [...prev, nouveauCellier]);                       
-            setTimeout(() => setModalAjouterVisible(false), 3000);   
+  // Supprimer ou vider un cellier
+  const viderCellier = async (cellierId) => {
+    try {
+      const cellier = celliers.find((c) => c.id === cellierId);
 
-            // Fermer le formulaire
-            setAfficherFormAjoutCellier(null);
+      // Calcul de la quantité totale
+      const nbBouteilles =
+        cellier?.produits?.reduce((total, p) => total + (p.pivot?.quantite || 0), 0) ?? 0;
 
-        } catch (error) {
-            if (error.response && error.response.data.errors) {
-                setErreurs(error.response.data.errors);
-            } else {
-                setMessageAjout("Une erreur est survenue lors de la création du cellier.");
-                setModalAjouterVisible(true);
-            }
-        }
-    };
+      // Si le cellier contient des bouteilles, on les supprime
+      if (nbBouteilles > 0) {
+        await Promise.all(
+          cellier.produits.map((p) =>
+            api.put(`/celliers/${cellierId}/produits/${p.id}`, { quantite: 0 })
+          )
+        );
+      }
 
-    // Modifier le nom du cellier
-    const modifierNomCellier = async (e) => {
-        e.preventDefault();
+      // Supprimer le cellier
+      await api.delete(`/celliers/${cellierId}`);
 
+      // Mettre à jour l'état
+      setCelliers((prev) => prev.filter((c) => c.id !== cellierId));
+      setCellierOuvertId(null);
+      setModalSupprimerViderVisible(false);
+      setCellierSelectionneSupId(null);
 
-        if (!cellierSelectionne) {
-            setMessageErreur("Sélectionne un cellier.");
-            setModalErreurVisible(true);
-            setTimeout(() => setModalErreurVisible(false), 3000);
-            return;
-        }
-        if (!nomCellierModif.trim()) {
-            setMessageErreur("Le nom du cellier est requis.");
-            setModalErreurVisible(true);
-            setTimeout(() => setModalErreurVisible(false), 3000);
-            return;
-        }
+      afficherModalConfirmation("Cellier supprimé avec succès !");
+    } catch (err) {
+      console.error(err);
+      afficherModalConfirmation("Erreur lors de la suppression du cellier");
+    }
+  };
 
-        try {
-            const res = await api.put(`/celliers/${cellierSelectionne}`, {
-                nom: nomCellierModif
-            });
+  const afficherModalConfirmation = (message) => {
+    setModalMessage(message);
+    setModalVisible(true);
+    setTimeout(() => setModalVisible(false), 2000);
+  };
 
-            // Mettre à jour la liste des celliers
-            setCelliers(prev =>
-                prev.map(c =>
-                    c.id == cellierSelectionne ? { ...c, nom: nomCellierModif } : c
-                )
-            );
+  const gererSupprimerCellier = (cellier) => {
+    setCellierSelectionneSupId(cellier.id);
+    setModalSupprimerViderVisible(true);
+  };
 
-            // Message de succès
-            setMessageAjout(`Tu as bien modifié le nom du cellier pour : ${nomCellierModif}!`);
-            setModalAjouterVisible(true);
-            setTimeout(() => {
-                setModalAjouterVisible(false);
-            }, 3000);
-            setNomCellierModif("");
-            setAfficherFormModifCellier(false);
-            setErreurs({});
-            setMessage(res.data.message);
-            setTimeout(() => setMessage(""), 3000);
-            setCellierSelectionne("");
+  return (
+    <div className="flex justify-center px-3 py-4">
+      <div className="w-full lg:w-4/5">
+        <h1 className="text-3xl mt-8 mb-8 text-center">Gestion des celliers</h1>
+        <h2 className="text-2xl mt-8 mb-8 text-center flex gap-2 items-center">
+          Mes Celliers <GiBarrel />
+        </h2>
 
-        } catch (error) {
-            if (error.response?.data?.errors) {
-                setErreurs(error.response.data.errors);
-            } else if (error.response?.data?.message) {
-                setMessage(error.response.data.message);
-            }
-        }
-    };
-    
-    // Supprimer cellier
-    const supprimerCellier = async () => {
-        if (!cellierSelectionne) {        
-            setMessageErreur("Choisissez un cellier à supprimer");
-            setModalErreurVisible(true);
-            setTimeout(() => setModalErreurVisible(false), 3000);
-            return;
-        }
+        {celliers.length > 0 ? (
+          <ul className="space-y-4 mb-20">
+            {celliers.map((cellier) => (
+              <li key={cellier.id} className="rounded-lg shadow-sm overflow-hidden">
+                <button
+                  onClick={() =>
+                    setCellierOuvertId(cellierOuvertId === cellier.id ? null : cellier.id)
+                  }
+                  className="w-full text-left p-3 flex justify-between items-center bg-[var(--couleur-form)] hover:bg-[#e5e5e5] rounded-lg cursor-pointer"
+                >
+                  <span className="font-semibold">{cellier.nom}</span>
+                  <span>{cellierOuvertId === cellier.id ? <FaChevronUp /> : <FaChevronDown />}</span>
+                </button>
 
-        const cellier = celliers.find(c => c.id == cellierSelectionne);
-
-        if (!cellier) return;
-        
-        if (cellier.produits && cellier.produits.length > 0) {
-            setMessageViderCellier("Vider ton cellier avant de supprimer");
-            setModalViderCellierVisible(true);
-
-            setTimeout(() => setModalViderCellierVisible(false), 3000);
-            return;
-        }
-        
-        setModalSupprimerCellierVisible(true);
-    };
-    
-
-    // Pagination
-    const changerPage = (cellierId, direction) => {
-        setPagination(prev => {
-        const page = prev[cellierId] || 0;
-        return { ...prev, [cellierId]: page + direction };
-        });
-    };
-
-    const getProduitsPage = (cellier) => {
-        const page = pagination[cellier.id] || 0;
-        const start = page * produitsParPageCellier;
-        const end = start + produitsParPageCellier;
-        return cellier.produits.slice(start, end);
-    };
-
-    return (
-        <div className="flex justify-center align-col px-3 py-4">                        
-            <div className="w-full lg:w-4/5">
-                <div>
-                    <h1 className="text-3xl mt-8 mb-8 text-center">Gestion des celliers</h1>
-                </div>
-                <h2 className="text-2xl mt-8 mb-8 text-center flex gap-2 items-center">Mes Celliers <GiBarrel /></h2>
-
-                {celliers.length > 0 ? (
-                <ul className="space-y-4 mb-20">
-                    {celliers.map(cellier => (
-                    <li key={cellier.id} className="rounded-lg shadow-sm overflow-hidden">
-                        <button
-                        onClick={() => setCellierOuvertId(cellierOuvertId === cellier.id ? null : cellier.id)}
-                        className="w-full text-left p-3 flex justify-between items-center bg-[var(--couleur-form)] hover:bg-[#e5e5e5] rounded-lg cursor-pointer"
-                        >
-                        <span className="font-semibold">{cellier.nom}</span>
-                        <span className="text-md">{cellierOuvertId === cellier.id ? <FaChevronUp /> : <FaChevronDown />}</span>
-                        </button>
-                        <div className={`overflow-hidden transition-all duration-300 ${cellierOuvertId === cellier.id ? "max-h-[2000px] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"}`}>
-                        {cellier.produits && cellier.produits.length > 0 ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 bg-[var(--couleur-form)] lg:grid-cols-5 gap-2 p-2">
-                            {getProduitsPage(cellier).map(p => (
-                                <div
-                                key={p.id}
-                                className="flex flex-col items-left p-2 bg-white rounded-md shadow cursor-pointer hover:bg-gray-50"
-                                onClick={() => setProduitSelectionne({ ...p, cellierId: cellier.id })}
-                                >
-                                <div className="w-full aspect-square  rounded-md flex items-center justify-center">                                
-                                    <img className="imageCellier" src={p.image || 'https://cdn.pixabay.com/photo/2012/04/13/11/49/wine-32052_1280.png'}
-                                    alt={p.name ? `Nom du vin ${p.name}` : 'Nom du vin non disponible'}/>
-                                </div>
-                                <p className="text-sm font-medium text-[var(--couleur-text)] mt-1 mb-1">{p.name}</p>
-                                <p className="text-sm font-bold  text-[var(--couleur-text)] ">Quantité : {p.pivot.quantite}</p>
-                                </div>
-                            ))}
-
-                            {/* Pagination des celliers - 6 par section maximum */}
-                            {cellier.produits.length > produitsParPageCellier && (
-                                <div className="flex justify-between col-span-full mt-2">
-                                <button
-                                    className="px-3 py-1 bg-white rounded disabled:opacity-50 disabled:cursor-default hover:cursor-pointer"
-                                    onClick={() => changerPage(cellier.id, -1)}
-                                    disabled={(pagination[cellier.id] || 0) === 0}
-                                >
-                                    Précédent
-                                </button>
-                                <button
-                                    className="px-3 py-1 bg-white rounded disabled:opacity-50 disabled:cursor-default hover:cursor-pointer"
-                                    onClick={() => changerPage(cellier.id, 1)}
-                                    disabled={(pagination[cellier.id] || 0) >= Math.floor(cellier.produits.length / produitsParPageCellier)}
-                                >
-                                    Suivant
-                                </button>
-                                </div>
-                            )}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    cellierOuvertId === cellier.id ? "max-h-[2000px] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
+                  }`}
+                >
+                  {cellier.produits && cellier.produits.length > 0 ? (
+                    <>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 p-2 bg-[var(--couleur-form)]">
+                        {getProduitsPage(cellier)
+                          .filter((p) => p.pivot.quantite > 0)
+                          .map((p) => (
+                            <div
+                              key={p.id}
+                              className="flex flex-col items-left p-2 bg-white rounded-md shadow cursor-pointer hover:bg-gray-50"
+                              onClick={() => setSelection({ cellier, produit: p })}
+                            >
+                              <img
+                                src={p.image || "https://cdn.pixabay.com/photo/2012/04/13/11/49/wine-32052_1280.png"}
+                                alt={p.name || "Nom du vin non disponible"}
+                                className="w-full aspect-square rounded-md object-contain"
+                              />
+                              <p>{p.name}</p>
+                              <p>Quantité : {p.pivot.quantite}</p>
                             </div>
-                        ) : (
-                            <p className="p-4 text-gray-500">Aucun produit dans ce cellier.</p>
-                        )}
+                          ))}
+                      </div>
+
+                      {cellier.produits.length > produitsParPageCellier && (
+                        <div className="flex justify-between mt-2">
+                          <button
+                            className="px-2 py-1 bg-gray-300 rounded disabled:opacity-50"
+                            disabled={(pagination[cellier.id] || 0) === 0}
+                            onClick={() =>
+                              setPagination((prev) => ({
+                                ...prev,
+                                [cellier.id]: (prev[cellier.id] || 0) - 1,
+                              }))
+                            }
+                          >
+                            Précédent
+                          </button>
+                          <button
+                            className="px-2 py-1 bg-gray-300 rounded disabled:opacity-50"
+                            disabled={
+                              (pagination[cellier.id] || 0) >=
+                              Math.floor((cellier.produits.length - 1) / produitsParPageCellier)
+                            }
+                            onClick={() =>
+                              setPagination((prev) => ({
+                                ...prev,
+                                [cellier.id]: (prev[cellier.id] || 0) + 1,
+                              }))
+                            }
+                          >
+                            Suivant
+                          </button>
                         </div>
-                    </li>
-                    ))}
-                </ul>
-                ) : (
-                <p></p>
-                )}
+                      )}
+                    </>
+                  ) : (
+                    <p className="p-4 text-gray-500">Aucun produit dans ce cellier.</p>
+                  )}
 
-                {modalRetraitVisible && (
-                    <ModalErreur
-                        visible={modalRetraitVisible}
-                        messageErreur={messageRetraitBouteille}
-                        onFermer={() => setModalRetraitVisible(false)}
-                    />
-                )}
-                
-                <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:gap-20">                    
-                    { /* Ajout d'un nouveau cellier */ }
-                    <div className="relative w-full sm:w-auto">
-                        <p className="text-2xl mb-8 flex gap-2 items-center">Nouveau cellier</p>
-                        
-                        <button className="sm:w-full sm:block inline-block text-lg px-6 py-3 mb-10 border-[2px] border-solid border-[var(--couleur-accent)] text-[var(--couleur-accent)] hover:bg-[var(--couleur-accent)] hover:text-white rounded-lg cursor-pointer" onClick={() => setAfficherFormAjoutCellier(prev => prev === "ajout" ? null : "ajout")}>
-                                
-                            {afficherFormAjoutCellier === "ajout" ? "Fermer" : "Ajouter un cellier"}
-                        </button>
-                        {afficherFormAjoutCellier === "ajout" &&  (
-                            <form className="w-full flex flex-col bg-form space-y-4 p-4 rounded-lg" onSubmit={gererSoumission}>                               
-                                
-                                <div className="flex flex-col mt-2">
-                                    <label className="text-brown" htmlFor="nomCellier">
-                                    Nom du cellier
-                                    </label>
-                                    <input
-                                    className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-red-300 focus:ring-1 focus:ring-red-300"
-                                    type="text"
-                                    id="nomCellier"
-                                    name="nom"
-                                    placeholder="Ex. : Cellier du sous-sol"
-                                    value={nomCellier}
-                                    onChange={(e) => setNomCellier(e.target.value)}
-                                    />
-                                </div>
-                                <input
-                                className="bouton-accent"
-                                type="submit"
-                                value="Créer le cellier"
-                                />
-                            </form>                            
-                        )}                
-                    </div>
-
-                    {/* Modification du nom du cellier */ }
-
-                    <div className="w-full sm:w-auto">
-                        <p className="text-2xl mb-8 flex gap-2 items-center">Modifier le nom</p>                        
-                        <button className="sm:w-full sm:block inline-block text-lg cursor-pointer px-6 py-3 mb-10 border-[2px] border-solid border-[var(--couleur-accent)] text-[var(--couleur-accent)] hover:bg-[var(--couleur-accent)]  hover:text-white rounded-lg" onClick={() => setAfficherFormModifCellier(!afficherFormModifCellier)}>                        
-                            {afficherFormModifCellier ? "Fermer" : "Modifier le nom"}
-                        </button>
-                        {afficherFormModifCellier && (
-                            <form className="w-full flex flex-col sm:width-full space-y-4 p-4 bg-form rounded-lg" onSubmit={modifierNomCellier}>
-                                <div className="flex flex-col mt-2">
-                                    <select
-                                        className="w-full p-2 mb-4 bouton-accent text-md sm:text-xl rounded-sm bg-red-950 text-white focus:outline-none"
-                                        defaultValue=""
-                                        onChange={e => {
-                                            const id = e.target.value;
-                                            setCellierSelectionne(id);
-                                            const cellierSelectionne = celliers.find(c => c.id == id);
-                                            if (cellierSelectionne) {
-                                                setNomCellierModif(cellierSelectionne.nom);
-                                            }
-                                        }}
-                                    >
-                                        <option value="">Sélectionne un cellier</option>
-                                        {celliers.map(c => (
-                                            <option key={c.id} value={c.id}>{c.nom}</option>
-                                        ))}
-                                    </select>
-                                    <input
-                                    className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-red-300 focus:ring-1 focus:ring-red-300"
-                                    type="text"
-                                    id="nomCellier"
-                                    name="nom"
-                                    placeholder="Ex. : Cellier du sous-sol"
-                                    value={nomCellierModif}
-                                    onChange={(e) => setNomCellierModif(e.target.value)}
-                                    />
-                                    {erreurs.nom && <p className="text-red-500 pt-2">{erreurs.nom[0]}</p>}
-                                </div>                        
-                                <input
-                                className="bouton-accent"
-                                type="submit"
-                                value="Mettre à jour"
-                                />
-                            </form>
-                        )}
-                    
-                    </div>
-
-                    {/* Suppression d'un cellier */ }
-                    
-                    <div className="relative w-full sm:w-auto">
-                        <p className="text-2xl mb-8 flex gap-2 items-center">Supprimer un cellier</p>
-                        {messageSupprimerCellier && (
-                            <p className="text-green-600 font-semibold mb-4">{messageSupprimerCellier}</p>
-                        )}
-                        <button className="sm:w-full sm:block inline-block text-lg px-6 py-3 mb-10 border-[2px] border-solid border-[var(--couleur-accent)] text-[var(--couleur-accent)] hover:bg-[var(--couleur-accent)] hover:text-white rounded-lg cursor-pointer" onClick={() => setAfficherFormSupprimerCellier(prev => prev === "supprimer" ? null : "supprimer")}>                                
-                            {afficherFormSupprimerCellier === "supprimer" ? "Fermer" : "Supprimer un cellier"}
-                        </button>
-                        {afficherFormSupprimerCellier === "supprimer" &&  (
-                            <form className="w-full flex flex-col sm:width-full space-y-4 p-4 bg-form rounded-lg" onSubmit={(e) => {
-                                e.preventDefault(); supprimerCellier();
-                                
-                            }}>
-                            
-                                <div className="flex flex-col mt-2 ">
-                                    <select
-                                        className="w-full p-2 mb-4 text-md sm:text-md bouton-accent rounded-sm bg-red-950 text-white focus:outline-none"
-                                        defaultValue=""
-                                        onChange={e => {
-                                            const id = e.target.value;
-                                            setCellierSelectionne(id);
-                                            const cellierSelectionne = celliers.find(c => c.id == id);
-                                            if (cellierSelectionne) {
-                                                setNomCellierSup(cellierSelectionne.nom);
-                                            }
-                                        }}
-                                    >
-                                        <option value="">Choisisssez un cellier</option>
-                                        {celliers.map(c => (
-                                            <option key={c.id} value={c.id}>{c.nom}</option>
-                                        ))}
-                                    </select>
-                                    <input
-                                    className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-red-300 focus:ring-1 focus:ring-red-300"
-                                    type="text"
-                                    id="nomCellier"
-                                    name="nom"
-                                    placeholder="Ex. : Cellier du sous-sol"
-                                    value={nomCellierSup}
-                                    onChange={(e) => setNomCellierSup(e.target.value)}
-                                    />
-                                    {erreurs.nom && <p className="text-red-500 pt-2">{erreurs.nom[0]}</p>}
-                                </div>                       
-                                <input
-                                className="bouton-accent"
-                                type="submit"
-                                value="Supprimer le cellier"
-                                />
-                            </form>                            
-                        )}                
-                    </div>
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      className="mt-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                      onClick={() => gererSupprimerCellier(cellier)}
+                    >
+                      Supprimer le cellier
+                    </button>
+                  </div>
                 </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Aucun cellier.</p>
+        )}
 
-                {/* Fiche bouteille cellier mobile */}
-                <FicheProduitCellier
-                    produit={produitSelectionne}
-                    onFerme={() => setProduitSelectionne(null)}
-                    onRetire={() =>
-                        gestionRetraitBouteille(
-                            produitSelectionne.cellierId,
-                            produitSelectionne.id,
-                            produitSelectionne.pivot.quantite
-                        )
-                    }
-                />
-                </div>
-                {/* Modal succès et erreur*/}
-                <ModalAjouter
-                    visible={modalAjouterVisible}
-                    messageAjout={messageAjout}
-                    onFermer={() => setModalAjouterVisible(false)}
-                />
-                <ModalErreur
-                    visible={modalErreurVisible}
-                    messageErreur={messageErreur}
-                    onFermer={() => setModalErreurVisible(false)}
-                />
-                {/* MODAL SUPPRIMER */}
-                <ModalSupprimerCellier
-                    visible={modalSupprimerCellierVisible}
-                    h1="Supprimer ce cellier ?"
-                    messageSupprimerCellier="Cette action est irréversible."
-                    onAnnule={() => setModalSupprimerCellierVisible(false)}
-                    onConfirme={async () => {
-                        setChargementSupprimer(true);
-                        try {
-                            const id = Number(cellierSelectionne);
-                            await api.delete(`/celliers/${id}`);
-                            setCelliers(prev => prev.filter(c => c.id !== id));
-                        } catch (error) {
-                            console.error(error);
-                        } finally {
-                            setChargementSupprimer(false);
-                            setModalSupprimerCellierVisible(false);
-                            setCellierSelectionne("");
-                        }
-                    }}
-                    chargement={chargementSupprimer}                    
-                />
-                {/* Nouvelle modale pour “vider avant de supprimer” */}
-                {modalViderCellierVisible && (
-                <ModalErreur
-                    visible={modalViderCellierVisible}
-                    messageErreur={messageViderCellier}
-                    onFermer={() => setModalViderCellierVisible(false)}
-                />
-                )}
-                {modalRetraitVisible && (
-                    <ModalErreur
-                        visible={modalRetraitVisible}
-                        messageErreur={messageRetraitBouteille}
-                        onFermer={() => setModalRetraitVisible(false)}
-                    />
-                )}
+        {/* Formulaire ajout cellier */}
+        <div className="relative w-full sm:w-auto mb-10">
+          <p className="text-2xl mb-4 flex gap-2 items-center">Nouveau cellier</p>
+          <button
+            className="sm:w-full sm:block inline-block text-lg px-6 py-3 border-[2px] border-solid border-[var(--couleur-accent)] text-[var(--couleur-accent)] hover:bg-[var(--couleur-accent)] hover:text-white rounded-lg cursor-pointer mb-4"
+            onClick={() => setAfficherFormAjoutCellier((prev) => !prev)}
+          >
+            {afficherFormAjoutCellier ? "Fermer" : "Ajouter un cellier"}
+          </button>
+
+          {afficherFormAjoutCellier && (
+            <form className="w-full flex flex-col bg-form space-y-4 p-4 rounded-lg" onSubmit={gererAjoutCellier}>
+              <input
+                type="text"
+                value={nomCellier}
+                onChange={(e) => setNomCellier(e.target.value)}
+                placeholder="Ex. : Cellier du sous-sol"
+                className="px-2 py-1 bg-white rounded w-full focus:outline-none focus:border-red-300 focus:ring-1 focus:ring-red-300"
+              />
+              <input type="submit" value="Créer le cellier" className="bouton-accent" />
+            </form>
+          )}
         </div>
-    );
-    }
 
-    export default AfficheCellier;
+        {/* Fiche bouteille mobile */}
+        <FicheProduitCellier
+          produit={selection.produit}
+          onFerme={() => setSelection({ cellier: null, produit: null })}
+          onBoit={boireBouteille}
+        />
+
+        {/* Modale confirmation simple */}
+        <ModalConfirmation
+          visible={modalVisible}
+          message={modalMessage}
+          onFermer={() => setModalVisible(false)}
+        />
+
+        {/* Modale Supprimer / Vider */}
+        <ModalViderCellier
+          visible={modalSupprimerViderVisible}
+          cellier={cellierSelectionneSup}
+          onFermer={() => {
+            setModalSupprimerViderVisible(false);
+            setCellierSelectionneSupId(null);
+          }}
+          onVider={viderCellier}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default AfficheCellier;
