@@ -3,11 +3,18 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  base: "/", // chemin du sous-dossier ou sous-domaine
+  plugins: [
+    react(),
+    tailwindcss(),    
+  ],
+  server: {
+    historyApiFallback: true,  // Redirige vers index.html pour toutes les routes
+  },
   build: {
-    sourcemap: true,
-    manifest: true, // Génère manifest.json
-    outDir: 'public_html', // Chemin de destination des fichiers générés
+    // Sortie de build dans le répertoire public_html/dist
+    outDir: 'public_html/dist',
+    rollupOptions: {
+      input: '/index.html',  // Fichier d'entrée principal
+    },
   },
 })

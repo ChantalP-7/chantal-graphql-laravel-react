@@ -1,18 +1,147 @@
-# React + Vite
+Collège Maisonneuve 2025
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Programme Conception et programmation de site web
 
-Currently, two official plugins are available:
+# Projet web 2 - Équipe Vino MCHN
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Notre projet consiste à développer une application SPA (Single Page Application) dédiée la de gestion de celliers * de vins* via une architecture Laravel + React. 
 
-## React Compiler
+## Description du projet
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Notre appication permet aux utilisateurs de créer et gérer plusieurs celliers, d’y ajouter des bouteilles, de suivre les quantités, et d’effectuer des actions comme le déplacement ou le retrait de bouteilles.
 
-Note: This will impact Vite dev & build performances.
+Le projet repose sur une architecture découplée :
 
-## Expanding the ESLint configuration
+Laravel agit comme backend API (logique métier, base de données, sécurité)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React agit comme frontend SPA (interface utilisateur dynamique)
+
+
+## Fonctionnalités principales
+
+- Authentification des utilisateurs
+- Gestion de plusieurs **celliers**
+- Ajout, modification et suppression de **bouteilles**
+- Gestion des **quantités**
+- Déplacement de bouteilles entre celliers
+- Interface **SPA fluide et réactive**
+
+
+## Objectifs pédagogiques
+
+Ce projet vise à :
+
+- Maîtriser une architecture Laravel + React découplée
+
+- Comprendre la communication API entre frontend et backend
+
+- Mettre en place une SPA complète
+
+- Gérer un projet full‑stack moderne
+
+## Architecture technique
+/backend        → Laravel (API REST)
+/public_html    → React (build de production)
+Backend (Laravel)
+
+- Framework : Laravel
+
+- API REST
+
+- Gestion des routes via routes/api.php
+
+- Accès aux données via Eloquent ORM
+
+### Séparation claire entre logique métier et présentation
+
+- Frontend (React)
+
+- Framework : React
+
+- Application monopage (SPA)
+
+- Communication avec le backend via Axios
+
+- Gestion de l’état avec les hooks React
+
+- Interfaces modulaires basées sur des composants
+
+## Communication Frontend / Backend
+
+- Le frontend communique avec le backend exclusivement via des requêtes HTTP (API)
+
+- Les routes API sont préfixées par /api
+
+- Gestion des erreurs côté frontend
+
+- Réponses JSON normalisées
+
+## Installation (en local)
+*Fork le projet principal*
+https://github.com/Equipe-MCHNC/graphql-laravel-react
+
+*Clonage de notre projet forked comme ceci : *
+*git clone https://github.com/username/nom-du-projet.git*
+
+### Prérequis
+
+PHP >= 8.x
+
+Composer
+
+Laravel 9 ou 10
+
+Node.js & npm
+
+Base de données MySQL
+
+### Backend
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+
+### Frontend
+cd frontend
+npm install
+npm run dev
+
+### Déploiement
+
+- Le backend Laravel est déployé à la racine du serveur
+
+- Le frontend React est compilé et déployé dans le dossier public_html
+
+- Les appels API utilisent des URLs absolues vers le backend
+
+## Objectifs pédagogiques
+
+### Ce projet vise à :
+
+- Maîtriser une architecture Laravel + React découplée
+
+- Comprendre la communication API entre frontend et backend
+
+- Mettre en place une SPA complète
+
+- Gérer un projet full‑stack moderne
+
+## Améliorations futures
+
+- Gestion des utilisateurs : liste des noms et de leurs celliers, les bouteilles entreposées, les quantités, etc. (côté administrateur)
+
+- Statistiques sur les utilisateurs et leurs celliers
+
+- Tests automatisés (unitaires et fonctionnels)
+
+- Accessibilité (a11y)
+
+    - Navigation complète au clavier
+    - Utilisation de balises HTML sémantiques
+    - Formulaires avec labels explicites
+    - Modales accessibles (focus, fermeture clavier)
+    - Contrastes et lisibilité respectés
+
+**Auteurs Moukda Phaengxay, Hannah Lauzon, Nadia Ouafi et Chantal Pépin**

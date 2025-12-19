@@ -20,7 +20,9 @@ use App\Http\Controllers\ListeAchatController;
 |
 */
 
-
+Route::get('/sanctum/csrf-cookie', function () {
+    return response()->json(['message' => 'CSRF token reçu']);
+});
 
 // Routes des usagers
 Route::middleware('auth:sanctum')->group(function () {
