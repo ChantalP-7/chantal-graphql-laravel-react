@@ -98,7 +98,6 @@ export default function Auth({ setIsAuth }) {
             name="email"
             placeholder="Courriel"
             value={courriel}
-            required
             onChange={(e) => setCourriel(e.target.value)} 
           />
           {erreurs.email && <p className="text-red-500 pt-2">{erreurs.email[0]}</p>}
@@ -112,7 +111,6 @@ export default function Auth({ setIsAuth }) {
             name="password"
             placeholder="Entrer un mot de passe"
             value={motDePasse}
-            required
             onChange={(e) => setMotDePasse(e.target.value)}
           />
           {erreurs.password && <p className="text-red-500 pt-2">{erreurs.password[0]}</p>}

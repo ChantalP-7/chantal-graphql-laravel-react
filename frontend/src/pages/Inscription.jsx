@@ -58,7 +58,6 @@ export default function Incription() {
             name="name"
             placeholder="Nom complet"
             value={nom}
-            required
             onChange={(e) => setNom(e.target.value)} 
           />
           {erreurs.name && <p className="text-red-500 pt-2">{erreurs.name[0]}</p>}
@@ -71,7 +70,6 @@ export default function Incription() {
             name="email"
             placeholder="Courriel"
             value={courriel}
-            required
             onChange={(e) => setCourriel(e.target.value)} 
           />
           {erreurs.email && <p className="text-red-500 pt-2">{erreurs.email[0]}</p>}
@@ -84,7 +82,6 @@ export default function Incription() {
             name="password"
             placeholder="Entrer un mot de passe"
             value={motDePasse}
-            required
             onChange={(e) => setMotDePasse(e.target.value)}
           />
           {erreurs.password && <p className="text-red-500 pt-2">{erreurs.password[0]}</p>}
@@ -97,7 +94,6 @@ export default function Incription() {
             name="password_confirmation"
             placeholder="Entrer de nouveau le mot de passe"
             value={confirmationMdp}
-            required
             onChange={(e) => setConfirmationMdp(e.target.value)}
           />
         </div>
