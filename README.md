@@ -81,7 +81,7 @@ Backend (Laravel)
 https://github.com/Equipe-MCHNC/graphql-laravel-react
 
 *Clonage de notre projet forked comme ceci : *
-*git clone https://github.com/username/nom-du-projet.git*
+git clone https://github.com/ChantalP-7/chantal-graphql-laravel-react
 
 ### Prérequis
 
@@ -89,24 +89,24 @@ PHP >= 8.x
 
 Composer
 
-Laravel 9 ou 10
+Laravel 9 ou plus
 
 Node.js & npm
 
 Base de données MySQL
 
 ### Backend
-cd backend
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan serve
+- cd backend
+- composer install
+- cp .env.example .env
+- php artisan key:generate
+- php artisan migrate
+- php artisan serve
 
 ### Frontend
-cd frontend
-npm install
-npm run dev
+- cd frontend
+- npm install
+- npm run dev
 
 ### Déploiement
 
