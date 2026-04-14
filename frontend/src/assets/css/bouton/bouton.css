@@ -55,5 +55,6 @@
 
 /* bouton pour éditer*/
 .bouton-edit{
-    @apply bg-lime-700 p-1 rounded-lg cursor-pointer text-white hover:bg-lime-800 hover:text-white
+    background-color: var(--couleur-accent);
+    @apply p-1 rounded-lg cursor-pointer text-white hover:text-white
 }

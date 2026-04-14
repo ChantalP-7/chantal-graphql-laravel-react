@@ -28,6 +28,6 @@ export default function BoutonDeconnexion({setIsAuth}) {
         }
     };    
     return (
-        <button className="bg-red-950 text-white text-center p-3 rounded-lg cursor-pointer hover:bg-lime-800 transition" type="button" onClick={deconnexion}>Se déconnecter</button>
+        <button className="bg-emerald-800 text-white text-center py-2 px-4 rounded-lg cursor-pointer hover:bg-lime-800 transition" type="button" onClick={deconnexion}>Se déconnecter</button>
     );
 }  

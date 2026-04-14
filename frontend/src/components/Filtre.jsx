@@ -57,7 +57,7 @@ export default function Filtre({ filtre, setFiltre, ordre, setOrdre }) {
         <button 
             type="button" 
             onClick={() => setFiltreOuvert(!filtreOuvert)}
-            className="dropdownDeDropdown bouton-filtre bg-lime-700"
+            className="dropdownDeDropdown bouton-filtre bg-gray-800"
         >
             {filtreOuvert ? "Cacher les filtres" : "Afficher les filtres"}
         </button>

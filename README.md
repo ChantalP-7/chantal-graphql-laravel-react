@@ -4,7 +4,7 @@ Programme Conception et programmation de site web
 
 # Projet web 2 - Équipe Vino MCHN
 
-Notre projet consiste à développer une application SPA (Single Page Application) dédiée la de gestion de celliers * de vins* via une architecture Laravel + React. 
+Notre projet consiste à développer une application SPA (Single Page Application) dédiée la de gestion de celliers de vins via une architecture Laravel + React. 
 
 ## Description du projet
 
@@ -193,4 +193,4 @@ Base de données MySQL
     - Modales accessibles (focus, fermeture clavier)
     - Contrastes et lisibilité respectés
 
-**Auteurs Moukda Phaengxay, Hannah Lauzon, Nadia Ouafi et Chantal Pépin**
+**Auteures : Moukda Phaengvixay, Hannah Lauzon, Nadia Ouafi et Chantal Pépin**

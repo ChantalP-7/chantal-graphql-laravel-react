@@ -100,6 +100,25 @@ class CellierController extends Controller
     }
 
 
+    public function miseAJourProduit(Request $request, $cellierId, $produitId) {
+        $cellier = Cellier::findOrFail($cellierId);
+        $quantite = $request->input('quantite', 0);
+
+        // Mettre à jour ou ajouter le produit dans le cellier
+        $cellier->produits()->syncWithoutDetaching([
+            $produitId => ['quantite' => $quantite]
+        ]);
+
+        // Retourner la réponse JSON pour le frontend
+        return response()->json([
+            'success' => true,
+            'cellier_id' => $cellierId,
+            'produit_id' => $produitId,
+            'quantite' => $quantite
+        ]);
+    }
+
+
     public function modifierQuantite(Request $request, $cellierId, $produitId)
     {
         $quantite = $request->input('quantite', 1);

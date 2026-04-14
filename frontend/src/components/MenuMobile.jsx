@@ -15,15 +15,15 @@ export default function MenuMobile() {
   return (
     <>
     {token && user && (
-    <nav className="fixed bottom-0 left-0 w-full h-16 bg-red-950 shadow-xl z-50 px-6">
+    <nav className="fixed bottom-0 left-0 w-full h-16 bg-red-950 border-0.5 border-black shadow-xl z-50 px-6">
       <ul className="flex justify-between items-center h-full">
 
         {/* ===== Accueil / Catalogue ===== */}
             <li className="flex-1 text-center">
               <Link
                 to="/produits"
-                className={`flex flex-col items-center ${
-                  isActive("/produits") ? "text-white font-semibold" : "text-white opacity-70"
+                className={`flex flex-col items-center p-1.5 ${
+                  isActive("/produits") ? "bg-white text-[var(--rouge_lecture)] hover:bg-white" : "text-white opacity-90"
                 }`}
               >
                 <Wine className="w-7 h-7" />
@@ -35,11 +35,15 @@ export default function MenuMobile() {
             <li className="flex-1 text-center">
               <Link
                 to="/celliers"
-                className={`flex flex-col items-center ${
-                  isActive("/celliers") ? "text-white font-semibold" : "text-white opacity-70"
+                className={`flex flex-col items-center p-1.5 ${
+                  isActive("/celliers") ? "bg-white text-[var(--rouge_lecture)] hover:bg-white" : "text-white opacity-90"
                 }`}
-              >
-                <Columns4 className="w-7 h-7" />
+              ><>
+              <img src={`${
+                  isActive("/celliers") ? "/images/bouteille-de-vin-bordeau.png" : "/images/bouteille-de-vin-blanc-24.png"}`}
+                ></img>
+              </>
+                
                 <span className="text-xs mt-1">Celliers</span>
               </Link>
             </li>
@@ -48,8 +52,8 @@ export default function MenuMobile() {
             <li className="flex-1 text-center">
               <Link
                 to="/cellier/creer"
-                className={`flex flex-col items-center ${
-                  isActive("/cellier/creer") ? "text-white font-semibold" : "text-white opacity-70"
+                className={`flex flex-col items-center p-1.5 ${
+                  isActive("/cellier/creer") ? "bg-white text-[var(--rouge_lecture)] hover:bg-white" : "text-white opacity-90"
                 }`}
               >
                 <Plus className="w-8 h-8" />
@@ -61,8 +65,8 @@ export default function MenuMobile() {
             <li className="flex-1 text-center">
               <Link
                 to="/compte"
-                className={`flex flex-col items-center ${
-                  isActive("/compte") ? "text-white font-semibold" : "text-white opacity-70"
+                className={`flex flex-col items-center p-1.5 ${
+                  isActive("/compte") ? "bg-white text-[var(--rouge_lecture)] hover:bg-white" : "text-white opacity-90"
                 }`}
               >
                 <User className="w-7 h-7" />
@@ -72,12 +76,12 @@ export default function MenuMobile() {
 
             <li className="flex-1 text-center">
               <Link to="/liste-achats"
-                className={`flex flex-col items-center ${
-                  isActive("/liste-achats") ? "text-white font-semibold" : "text-white opacity-70"
+                className={`flex flex-col items-center p-1.5 ${
+                  isActive("/liste-achats") ? "bg-white text-[var(--rouge_lecture)] hover:bg-white" : "text-white opacity-90"
                 }`}
               >
-                < ListChecks className="w-7 h-7" />
-                    <span className="text-xs mt-1">Achats</span>
+                  <ListChecks className="w-7 h-7" />
+                  <span className="text-xs mt-1">Liste vins</span>
               </Link>
             </li>
       </ul>

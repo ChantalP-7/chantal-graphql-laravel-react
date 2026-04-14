@@ -3,17 +3,25 @@
 @import "tailwindcss";
 
 :root{
-  --couleur-accent: #5d7226;
+  --blanc: white;
+  --couleur-accent-ancien: #5d7226;
+  --couleur-accent-ancien-deux: oklch(27.8% 0.033 256.848);
+  --couleur-accent: oklch(50.8% 0.118 165.612);
+  --couleur-accent-pale: #b3cc73;
   --couleur-text: #450C1B;
+  --couleur-douce: #c71242;
   --couleur-form: #7462673e;
-  --couleur-fond: #f8f3f3;
+  --couleur-fond: #f1eded;
+  --couleur-fond-hover:#882d42;
   --couleur-secondaire: #BF7A8C;
   --rouge_lecture: #3c111b;
-  --rose_vino: #945f6c;
+  --rose_vino: #af596f;
+  --neutre: #3d2a30;
+  --icone: #460809;
 }
 
 body{
-  background-color: var(--couleur-fond);
+  background-color: var(--blanc);
 }
 
 p, span, a, button, select, option, input .bouton-vin {

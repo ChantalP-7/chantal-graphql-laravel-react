@@ -1,7 +1,8 @@
 import { useEffect, useState} from "react";
-import { Link, useParams,useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import GetUsager from "../components/GetUsager"
+import GetUsager from "../components/GetUsager";
+import ModalAjouterListe from "../components/ModalAjouterListe";
 
 /**
  * Fonction fléchée qui affiche les détails d'un vin et qui affiche le formulaire d'ajout du vin sélectionné et qui permet d'ajouter le vin dans le cellier de l'utilisateur connecté. La quantité ajoutée est enregistrée dans la table pivot cellier_produit dans la colonne "quantite"
@@ -11,6 +12,10 @@ import GetUsager from "../components/GetUsager"
  const FicheProduit = () => {
     const { id } = useParams();
     const [produit, setProduit] = useState(null); 
+    const [quantite, setQuantite] = useState(1); // valeur par défaut 1
+    const [quantiteAjoutee, setQuantiteAjoutee] = useState(0);
+    const [modalAjouterVisible, setModalAjouterVisible] = useState(false); // affiche la boite modale d'ajout et quantité
+    const [messageAjout, setMessageAjout] = useState("");
 
     const user = GetUsager();
     const navigate = useNavigate();
@@ -22,16 +27,32 @@ import GetUsager from "../components/GetUsager"
             .catch(err => console.error(err));
     }, [id]);
 
-    const ajouterALaListe = async (produitId) => {
+    const ajouterALaListe = async (produitId) => {       
+          
         try {
-            const response = await api.post(`/liste-achats/${produitId}`);
+            const response = await api.post(`/liste-achats/${produitId}`,{
+            quantite: quantite
+        });
 
-               // Redirection automatique
-                navigate("/liste-achats");
+            console.log(response);
+            
+            setQuantiteAjoutee(quantite);
+            setMessageAjout(`Tu as ajouté ${quantite} bouteille${quantite > 1 ? "s" : ""} de 🍷 à ta liste de vins .`);
+            setModalAjouterVisible(true);
+            setQuantite(1);
+
+            // fermer la modale après 5s
+            setTimeout(() => {
+                setModalAjouterVisible(false);                
+            }, 3000);                
             
         } catch (error) {
-            console.error(error);
-            
+            setMessageAjout("Mode démo activé : Ajout non permis.");
+            setModalAjouterVisible(true);
+            // fermer la modale après 5s
+            setTimeout(() => {
+                setModalAjouterVisible(false);                
+            }, 3000); 
         }
     };
 
@@ -40,15 +61,14 @@ import GetUsager from "../components/GetUsager"
         <span></span><span></span><span></span>
     </div>
 
-    return (
-        
+    return (        
         <div className="container mx-auto p-4">
             <h1 className="text-center mt-20 text-3xl">Fiche détaillée</h1>
             <h2 className="text-center text-2xl mt-5 mb-10"><strong>{produit.name}</strong></h2>
             <hr className="border-t-1 border-dashed bouton-[var(--couleur-texte)] mt-15 mb-15 my-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                 <div className="flex justify-center">            
-                    <img className="w-sm sm:w-xsm" src={produit.image || 'https://cdn.pixabay.com/photo/2012/04/13/11/49/wine-32052_1280.png'}
+                    <img className="w-3xs sm:w-7xs" src={produit.image || 'https://cdn.pixabay.com/photo/2012/04/13/11/49/wine-32052_1280.png'}
                     alt={produit.name ? `Nom du vin ${produit.name}` : 'Nom du vin non disponible'} loading="lazy"/>
                 </div>               
                 <div className="flex flex-col mt-5 gap-4 h-full">
@@ -59,23 +79,31 @@ import GetUsager from "../components/GetUsager"
                         <li className="text-sm md:text-xl lg:text-3lg "><strong>Origine - </strong> {produit.pays_origine}</li>
                     </ul>
 
-                    <div className="flex gap-5 justify-left items-center ">
+                    <div className="flex gap-2 justify-left items-center ">
                         <Link className="block w-full" to={user ? `/user/${user.id}/celliers/produits/${produit.id}` : "#"}>
-                            <button className="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg">Ajouter au cellier</button>
-                        </Link>
-                        <Link className="block w-full" to={user ? `/user/${user.id}/liste/produits/${produit.id}` : ""}>
-                            <button
-                                onClick={() => ajouterALaListe(produit.id)}
-                                className="mt-6 px-6 py-3 border-2 hover:border-[var(--couleur-text)] hover:text-[var(--couleur-text)] hover:bg-white rounded-lg bg-[var(--couleur-text)] text-white transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg"
-                                >
-                                    Ajouter à ma liste
-                            </button>
-                        </Link>
-
+                            <button className="mt-6 px-6 py-3 border-2 bg-gray-800 text-white hover:border-gray-800 hover:text-gray-800 hover:bg-white rounded-lg transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg">Ajouter au cellier</button>
+                        </Link>  
+                        <Link className="block w-full">                      
+                        <button
+                            onClick={() => ajouterALaListe(produit.id)}
+                            className="mt-6 px-6 py-3 border-2 bg-gray-800 text-white hover:border-gray-800 hover:text-gray-800 hover:bg-white rounded-lg transition duration-300 cursor-pointer text-sm md:text-md lg:text-lg"
+                            >
+                                Ajouter à ma liste
+                        </button> 
+                        </Link>                       
                     </div>
-                </div>
-                
+                    <Link className="underline text-blue-900 mt-4 text-xl" to="/produits">
+                        Retour au catalogue
+                    </Link>
+                </div>                               
             </div>
+            <ModalAjouterListe
+                visible={modalAjouterVisible}
+                quantite={quantiteAjoutee}
+                messageAjout={messageAjout}
+                onFermer={() => setModalAjouterVisible(false)}
+            />
+            
         </div>
         
     );

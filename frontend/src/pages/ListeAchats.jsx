@@ -62,12 +62,12 @@ const ListeAchats = () => {
 
   return (
     <section className="mt-20 px-4">
-        <h1 className="text-3xl font-bold mb-6">Ma liste d’achat</h1>
+        <h1 className="text-3xl font-bold mb-6">Ma liste de vins</h1>
 
         {erreur && <p className="text-red-600 mb-4">{erreur}</p>}
 
         {items.length === 0 ? (
-            <p>Votre liste d’achat est vide.</p>
+            <p>Ta liste est vide.</p>
         ) : (
             <div className="space-y-4">
             {items.map((item) => (

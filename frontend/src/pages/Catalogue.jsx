@@ -19,7 +19,7 @@ const Catalogue = ({deconnexion}) => {
 	// Obtenir les infos de l'usager 
 	const user = GetUsager();
 
-	const bouteillesParPage = 12;
+	const bouteillesParPage = 20;
 
 	useEffect(() => {
 		setPageCourante(1);
@@ -50,11 +50,14 @@ const Catalogue = ({deconnexion}) => {
 		setPageCourante(page);
 	};
 
-	{/* Animations 3 points pour le chargement de la page */}
-	if (!produits) return <div className="points"> 
-		<span></span><span></span><span></span>
-
- 	</div>;
+	{/* Animations 3 points pour le chargement de la page catalogue*/}
+	if (!produits || produits.length === 0) return (
+		<div className="flex flex-col items-center gap-2 mb-5">
+			<p className="points">                
+				<span></span><span></span><span></span>                    
+			</p>
+			<p className="text-emerald-700 text-2xl">Chargement du catalogue ...</p>
+		</div>)
   	return (
 		<div className="contenu"> 
 			<p className="flex justify-end mb-15 text-sm">{user ? `Bienvenue ${user.name} !` : ""}</p>
@@ -75,14 +78,16 @@ const Catalogue = ({deconnexion}) => {
 							<p>{p.identite_produit} - {p.pays_origine}</p>
 							<p className="font-bold ">{Number(p.price).toFixed(2)} $</p>	
 							<div className="carteBouton flex justify-between items-center">								
-								<button className="bg-lime-700 border-transparent hover:bg-lime-800 p-2 rounded-md mt-4 " id="ajoutBouteille">
-									<Link className="block " to={`/produits/${p.id}`}>
-										<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" color="#fff"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"></path></svg>
+								<button className="bg-emerald-700 border-transparent text-xs hover:bg-emerald-600 p-2 rounded-md mt-4 cursor-pointer" id="ajoutBouteille">
+									<Link className="flex gap-1 items-center " to={`/produits/${p.id}`}>
+										<span className="text-white">Voir</span>									
+										<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" color="#fff"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"></path></svg>
 									</Link>
 								</button>
-								<button className="bg-lime-700 border-transparent p-2 rounded-md hover:bg-lime-800 mt-4" id="ajoutBouteille">								
-									<Link className="block" to={`/user/${user.id}/celliers/produits/${p.id}`}>
-										<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" color="#fff"><path d="M0 0h24v24H0z" fill="none"></path><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>								
+								<button className="bg-emerald-700 text-xs border-transparent p-2 pr-1 rounded-md hover:bg-emerald-600 mt-4 cursor-pointer" id="ajoutBouteille">
+									<Link className="flex gap-1 items-center" to={`/user/${user.id}/celliers/produits/${p.id}`}>
+										<span className="text-white">Ajouter</span>
+										<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" color="#fff"><path d="M0 0h24v24H0z" fill="none"></path><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>								
 									</Link>
 								</button>			
 							</div>

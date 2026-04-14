@@ -6,7 +6,7 @@ import GetUsager from "./GetUsager";
 import GetToken from "./GetToken";
 import Recherche from "./Recherche";
 
-export default function Header({deconnexion, recherche, setRecherche,isAuth, setIsAuth}) {
+export default function Header({deconnexion, recherche, setRecherche, isAuth, setIsAuth}) {
 
   const [menuOuvert, setMenuOuvert] = useState(false);
   const [compteOuvert, setCompteOuvert] = useState(false);
@@ -40,7 +40,7 @@ export default function Header({deconnexion, recherche, setRecherche,isAuth, set
 
           {estConnecte && (
             <Link to="/liste-achats" className="hover:text-red-950 transition">
-                Mes Achats
+                Ma liste de vins
             </Link>
           )}
 
@@ -113,7 +113,7 @@ export default function Header({deconnexion, recherche, setRecherche,isAuth, set
         <nav className="flex flex-col gap-4 text-lg font-medium">
 
           {token && <Link to="/produits" onClick={() => setMenuOuvert(false)}>Catalogue</Link>}
-          {token && <Link to="/liste-achats" onClick={() => setMenuOuvert(false)}>Achats</Link>}
+          {token && <Link to="/liste-achats" onClick={() => setMenuOuvert(false)}>Ma liste de vins</Link>}
 
           
           {estConnecte && (

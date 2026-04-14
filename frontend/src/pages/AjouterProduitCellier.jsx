@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../api/axios";
 import { FaWineBottle } from "react-icons/fa6";
 import ModaleAjouter from "../components/ModalAjouter";
@@ -78,14 +78,14 @@ import { useNavigate } from "react-router-dom";
             setModalAjouterVisible(true);
             setQuantite(1);
 
-            // fermer la modale après 5s et rediriger vers la liste des celliers
+            // fermer la modale après 3 secondes
             setTimeout(() => {
                 setModalAjouterVisible(false);
-                navigate(`/celliers`);
-            }, 5000);
+                //navigate(`/celliers`);
+            }, 3000);
         })
         .catch(err => {
-            setMessageErreur("Erreur lors de l'ajout du produit.");
+            setMessageErreur("Mode démo : ajout non permis.");
             setModalErreurVisible(true);
         });
     };
@@ -107,7 +107,7 @@ import { useNavigate } from "react-router-dom";
                     <div className="p-4">
                         <h2 className="text-xl sm:text-2xl font-semibold mb-3 mt-2">Garnir mon cellier</h2>
                         <select name="cellier" id="cellier"
-                        className="w-full p-3 mb-4  mt-4 text-md sm:text-xl rounded-sm focus:outline-none block border border-gray-300 bouton-raisin  text-white"
+                        className="w-full p-3 mb-4  mt-4 text-md sm:text-xl rounded-sm focus:outline-none block border-1 border-emerald-600 px-2 py-3 text-emerald-600"
                         
                         onChange={e => setCellierSelectionne(e.target.value)} defaultValue={''}
                         >
@@ -121,7 +121,7 @@ import { useNavigate } from "react-router-dom";
                         <div className="flex w-full gap-2 ">
                             <button
                             onClick={() => setQuantite(q => Math.max(0, q - 1))}
-                            className="text-xl text-center w-40 font-bold px-4 py-2 rounded-lg bouton-raisin cursor-pointer border-white border-[2px]"
+                            className="text-xl text-center w-40 font-bold px-4 py-2 rounded-3xl bg-emerald-600 text-white hover:bg-emerald-800 cursor-pointer border-white border-[2px]"
                             >
                             -
                             </button>
@@ -129,29 +129,39 @@ import { useNavigate } from "react-router-dom";
                                 type="text"
                                 inputMode="numeric"
                                 pattern="[0-9]*"
+                                min={1}
                                 value={quantite}
                                 onChange={e => {
                                     const val = e.target.value.replace(/\D/g, "");
                                     setQuantite(Math.max(1, Math.min(99, Number(val) || 1)));
                                 }}
-                                className="text-xl w-full text-lg sm:text-xl rounded-md bouton-raisin text-center border-white border-[2px]"
-                                placeholder="0"
+                                className="text-xl w-full text-lg sm:text-xl rounded-md border-1 border-emerald-600 text-emerald-600 text-center "
+                                placeholder="1"
                                 />
                             <button
                             onClick={() => setQuantite(q => Math.min(99, q + 1))}
-                            className="text-xl text-center w-40 text-lg sm:text-xl font-bold px-4 py-2 rounded bouton-raisin cursor-pointer border-white border-[2px]"
+                            className="text-xl text-center w-40 text-lg sm:text-xl font-bold px-4 py-2 rounded-3xl bg-emerald-600 text-white hover:bg-emerald-800 cursor-pointer border-white border-[2px]"
                             >
                             +
                             </button>
                         </div>
                         <button
                             onClick={ajouterProduit}
-                            className="w-full flex gap-2 justify-center bouton-accent transition-colors"
+                            className="w-full flex gap-2 justify-center px-3 py-2 border-1 border-emerald-600 text-emerald-800 hover:bg-emerald-600 hover:text-white mt-5 rounded-sm transition-colors cursor-pointer"
                         >
                             Ajouter<FaWineBottle />
 
                         </button>
                     </div>
+                    <div className="w-full p-5 flex flex-row justify-between items-center">
+                        <Link className="py-1 px-3 border-1 text-emerald-600 border-emerald-600 hover:bg-emerald-600 hover:text-white rounded-sm text-md" to="/produits">
+                            ◀ Catalogue 
+                        </Link>
+                        <Link className="py-1 px-3 border-1 text-emerald-600 border-emerald-600 hover:bg-emerald-600 hover:text-white rounded-sm text-md" to="/celliers">
+                            Celliers ▶
+                        </Link>
+                    </div>
+                    
                 </div>
             </div>
             {/* Modal ajouté succès et quantité */}

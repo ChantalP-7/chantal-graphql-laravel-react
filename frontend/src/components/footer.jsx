@@ -5,13 +5,11 @@ export default function Footer() {
   
 
   return (
-    <footer className="mt-20 bg-stone-200 text-red-950">
+    <footer className="bg-stone-200 text-red-950">
 
       {/* SECTION HAUT — TITRE & DESCRIPTION */}
       <div className="text-center px-6 py-12 max-w-3xl mx-auto">
-
         <h2 className="text-4xl font-serif mb-4">Vino</h2>
-
         <p className="text-sm leading-relaxed mb-8">
          Découvrez, gérez et savourez vos bouteilles favorites.
           Suivez vos celliers, explorez votre collection et profitez pleinement de l’univers du vin.

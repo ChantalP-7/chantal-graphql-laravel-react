@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_demo',
     ];
 
     public function celliers()
@@ -53,6 +54,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'temp_password_created_at' => 'datetime',
+        'is_demo' => 'boolean',
     ];
 
 }
