@@ -47,7 +47,7 @@ import ModalAjouterListe from "../components/ModalAjouterListe";
             }, 3000);                
             
         } catch (error) {
-            setMessageAjout("Mode démo activé : Ajout non permis.");
+            setMessageAjout("Mode démo : Pas d'ajout effecturé.");
             setModalAjouterVisible(true);
             // fermer la modale après 5s
             setTimeout(() => {

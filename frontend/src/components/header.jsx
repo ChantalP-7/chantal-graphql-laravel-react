@@ -70,7 +70,7 @@ export default function Header({deconnexion, recherche, setRecherche, isAuth, se
 
           {!estConnecte && (
             <>
-              <Link to="/inscription" className="bg-red-950 text-white px-4 py-2 rounded-lg">
+              <Link to="/inscription"  className="bg-red-950 text-white px-4 py-2 rounded-lg">
                 Inscription
               </Link>
               <Link to="/" className="bg-red-950 text-white px-4 py-2 rounded-lg">

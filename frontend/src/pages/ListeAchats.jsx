@@ -6,6 +6,20 @@ const ListeAchats = () => {
     const [items, setItems] = useState([]);
     const [chargement, setChargement] = useState(true);
     const [erreur, setErreur] = useState("");
+    const [msgDemo, setMsgDemo] = useState("");
+    const [showDemoModal, setShowDemoModal] = useState(false); // toggle afficher/cacher la modale
+
+    // Gestion de la modale Démo
+        useEffect(() => {
+            if (showDemoModal) {
+                const timer = setTimeout(() => {
+                    setShowDemoModal(false);
+                    setMsgDemo("");
+                }, 3000);
+    
+                return () => clearTimeout(timer);
+            }
+        }, [showDemoModal]);
     
 
   const chargerListe = async () => {
@@ -38,6 +52,8 @@ const ListeAchats = () => {
             )
         );
         } catch (error) {
+            setMsgDemo("Mode démo : Aucun + ou - effectué.");  
+			setShowDemoModal(true); 
         console.error(error);
     }
   };
@@ -49,6 +65,8 @@ const ListeAchats = () => {
         setItems((prev) => prev.filter((it) => it.id !== itemId));
 
         } catch (error) {
+            setMsgDemo("Mode démo : Pas de suppression.");  
+			setShowDemoModal(true); 
         console.error(error);
         }
   };
@@ -99,9 +117,11 @@ const ListeAchats = () => {
                         : ""}
                     </p>
                 </div>
-
+                {showDemoModal && (
+                    <p className="text-red-700 mb-4">{msgDemo}</p>
+                )}
                 {/* CONTROLES QUANTITÉ + SUPPRESSION */}
-                <div className="flex items-center gap-2 border-t border-gray-300 py-4">
+                <div className="flex items-center gap-2 border-t border-gray-300 py-4">                    
                     <button
                     className="px-2 py-1 rounded bg-gray-200 cursor-pointer"
                     onClick={() => changerQuantite(item.id, item.quantite - 1)}

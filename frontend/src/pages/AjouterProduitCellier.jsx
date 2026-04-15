@@ -85,7 +85,7 @@ import { useNavigate } from "react-router-dom";
             }, 3000);
         })
         .catch(err => {
-            setMessageErreur("Mode démo : ajout non permis.");
+            setMessageErreur("Mode démo : ajout non effectué.");
             setModalErreurVisible(true);
         });
     };
