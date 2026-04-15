@@ -77,7 +77,7 @@ const AfficheCellier = () => {
         afficherModalConfirmation("Cellier créé avec succès !");
         } catch (err) {
         console.error(err);
-        afficherModalConfirmation("Erreur lors de la création du cellier.");
+        afficherModalConfirmation("Mode démo : Aucun ajout de cellier effectué.");
         }
     };
 
@@ -110,7 +110,7 @@ const AfficheCellier = () => {
         
         } catch (err) {
         console.error(err);
-        afficherModalConfirmation("Erreur lors de la modification du nom.");
+        afficherModalConfirmation("Mode démo : modification non effectuée.");
         }
     };
 
@@ -155,7 +155,7 @@ const AfficheCellier = () => {
         afficherModalConfirmation(`Il reste ${nouvelleQuantite} bouteilles de ce vin. Bonne dégustation !`);
         } catch (err) {
         console.error(err);
-        afficherModalConfirmation("Erreur lors du retrait de la bouteille pour dégustation!");
+        afficherModalConfirmation("Mode démo : aucune bouteille retirée pour dégustation.");
         }
         
     };
@@ -173,7 +173,7 @@ const AfficheCellier = () => {
             );         
             } catch (err) {
             console.error(err);
-            afficherModalConfirmation("Erreur lors de la suppression du cellier.");
+            afficherModalConfirmation("Mode démo : aucune suppression possible.");
         }
     }
 
@@ -261,7 +261,7 @@ const AfficheCellier = () => {
         setCellierCibleId(null);
         } catch (err) {
         console.error(err);
-        afficherModalConfirmation("Erreur lors du déplacement des bouteilles.");
+        afficherModalConfirmation("Mode démo : Aucun déplacement effectué.");
         }
     };    
 
@@ -302,7 +302,7 @@ const AfficheCellier = () => {
 			<div className="w-full lg:w-4/5">
 			{/* Header */}
 			<h1 className="text-3xl mt-8 mb-8 text-center">
-				{user ? `Rebonjour ${user.name} !` : ""}
+				{user ? `Les celliers de ${user.name} !` : ""}
 			</h1>
 			<h2 className="text-2xl mt-8 mb-8 text-center flex gap-2 items-center">
 				Mes Celliers <GiBarrel />

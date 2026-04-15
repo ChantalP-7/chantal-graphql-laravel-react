@@ -32,7 +32,7 @@ import { Link } from "react-router-dom";
       if (error.response && error.response.data.errors) {
         setErreurs(error.response.data.errors);
       } else {
-        setMessage("Mode démo : Action non permise.");
+        setMessage("Mode démo : cellier non créé.");
       }
     }
   };
