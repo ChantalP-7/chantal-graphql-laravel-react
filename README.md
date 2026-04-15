@@ -194,3 +194,20 @@ Base de données MySQL
     - Contrastes et lisibilité respectés
 
 **Auteures : Moukda Phaengvixay, Hannah Lauzon, Nadia Ouafi et Chantal Pépin**
+
+
+## Améliorations printemps 2026
+
+### Gestion du cellier :
+
+- Changer la disposition des cellier : De tiroirs, je les ai mis en grilles. 
+- Le nom du cellier, la quantité de bouteilles ainsi que le nombre de vins est inscrit sur chaque cellier. Au clic, chaque contenu de cellier s'affiche pleine largeur en bas de la grille et le contenu est mieux présenté. 
+- Ajouts : possibilité de changer le nom du cellier ouvert, annuler l'action. Déplacer les bouteilles du cellier dans un autre à l'aide d'un mini formulaire, pagination lorsque plus de 6 bouteilles, etc. 
+- Quand on clique sur un vin, le panneau inférieur coulissant affiche les détails et un bouton dégustation permet au clic d'afficher un mini formulaire qui permet d'indiquer le nombre de bouteilles que le client veut boire de ce vin. Maximum la quantité du produit. Une fois cliqué, une modale indique le nombre de bouteilles restant de ce vin. 
+
+### Création d'un mode démo :
+
+- Ajout du booléen is_demo dans une colonne de la table users qui est par défaut false. J'ai ajouté un nouveau profil dont j'ai ajouté des celliers, bouteilles et rempli une liste d'achats. Une fois fait, j'ai mis son profil a is_demo = true.
+- J'ai ajouté du code backend : Middleware de blocage, mis dans le fichier kernel.php. Mis des routes de blocage du CRUD dans le fichier api.php lorsque le profil authentifié est celui du démo. 
+- À ce moment, l'utilisateur démo entre dans sa session et peut visualiser tout le contenu du site, le catalogue, sa liste d'achats, ses celliers et bouteilles, son profil etc. Il ne peut rien modifier, s'il tente de le faire, une modale lui explique que les modifications ne sont pas possibles en démo. 
+- Même avec l'inspecteur ou Postman, les modifications ne sont pas possible.
